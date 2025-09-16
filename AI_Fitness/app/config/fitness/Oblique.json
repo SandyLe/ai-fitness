@@ -1,0 +1,21 @@
+{
+    "Oblique": {
+        "comment": "侧腹",
+        "name": "侧腹",
+        "description": "侧腹是一种锻炼方式，它可以锻炼人体的侧倾能力和柔韧性。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "砍伐者",
+            "video_src": {
+                "man": "../static/vedio/Oblique_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Oblique_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "站立，双脚与肩同宽",
+                "双手握住一个哑铃，举过头顶",
+                "保持手臂伸直，向一侧弯曲躯干",
+                "缓慢返回起始位置，然后向另一侧弯曲"
+            ]
+        }
+    }
+}

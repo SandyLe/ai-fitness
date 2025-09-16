@@ -1,0 +1,416 @@
+{% extends "main.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_center.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="user-center-container">
+    <!-- 侧边导航栏 -->
+    <div class="sidebar">
+            <div class="user-profile">
+                <div class="avatar">
+                    <img src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="用户头像">
+                </div>
+                <h3>{{ user.user_name }}</h3>
+                <p>{{ user.email }}</p>
+            </div>
+            
+            <ul class="nav-tabs">
+                <li class="nav-item active" data-tab="profile">
+                    <i class="fas fa-user"></i> 个人资料
+                </li>
+                <li class="nav-item" data-tab="fitness-data">
+                    <i class="fas fa-chart-line"></i> 健身数据
+                </li>
+                <li class="nav-item" data-tab="training-plan">
+                    <i class="fas fa-dumbbell"></i> 训练计划
+                </li>
+                <li class="nav-item" data-tab="nutrition">
+                    <i class="fas fa-apple-alt"></i> 营养记录
+                </li>
+                <li class="nav-item" data-tab="settings">
+                    <i class="fas fa-cog"></i> 账户设置
+                </li>
+            </ul>
+            
+            <div class="logout-btn">
+                <a href="{{ url_for('auth.logout') }}">
+                    <i class="fas fa-sign-out-alt"></i> 退出登录
+                </a>
+            </div>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <div class="main-content">
+            <!-- 个人资料 -->
+            <div class="content-section active" id="profile">
+                <h2>个人资料</h2>
+                <div class="card">
+                    <form action="{{ url_for('auth.update_profile') }}" method="POST">
+                        <div class="form-group">
+                            <label for="username">用户名</label>
+                            <input type="text" id="username" value="{{ user.user_name }}" disabled>
+                            <small>用户名不可修改</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">邮箱</label>
+                            <input type="email" id="email" name="email" value="{{ user.email }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">手机号</label>
+                            <input type="tel" id="phone" name="phone" value="{{ user.phone or '' }}">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="gender">性别</label>
+                                <select id="gender" name="gender">
+                                    <option value="">请选择</option>
+                                    <option value="male" {% if user.gender == 'male' %}selected{% endif %}>男</option>
+                                    <option value="female" {% if user.gender == 'female' %}selected{% endif %}>女</option>
+                                    <option value="other" {% if user.gender == 'other' %}selected{% endif %}>其他</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group half">
+                                <label for="age">年龄</label>
+                                <input type="number" id="age" name="age" value="{{ user.age or '' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="height">身高 (cm)</label>
+                                <input type="number" id="height" name="height" value="{{ user.height or '' }}">
+                            </div>
+                            
+                            <div class="form-group half">
+                                <label for="weight">体重 (kg)</label>
+                                <input type="number" id="weight" name="weight" value="{{ user.weight or '' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fitness_goal">健身目标</label>
+                            <select id="fitness_goal" name="fitness_goal">
+                                <option value="">请选择</option>
+                                <option value="lose_weight" {% if user.fitness_goal == 'lose_weight' %}selected{% endif %}>减肥</option>
+                                <option value="build_muscle" {% if user.fitness_goal == 'build_muscle' %}selected{% endif %}>增肌</option>
+                                <option value="maintain" {% if user.fitness_goal == 'maintain' %}selected{% endif %}>保持健康</option>
+                                <option value="improve_endurance" {% if user.fitness_goal == 'improve_endurance' %}selected{% endif %}>提高耐力</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">保存修改</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- 健身数据 -->
+            <div class="content-section" id="fitness-data">
+                <h2>健身数据</h2>
+                <div class="card">
+                    <div class="fitness-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>总消耗热量</h3>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-stopwatch"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>总训练时长</h3>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>训练次数</h3>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-chart">
+                        <h3>最近训练记录</h3>
+                        {% if fitness_data %}
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>日期</th>
+                                        <th>训练项目</th>
+                                        <th>组数</th>
+                                        <th>每组个数</th>
+                                        <th>评分</th>
+                                        <th>详情</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in fitness_data %}
+                                    <tr>
+                                        <td>{{ item.created_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.group }}</td>
+                                        <td>{{ item.number }}</td>
+                                        <td>{{ item.source }}</td>
+                                        <td>
+                                            <button class="view-report-btn" 
+                                                    data-id="{{ item.id }}" 
+                                                    data-title="{{ item.title }}"
+                                                    data-score="{{ item.source }}"
+                                                    data-analysis="{{ item.analysis }}"
+                                                    data-advice="{{ item.advice }}"
+                                                    data-group="{{ item.group }}"
+                                                    data-reps="{{ item.number }}"
+                                                    data-action-analyse="{{ item.action_analyse }}">
+                                                查看
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <div class="no-data">
+                            <p>暂无训练记录，快去开始您的健身之旅吧！</p>
+                            <a href="{{ url_for('fitness.start_fitness') }}" class="btn btn-primary">开始健身</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 训练计划 -->
+            <div class="content-section" id="training-plan">
+                <h2>训练计划</h2>
+                <div class="card">
+                    <div class="plan-header">
+                        <h3>当前训练计划</h3>
+                        <button class="btn btn-outline">更换计划</button>
+                    </div>
+                    
+                    <div class="current-plan">
+                        <h4>增肌塑形 - 中级计划</h4>
+                        <div class="plan-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 65%;"></div>
+                            </div>
+                            <span>65% 完成</span>
+                        </div>
+                        
+                        <div class="weekly-schedule">
+                            <div class="day-card">
+                                <h5>周一</h5>
+                                <p>胸部 + 三头肌</p>
+                                <span class="status completed">已完成</span>
+                            </div>
+                            <div class="day-card">
+                                <h5>周二</h5>
+                                <p>背部 + 二头肌</p>
+                                <span class="status completed">已完成</span>
+                            </div>
+                            <div class="day-card active">
+                                <h5>周三</h5>
+                                <p>腿部 + 肩部</p>
+                                <span class="status">今日训练</span>
+                            </div>
+                            <div class="day-card">
+                                <h5>周四</h5>
+                                <p>休息日</p>
+                                <span class="status">休息</span>
+                            </div>
+                            <div class="day-card">
+                                <h5>周五</h5>
+                                <p>全身训练</p>
+                                <span class="status">未开始</span>
+                            </div>
+                            <div class="day-card">
+                                <h5>周六</h5>
+                                <p>有氧训练</p>
+                                <span class="status">未开始</span>
+                            </div>
+                            <div class="day-card">
+                                <h5>周日</h5>
+                                <p>休息日</p>
+                                <span class="status">休息</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 营养记录 -->
+            <div class="content-section" id="nutrition">
+                <h2>营养记录</h2>
+                <div class="card">
+                    <div class="nutrition-summary">
+                        <div class="nutrition-chart">
+                            <canvas id="nutritionChart"></canvas>
+                        </div>
+                        <div class="nutrition-stats">
+                            <div class="nutrient-item">
+                                <h4>蛋白质</h4>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 75%;"></div>
+                                </div>
+                                <p>75g / 100g</p>
+                            </div>
+                            <div class="nutrient-item">
+                                <h4>碳水化合物</h4>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 60%;"></div>
+                                </div>
+                                <p>180g / 300g</p>
+                            </div>
+                            <div class="nutrient-item">
+                                <h4>脂肪</h4>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 40%;"></div>
+                                </div>
+                                <p>30g / 70g</p>
+                            </div>
+                            <div class="nutrient-item">
+                                <h4>总热量</h4>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 65%;"></div>
+                                </div>
+                                <p>1560 / 2400 千卡</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="meal-log">
+                        <h3>今日饮食记录</h3>
+                        <button class="btn btn-sm">添加食物</button>
+                        
+                        <div class="meal-section">
+                            <h4>早餐</h4>
+                            <div class="meal-items">
+                                <div class="meal-item">
+                                    <span class="food-name">全麦面包</span>
+                                    <span class="food-amount">2片</span>
+                                    <span class="food-calories">160千卡</span>
+                                </div>
+                                <div class="meal-item">
+                                    <span class="food-name">鸡蛋</span>
+                                    <span class="food-amount">2个</span>
+                                    <span class="food-calories">140千卡</span>
+                                </div>
+                                <div class="meal-item">
+                                    <span class="food-name">牛奶</span>
+                                    <span class="food-amount">250ml</span>
+                                    <span class="food-calories">120千卡</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="meal-section">
+                            <h4>午餐</h4>
+                            <div class="meal-items">
+                                <div class="meal-item">
+                                    <span class="food-name">糙米饭</span>
+                                    <span class="food-amount">1碗</span>
+                                    <span class="food-calories">200千卡</span>
+                                </div>
+                                <div class="meal-item">
+                                    <span class="food-name">鸡胸肉</span>
+                                    <span class="food-amount">100g</span>
+                                    <span class="food-calories">165千卡</span>
+                                </div>
+                                <div class="meal-item">
+                                    <span class="food-name">西兰花</span>
+                                    <span class="food-amount">100g</span>
+                                    <span class="food-calories">55千卡</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 账户设置 -->
+            <div class="content-section" id="settings">
+                <h2>账户设置</h2>
+                <div class="card">
+                    <h3>修改密码</h3>
+                    <form action="{{ url_for('auth.change_password') }}" method="POST">
+                        <div class="form-group">
+                            <label for="current_password">当前密码</label>
+                            <input type="password" id="current_password" name="current_password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new_password">新密码</label>
+                            <input type="password" id="new_password" name="new_password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_password">确认新密码</label>
+                            <input type="password" id="confirm_password" name="confirm_password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">修改密码</button>
+                    </form>
+                    
+                    <hr>
+                    
+                    <h3>通知设置</h3>
+                    <div class="settings-group">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>训练提醒</h4>
+                                <p>接收每日训练计划提醒</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>营养提醒</h4>
+                                <p>接收饮食和营养建议</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>成就通知</h4>
+                                <p>当达成健身目标时通知我</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/user_center.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{
+    "Erector_Spinae": {
+        "comment": "竖脊肌",
+        "name": "竖脊肌",
+        "description": "竖脊肌是人体的重要肌肉，它位于脊柱下方，是支撑脊柱和身体其他部分的重要肌肉。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃背部伸展",
+            "video_src": {
+                "man": "../static/vedio/Erector_Spinae_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Erector_Spinae_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "俯卧在平板上，脚踝固定",
+                "双手握住哑铃，放在肩膀下方",
+                "弯曲躯干向下，然后向上伸展",
+                "回到与地面平行的位置"
+            ]
+        }
+    }
+}

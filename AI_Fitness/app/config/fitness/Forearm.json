@@ -1,0 +1,21 @@
+{
+    "Forearm": {
+        "comment": "前臂",
+        "name": "手臂",
+        "description": "前臂是人体的第二大关节，是身体的重要组成部分，也是人体的主要肌肉组织。前臂的作用是支撑身体的其他关节和肌肉，同时还可以提供力量和灵活性。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃腕部弯举",
+            "video_src": {
+                "man": "../static/vedio/Forearm_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Forearm_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "坐姿，前臂放在大腿上，手腕悬空",
+                "手掌向上握住哑铃",
+                "仅通过弯曲手腕向上卷起哑铃",
+                "缓慢放下回到起始位置"
+            ]
+        }
+    }
+}

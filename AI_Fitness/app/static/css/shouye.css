@@ -1,0 +1,764 @@
+/* 首页特定样式 */
+#shouye {
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* 英雄区域 */
+#shouye .hero {
+    display: flex;
+    height: 85vh;
+    padding: 0 40px;
+    font-style: italic;
+}
+
+#shouye .hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 40px;
+}
+
+#shouye .hero-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#shouye .hero-image img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#shouye .hero h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+#shouye .hero .title1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+#shouye .hero .title2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-align: right;
+    text-transform: uppercase;
+}
+
+#shouye .hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #a0a0a0;
+    line-height: 1.6;
+}
+
+#shouye .cta-btn {
+    background-color: #00c8ff;
+    color: #0c1a2a;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.3s;
+}
+
+#shouye .cta-btn:hover {
+    background-color: #00a8df;
+}
+
+#shouye .stats {
+    display: flex;
+    margin-top: 40px;
+}
+
+#shouye .stat-item {
+    margin-right: 40px;
+}
+
+#shouye .stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #00c8ff;
+}
+
+#shouye .stat-label {
+    font-size: 14px;
+    color: #a0a0a0;
+}
+
+#shouye .features {
+    background-color: #0f2133;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+#shouye .feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#shouye .feature-icon {
+    width: 24px;
+    height: 24px;
+    background-color: #00c8ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+#shouye .feature-text {
+    font-size: 16px;
+}
+
+/* 轮播图样式 */
+#shouye .carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+#shouye .carousel-inner {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+#shouye .carousel-item {
+    min-width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#shouye .carousel-item.active {
+    display: flex;
+}
+
+#shouye .carousel-item img {
+    width: 100%;
+    object-fit: cover;
+}
+
+#shouye .carousel-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#shouye .carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#shouye .carousel-dot.active {
+    background-color: #00c8ff;
+}
+
+#shouye .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s;
+}
+
+#shouye .carousel-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+#shouye .carousel-prev {
+    left: 10px;
+}
+
+#shouye .carousel-next {
+    right: 10px;
+}
+
+/* 通用部分 */
+#shouye .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#shouye .section {
+    padding: 100px 0;
+}
+
+#shouye .section-dark {
+    background-color: #0f1d2c;
+}
+
+#shouye .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+#shouye .section-header h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+#shouye .section-header p {
+    font-size: 18px;
+    color: #a0a0a0;
+}
+
+#shouye .btn {
+    background-color: #00c8ff;
+    color: #0c1a2a;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#shouye .btn:hover {
+    background-color: #00a8df;
+}
+
+#shouye .btn-outline {
+    background-color: transparent;
+    border: 2px solid #00c8ff;
+    color: #00c8ff;
+}
+
+#shouye .btn-outline:hover {
+    background-color: #00c8ff;
+    color: #0c1a2a;
+}
+
+/* 关于我们部分 */
+#shouye .about-content {
+    display: flex;
+    gap: 40px;
+}
+
+#shouye .about-image {
+    flex: 1;
+}
+
+#shouye .about-image img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    height: 400px;
+}
+
+#shouye .about-text {
+    flex: 1;
+}
+
+#shouye .about-text h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #00c8ff;
+}
+
+#shouye .about-text p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+#shouye .about-text ul {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+#shouye .about-text li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#shouye .about-text li i {
+    color: #00c8ff;
+    margin-right: 10px;
+}
+
+/* 课程部分 */
+#shouye .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+#shouye .course-card {
+    background-color: #0c1a2a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+#shouye .course-card:hover {
+    transform: translateY(-10px);
+}
+
+#shouye .course-image {
+    position: relative;
+    height: 200px;
+}
+
+#shouye .course-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#shouye .course-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #00c8ff;
+    color: #0c1a2a;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#shouye .course-content {
+    padding: 20px;
+}
+
+#shouye .course-content h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#shouye .course-content p {
+    color: #a0a0a0;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+#shouye .course-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+    font-size: 14px;
+}
+
+#shouye .course-meta span i {
+    margin-right: 5px;
+    color: #00c8ff;
+}
+
+#shouye .view-all {
+    text-align: center;
+}
+
+/* 教练团队部分 */
+#shouye .trainers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+#shouye .trainer-card {
+    background-color: #0f2133;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+#shouye .trainer-card:hover {
+    transform: translateY(-10px);
+}
+
+#shouye .trainer-image {
+    height: 300px;
+}
+
+#shouye .trainer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#shouye .trainer-content {
+    padding: 20px;
+    text-align: center;
+}
+
+#shouye .trainer-content h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+#shouye .trainer-specialty {
+    color: #00c8ff;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#shouye .trainer-bio {
+    color: #a0a0a0;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+#shouye .trainer-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+#shouye .social-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #0c1a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00c8ff;
+    transition: all 0.3s;
+}
+
+#shouye .social-icon:hover {
+    background-color: #00c8ff;
+    color: #0c1a2a;
+}
+
+/* 用户评价部分 */
+#shouye .testimonials-slider {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#shouye .testimonial-card {
+    background-color: #0c1a2a;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+#shouye .testimonial-card.active {
+    display: block;
+}
+
+#shouye .testimonial-quote {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#shouye .testimonial-quote i {
+    color: #00c8ff;
+    font-size: 24px;
+    margin: 0 10px;
+}
+
+#shouye .testimonial-quote p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #e0e0e0;
+    font-style: italic;
+}
+
+#shouye .testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#shouye .testimonial-author img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+#shouye .testimonial-info h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+#shouye .testimonial-info p {
+    color: #a0a0a0;
+    font-size: 14px;
+}
+
+#shouye .testimonial-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+#shouye .testimonial-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#shouye .testimonial-dot.active {
+    background-color: #00c8ff;
+}
+
+/* 联系我们部分 */
+#shouye .contact-content {
+    display: flex;
+    gap: 40px;
+}
+
+#shouye .contact-info {
+    flex: 1;
+}
+
+#shouye .contact-item {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+#shouye .contact-item i {
+    font-size: 24px;
+    color: #00c8ff;
+    margin-right: 20px;
+    width: 24px;
+}
+
+#shouye .contact-item h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+#shouye .contact-item p {
+    color: #a0a0a0;
+}
+
+#shouye .contact-form {
+    flex: 1;
+}
+
+#shouye .form-group {
+    margin-bottom: 20px;
+}
+
+#shouye .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #e0e0e0;
+}
+
+#shouye .form-group input,
+#shouye .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: #0f2133;
+    border: 1px solid #1c3654;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#shouye .form-group textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    #shouye .hero h2, 
+    #shouye .hero .title1, 
+    #shouye .hero .title2 {
+        font-size: 40px;
+    }
+    
+    #shouye .stat-item {
+        margin-right: 20px;
+    }
+    
+    #shouye .stat-number {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 992px) {
+    #shouye .hero {
+        height: auto;
+    }
+    
+    #shouye .hero h2, 
+    #shouye .hero .title1, 
+    #shouye .hero .title2 {
+        font-size: 36px;
+    }
+    
+    #shouye .courses-grid,
+    #shouye .trainers-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    #shouye .hero {
+        flex-direction: column;
+        
+        height: auto;
+    }
+    
+    #shouye .hero-content {
+        padding-right: 0;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    
+    #shouye .hero .title1, 
+    #shouye .hero .title2 {
+        font-size: 32px;
+        text-align: center;
+    }
+    
+    #shouye .hero p {
+        font-size: 16px;
+    }
+    
+    #shouye .cta-btn {
+        align-self: center;
+    }
+    
+    #shouye .stats {
+        justify-content: center;
+    }
+    
+    #shouye .stat-item {
+        margin: 0 15px;
+    }
+    
+    #shouye .about-content,
+    #shouye .contact-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    #shouye .about-image,
+    #shouye .about-text,
+    #shouye .contact-info,
+    #shouye .contact-form {
+        width: 100%;
+    }
+    
+    #shouye .courses-grid,
+    #shouye .trainers-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    #shouye .section {
+        padding: 60px 20px;
+    }
+    
+    #shouye .carousel-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    #shouye .hero .title1, 
+    #shouye .hero .title2 {
+        font-size: 28px;
+    }
+    
+    #shouye .section-header h2 {
+        font-size: 24px;
+    }
+    
+    #shouye .section-header p {
+        font-size: 14px;
+    }
+    
+    #shouye .stats {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #shouye .stat-item {
+        margin: 10px 0;
+    }
+    
+    #shouye .features {
+        flex-direction: column;
+    }
+    
+    #shouye .feature-item {
+        margin-bottom: 15px;
+    }
+    
+    #shouye .carousel-controls {
+        bottom: 5px;
+    }
+    
+    #shouye .carousel-dot {
+        width: 8px;
+        height: 8px;
+        margin: 0 4px;
+    }
+    
+    #shouye .testimonial-author {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    #shouye .testimonial-author img {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+}

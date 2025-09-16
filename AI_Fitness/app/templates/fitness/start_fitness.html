@@ -1,0 +1,378 @@
+{% extends "main.html" %}
+
+{% block title %}开始健身{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/baseBig.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.musclewiki.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/start_fitness.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="start_fitness_container">
+    <div class="mw-content-text">
+        <div class="row content-menu">
+            <div id="sex-choice-wrapper" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <h4 class="choice-title">选择性别</h4>
+                <div class="btn-group fitness-choice" data-toggle="buttons">
+                        <label class="btn fitness-btn gender-btn" id="sexchoosermalelabel">
+                            <input type="radio" name="sexchooser" id="sexchoosermale" value="male" checked="">
+                            <img src="{{ url_for('static', filename='images/gender/male.png') }}" class="gender-icon">
+                            <span>男士</span>
+                        </label>
+                        <label class="btn fitness-btn gender-btn" id="sexchooserfemalelabel">
+                            <input type="radio" name="sexchooser" id="sexchooserfemale" value="female">
+                            <img src="{{ url_for('static', filename='images/gender/female.png') }}" class="gender-icon">
+                            <span>女士</span>
+                        </label>
+                </div>
+            </div>
+            <div id="section_options" class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                <h4 class="choice-title">选择器材</h4>
+                <div class="equipment-container">
+                    <button data-name="Exercises" class="section-button equipment-btn">
+                        <img src="{{ url_for('static', filename='images/equipment/dumbbell.png') }}" class="equipment-icon">哑铃
+                    </button>
+                    <button data-name="Stretches" class="section-button equipment-btn">
+                        <img src="{{ url_for('static', filename='images/equipment/stretch.png') }}" class="equipment-icon">拉伸
+                    </button>
+                    <button data-name="Bodyweight" class="section-button equipment-btn">
+                        <img src="{{ url_for('static', filename='images/equipment/bodyweight.png') }}" class="equipment-icon">徒手
+                    </button>
+                    <button data-name="Kettlebells" class="section-button equipment-btn">
+                        <img src="{{ url_for('static', filename='images/equipment/kettlebell.png') }}" class="equipment-icon">壶铃
+                    </button>
+                    <button data-name="Barbell" class="section-button equipment-btn">
+                        <img src="{{ url_for('static', filename='images/equipment/barbell.png') }}" class="equipment-icon">杠铃
+                    </button>
+                    <button data-name="Gantry" class="section-button equipment-btn">
+                        <img src="{{ url_for('static', filename='images/equipment/gantry.png') }}" class="equipment-icon">龙门架
+                    </button>
+                    <button data-name="Band" class="section-button equipment-btn">
+                        <img src="{{ url_for('static', filename='images/equipment/band.png') }}" class="equipment-icon">弹力带
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modle">
+            <div id="malefigures">
+                    <div id="mobile-muscle-map">
+                        <img id="mobilebg" src="{{ url_for('static', filename='Crops1/mobilebg.png') }}">
+                        <img id="traps-a" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
+                            data-src="{{ url_for('static', filename='Crops1/08.-TrapsLeft.png') }}">
+                        <img id="traps-b" src="{{ url_for('static', filename='Crops1/08.-TrapsRight.png') }}">
+                        <img id="shoulders-a" src="{{ url_for('static', filename='Crops1/07.A-Deltoids.png') }}">
+                        <img id="shoulders-b" src="{{ url_for('static', filename='Crops1/07.B-Deltoids.png') }}">
+                        <img id="pecs" src="{{ url_for('static', filename='Crops1/06.-Pecs.png') }}">
+                        <img id="biceps-a" src="{{ url_for('static', filename='Crops1/05.A-Biceps.png') }}">
+                        <img id="biceps-b" src="{{ url_for('static', filename='Crops1/05.B-Biceps.png') }}">
+                        <img id="forearm-a" src="{{ url_for('static', filename='Crops1/14.A-Forearms.png') }}">
+                        <img id="forearm-b" src="{{ url_for('static', filename='Crops1/14.B-Forearms.png') }}">
+                        <img id="obliques" src="{{ url_for('static', filename='Crops1/04.-Obliques.png') }}">
+                        <img id="quads-a" src="{{ url_for('static', filename='Crops1/01.A-Quads.png') }}">
+                        <img id="quads-b" src="{{ url_for('static', filename='Crops1/01.B-Quads.png') }}">
+                        <img id="calves-a" src="{{ url_for('static', filename='Crops1/13.A-Calves.png') }}">
+                        <img id="calves-b" src="{{ url_for('static', filename='Crops1/13.B-Calves.png') }}">
+                        <img id="back-traps-a" src="{{ url_for('static', filename='Crops1/08.B-Traps.png') }}">
+                        <img id="back-traps-b" src="{{ url_for('static', filename='Crops1/08.C-Traps.png') }}">
+                        <img id="back-shoulders-a" src="{{ url_for('static', filename='Crops1/07.C-Deltoids.png') }}">
+                        <img id="back-shoulders-b" src="{{ url_for('static', filename='Crops1/07.D-Deltoids.png') }}">
+                        <img id="triceps-a" src="{{ url_for('static', filename='Crops1/09.A-Triceps.png') }}">
+                        <img id="triceps-b" src="{{ url_for('static', filename='Crops1/09.B-Triceps.png') }}">
+                        <img id="back-lats-a" src="{{ url_for('static', filename='Crops1/10.A-Lats.png') }}">
+                        <img id="back-lats-b" src="{{ url_for('static', filename='Crops1/10.B-Lats.png') }}">
+                        <img id="back-lower" src="{{ url_for('static', filename='Crops1/15.-Lower-Back.png') }}">
+                        <img id="back-forearms-a" src="{{ url_for('static', filename='Crops1/14.C-Forearms.png') }}">
+                        <img id="back-forearms-b" src="{{ url_for('static', filename='Crops1/14.D-Forearms.png') }}">
+                        <img id="back-glutes" src="{{ url_for('static', filename='Crops1/11.-Glutes.png') }}">
+                        <img id="back-hamstrings-a" src="{{ url_for('static', filename='Crops1/12.A-Hamstrings.png') }}">
+                        <img id="back-hamstrings-b" src="{{ url_for('static', filename='Crops1/12.B-Hamstrings.png') }}">
+                        <img id="back-calves-a" src="{{ url_for('static', filename='Crops1/13.C-Calves.png') }}">
+                        <img id="back-calves-b" src="{{ url_for('static', filename='Crops1/13.D-Calves.png') }}">
+                        <img id="obliques-a" src="{{ url_for('static', filename='Crops1/16.A-Obliques.png') }}">
+                        <img id="obliques-b" src="{{ url_for('static', filename='Crops1/16.B-Obliques.png') }}">
+                    </div>
+                    <div id="muscle-map">
+                        <img id="background" alt="Logo" src="{{ url_for('static', filename='Crops1/00.-Blank-Figures.png') }}">
+                        <img id="traps-a" src="{{ url_for('static', filename='Crops1/08.-TrapsLeft.png') }}">
+                        <img id="traps-b" src="{{ url_for('static', filename='Crops1/08.-TrapsRight.png') }}">
+                        <img id="shoulders-a" src="{{ url_for('static', filename='Crops1/07.A-Deltoids.png') }}">
+                        <img id="shoulders-b" src="{{ url_for('static', filename='Crops1/07.B-Deltoids.png') }}">
+                        <img id="pecs" src="{{ url_for('static', filename='Crops1/06.-Pecs.png') }}">
+                        <img id="biceps-a" src="{{ url_for('static', filename='Crops1/05.A-Biceps.png') }}">
+                        <img id="biceps-b" src="{{ url_for('static', filename='Crops1/05.B-Biceps.png') }}">
+                        <img id="forearm-a" src="{{ url_for('static', filename='Crops1/14.A-Forearms.png') }}">
+                        <img id="forearm-b" src="{{ url_for('static', filename='Crops1/14.B-Forearms.png') }}">
+                        <img id="obliques" src="{{ url_for('static', filename='Crops1/04.-Obliques.png') }}">
+                        <img id="quads-a" src="{{ url_for('static', filename='Crops1/01.A-Quads.png') }}">
+                        <img id="quads-b" src="{{ url_for('static', filename='Crops1/01.B-Quads.png') }}">
+                        <img id="calves-a" src="{{ url_for('static', filename='Crops1/13.A-Calves.png') }}">
+                        <img id="calves-b" src="{{ url_for('static', filename='Crops1/13.B-Calves.png') }}">
+                        <img id="back-traps-a" src="{{ url_for('static', filename='Crops1/08.B-Traps.png') }}">
+                        <img id="back-traps-b" src="{{ url_for('static', filename='Crops1/08.C-Traps.png') }}">
+                        <img id="back-shoulders-a" src="{{ url_for('static', filename='Crops1/07.C-Deltoids.png') }}">
+                        <img id="back-shoulders-b" src="{{ url_for('static', filename='Crops1/07.D-Deltoids.png') }}">
+                        <img id="triceps-a" src="{{ url_for('static', filename='Crops1/09.A-Triceps.png') }}">
+                        <img id="triceps-b" src="{{ url_for('static', filename='Crops1/09.B-Triceps.png') }}">
+                        <img id="back-lats-a" src="{{ url_for('static', filename='Crops1/10.A-Lats.png') }}">
+                        <img id="back-lats-b" src="{{ url_for('static', filename='Crops1/10.B-Lats.png') }}">
+                        <img id="back-lower" src="{{ url_for('static', filename='Crops1/15.-Lower-Back.png') }}">
+                        <img id="back-forearms-a" src="{{ url_for('static', filename='Crops1/14.C-Forearms.png') }}">
+                        <img id="back-forearms-b" src="{{ url_for('static', filename='Crops1/14.D-Forearms.png') }}">
+                        <img id="back-glutes" src="{{ url_for('static', filename='Crops1/11.-Glutes.png') }}">
+                        <img id="back-hamstrings-a" src="{{ url_for('static', filename='Crops1/12.A-Hamstrings.png') }}">
+                        <img id="back-hamstrings-b" src="{{ url_for('static', filename='Crops1/12.B-Hamstrings.png') }}">
+                        <img id="back-calves-a" src="{{ url_for('static', filename='Crops1/13.C-Calves.png') }}">
+                        <img id="back-calves-b" src="{{ url_for('static', filename='Crops1/13.D-Calves.png') }}">
+                        <img id="obliques-a" src="{{ url_for('static', filename='Crops1/16.A-Obliques.png') }}">
+                        <img id="obliques-b" src="{{ url_for('static', filename='Crops1/16.B-Obliques.png') }}">
+                    </div>
+            </div>
+            <div id="femalefigures">
+                    <div id="mobile-muscle-map-female">
+                        <img id="mobilebg-female" src="{{ url_for('static', filename='Crops1/female/female-mobilebg.png') }}">
+                        <img id="female-traps-a" src="{{ url_for('static', filename='Crops1/female/female-traps-A.png') }}">
+                        <img id="female-traps-b" src="{{ url_for('static', filename='Crops1/female/female-traps-B.png') }}">
+                        <img id="female-shoulders-a" src="{{ url_for('static', filename='Crops1/female/female-deltoids-A.png') }}">
+                        <img id="female-shoulders-b" src="{{ url_for('static', filename='Crops1/female/female-deltoids-B.png') }}">
+                        <img id="female-pecs" src="{{ url_for('static', filename='Crops1/female/female-pecs.png') }}">
+                        <img id="female-biceps-a" src="{{ url_for('static', filename='Crops1/female/female-biceps-A.png') }}">
+                        <img id="female-biceps-b" src="{{ url_for('static', filename='Crops1/female/female-biceps-B.png') }}">
+                        <img id="female-forearm-a" src="{{ url_for('static', filename='Crops1/female/female-forearms-A.png') }}">
+                        <img id="female-forearm-b" src="{{ url_for('static', filename='Crops1/female/female-forearms-B.png') }}">
+                        <img id="female-abdominals" src="{{ url_for('static', filename='Crops1/female/female-abdominals.png') }}">
+                        <img id="female-quads-a" src="{{ url_for('static', filename='Crops1/female/female-quads-A.png') }}">
+                        <img id="female-quads-b" src="{{ url_for('static', filename='Crops1/female/female-quads-B.png') }}">
+                        <img id="female-calves-a" src="{{ url_for('static', filename='Crops1/female/female-calves-A.png') }}">
+                        <img id="female-calves-b" src="{{ url_for('static', filename='Crops1/female/female-calves-B.png') }}">
+                        <img id="female-back-traps-a" src="{{ url_for('static', filename='Crops1/female/female-traps-C.png') }}">
+                        <img id="female-back-traps-b" src="{{ url_for('static', filename='Crops1/female/female-traps-D.png') }}">
+                        <img id="female-back-shoulders-a" src="{{ url_for('static', filename='Crops1/female/female-deltoids-C.png') }}">
+                        <img id="female-back-shoulders-b" src="{{ url_for('static', filename='Crops1/female/female-deltoids-D.png') }}">
+                        <img id="female-triceps-a" src="{{ url_for('static', filename='Crops1/female/female-triceps-A.png') }}">
+                        <img id="female-triceps-b" src="{{ url_for('static', filename='Crops1/female/female-triceps-B.png') }}">
+                        <img id="female-back-lats-a" src="{{ url_for('static', filename='Crops1/female/female-lats-A.png') }}">
+                        <img id="female-back-lats-b" src="{{ url_for('static', filename='Crops1/female/female-lats-B.png') }}">
+                        <img id="female-back-lower" src="{{ url_for('static', filename='Crops1/female/female-lowerback.png') }}">
+                        <img id="female-back-forearms-a" src="{{ url_for('static', filename='Crops1/female/female-forearms-C.png') }}">
+                        <img id="female-back-forearms-b" src="{{ url_for('static', filename='Crops1/female/female-forearms-D.png') }}">
+                        <img id="female-back-glutes" src="{{ url_for('static', filename='Crops1/female/female-glutes.png') }}">
+                        <img id="female-back-hamstrings-a" src="{{ url_for('static', filename='Crops1/female/female-hamstrings-A.png') }}">
+                        <img id="female-back-hamstrings-b" src="{{ url_for('static', filename='Crops1/female/female-hamstrings-B.png') }}">
+                        <img id="female-back-calves-a" src="{{ url_for('static', filename='Crops1/female/female-calves-C.png') }}">
+                        <img id="female-back-calves-b" src="{{ url_for('static', filename='Crops1/female/female-calves-D.png') }}">
+                        <img id="female-obliques-a" src="{{ url_for('static', filename='Crops1/female/female-obliques-A.png') }}">
+                        <img id="female-obliques-b" src="{{ url_for('static', filename='Crops1/female/female-obliques-B.png') }}">
+                    </div>
+                    <div id="muscle-map-female">
+                        <img id="background-female" src="{{ url_for('static', filename='Crops1/female/Female-Figures.png') }}">
+                        <img id="female-traps-a" src="{{ url_for('static', filename='Crops1/female/female-traps-A.png') }}">
+                        <img id="female-traps-b" src="{{ url_for('static', filename='Crops1/female/female-traps-B.png') }}">
+                        <img id="female-shoulders-a" src="{{ url_for('static', filename='Crops1/female/female-deltoids-A.png') }}">
+                        <img id="female-shoulders-b" src="{{ url_for('static', filename='Crops1/female/female-deltoids-B.png') }}">
+                        <img id="female-pecs" src="{{ url_for('static', filename='Crops1/female/female-pecs.png') }}">
+                        <img id="female-biceps-a" src="{{ url_for('static', filename='Crops1/female/female-biceps-A.png') }}">
+                        <img id="female-biceps-b" src="{{ url_for('static', filename='Crops1/female/female-biceps-B.png') }}">
+                        <img id="female-forearm-a" src="{{ url_for('static', filename='Crops1/female/female-forearms-A.png') }}">
+                        <img id="female-forearm-b" src="{{ url_for('static', filename='Crops1/female/female-forearms-B.png') }}">
+                        <img id="female-abdominals" src="{{ url_for('static', filename='Crops1/female/female-abdominals.png') }}">
+                        <img id="female-quads-a" src="{{ url_for('static', filename='Crops1/female/female-quads-A.png') }}">
+                        <img id="female-quads-b" src="{{ url_for('static', filename='Crops1/female/female-quads-B.png') }}">
+                        <img id="female-calves-a" src="{{ url_for('static', filename='Crops1/female/female-calves-A.png') }}">
+                        <img id="female-calves-b" src="{{ url_for('static', filename='Crops1/female/female-calves-B.png') }}">
+                        <img id="female-back-traps-a" src="{{ url_for('static', filename='Crops1/female/female-traps-C.png') }}">
+                        <img id="female-back-traps-b" src="{{ url_for('static', filename='Crops1/female/female-traps-D.png') }}">
+                        <img id="female-back-shoulders-a" src="{{ url_for('static', filename='Crops1/female/female-deltoids-C.png') }}">
+                        <img id="female-back-shoulders-b" src="{{ url_for('static', filename='Crops1/female/female-deltoids-D.png') }}">
+                        <img id="female-triceps-a" src="{{ url_for('static', filename='Crops1/female/female-triceps-A.png') }}">
+                        <img id="female-triceps-b" src="{{ url_for('static', filename='Crops1/female/female-triceps-B.png') }}">
+                        <img id="female-back-lats-a" src="{{ url_for('static', filename='Crops1/female/female-lats-A.png') }}">
+                        <img id="female-back-lats-b" src="{{ url_for('static', filename='Crops1/female/female-lats-B.png') }}">
+                        <img id="female-back-lower" src="{{ url_for('static', filename='Crops1/female/female-lowerback.png') }}">
+                        <img id="female-back-forearms-a" src="{{ url_for('static', filename='Crops1/female/female-forearms-C.png') }}">
+                        <img id="female-back-forearms-b" src="{{ url_for('static', filename='Crops1/female/female-forearms-D.png') }}">
+                        <img id="female-back-glutes" src="{{ url_for('static', filename='Crops1/female/female-glutes.png') }}">
+                        <img id="female-back-hamstrings-a" src="{{ url_for('static', filename='Crops1/female/female-hamstrings-A.png') }}">
+                        <img id="female-back-hamstrings-b" src="{{ url_for('static', filename='Crops1/female/female-hamstrings-B.png') }}">
+                        <img id="female-back-calves-a" src="{{ url_for('static', filename='Crops1/female/female-calves-C.png') }}">
+                        <img id="female-back-calves-b" src="{{ url_for('static', filename='Crops1/female/female-calves-D.png') }}">
+                        <img id="female-obliques-a" src="{{ url_for('static', filename='Crops1/female/female-obliques-A.png') }}">
+                        <img id="female-obliques-b" src="{{ url_for('static', filename='Crops1/female/female-obliques-B.png') }}">
+                    </div>
+            </div>
+        </div>
+        
+        <!-- 右侧 -->
+        <div class="right-content">
+            <!-- 打卡 -->
+            <div class="clock-section">
+                <div class="section-title">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3003/3003202.png">
+                    <span>每日打卡</span>
+                </div>
+                <div class="clock-content">
+                    <div class="clock-status">
+                        <span class="status-text">今日打卡状态：</span>
+                        <span class="status-value">未打卡</span>
+                    </div>
+                    <div class="clock-streak">
+                        <span>连续打卡：</span>
+                        <span class="streak-days">0</span>
+                        <span>天</span>
+                    </div>
+                    <div class="clock-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text">本月打卡：0/30天</div>
+                    </div>
+                    <button class="clock-btn">
+                        <i class="clock-icon"></i>立即打卡
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 排行榜 -->
+            <div class="leaderboard-section">
+                <div class="section-title">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2997/2997020.png">
+                    <span>健身排行榜</span>
+                </div>
+                <div class="leaderboard-tabs">
+                    <button class="tab-btn active" data-type="clock">
+                        <i class="tab-icon clock-tab-icon"></i>打卡排行
+                    </button>
+                    <button class="tab-btn" data-type="training">
+                        <i class="tab-icon training-tab-icon"></i>训练排行
+                    </button>
+                </div>
+                <div class="leaderboard-content">
+                    <div class="leaderboard-list clock-leaderboard active">
+                        <div class="leaderboard-item">
+                            <div class="rank rank-1">1</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">健身达人</div>
+                                <div class="user-level">Lv.8 健身专家</div>
+                            </div>
+                            <div class="user-score">30天</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank rank-2">2</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">运动女神</div>
+                                <div class="user-level">Lv.7 健身教练</div>
+                            </div>
+                            <div class="user-score">28天</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank rank-3">3</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/62.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">肌肉先生</div>
+                                <div class="user-level">Lv.6 健身爱好者</div>
+                            </div>
+                            <div class="user-score">25天</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank">4</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/22.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">瑜伽女王</div>
+                                <div class="user-level">Lv.5 健身新手</div>
+                            </div>
+                            <div class="user-score">20天</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank">5</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/42.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">力量巨人</div>
+                                <div class="user-level">Lv.4 健身新手</div>
+                            </div>
+                            <div class="user-score">18天</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-list training-leaderboard">
+                        <div class="leaderboard-item">
+                            <div class="rank rank-1">1</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/92.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">马拉松王者</div>
+                                <div class="user-level">Lv.9 健身大师</div>
+                            </div>
+                            <div class="user-score">320分钟</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank rank-2">2</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">燃脂女神</div>
+                                <div class="user-level">Lv.8 健身专家</div>
+                            </div>
+                            <div class="user-score">280分钟</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank rank-3">3</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/52.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">铁人三项</div>
+                                <div class="user-level">Lv.7 健身教练</div>
+                            </div>
+                            <div class="user-score">240分钟</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank">4</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/32.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">柔韧女王</div>
+                                <div class="user-level">Lv.6 健身爱好者</div>
+                            </div>
+                            <div class="user-score">210分钟</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank">5</div>
+                            <div class="user-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/22.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">健身达人</div>
+                                <div class="user-level">Lv.5 健身新手</div>
+                            </div>
+                            <div class="user-score">180分钟</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript" src="{{ url_for('static',filename='js/base.musclewiki.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/base.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/muscle.js')}}"></script>
+{% endblock %}

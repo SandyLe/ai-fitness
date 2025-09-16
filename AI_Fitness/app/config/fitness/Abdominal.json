@@ -1,0 +1,21 @@
+{
+    "Abdominal": {
+        "comment": "腹肌",
+        "name": "腹肌",
+        "description": "腹肌是人体的重要组成部分，也是人体的重要功能区。它位于腹部的中部，是人体的核心和支撑部位。腹肌的作用是保护腹部的肌肉，使腹部的肌肉保持稳定，同时也起到了保护腹部的作用。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃卷腹",
+            "video_src": {
+                "man": "vedio/Abdominal_Dumbbell_man.mp4",
+                "woman": "vedio/Abdominal_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "仰卧，屈膝，双脚平放在地面上",
+                "双手握住一个哑铃，置于胸前",
+                "收紧腹部肌肉，抬起上身",
+                "缓慢回到起始位置"
+            ]
+        }
+    }
+}

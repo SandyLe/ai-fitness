@@ -1,0 +1,75 @@
+<!-- navbar.html -->
+<div class="header">
+    <a href="{{ url_for('auth.shouye') }}" class="navbar-logo-a">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
+            <h1>智能健身私教</h1>
+        </div>
+    </a>
+    <div class="nav-menu">
+        <a href="{{ url_for('auth.shouye') }}" class="navbar-a {% if active_page == 'home' %}active{% endif %}">首页</a>
+        <a href="#courses" class="navbar-a {% if active_page == 'courses' %}active{% endif %}">健身课程</a>
+        <a href="{{ url_for('fitness.start_fitness') }}" class="navbar-a {% if active_page == 'start_fitness' %}active{% endif %}">开始健身</a>
+        <a href="{{ url_for('ai_assistant.ai_assistant') }}" class="navbar-a {% if active_page == 'ai_assistant' %}active{% endif %}">智能助手</a>
+        <a href="{{ url_for('community.community') }}" class="navbar-a {% if active_page == 'community' %}active{% endif %}">健身社区</a>
+        <a href="#nutrition" class="navbar-a {% if active_page == 'nutrition' %}active{% endif %}">营养指导</a>
+        
+        <!-- 修改用户下拉菜单部分 -->
+        {% if session.get('user_id') %}
+        <div class="user-profile-nav">
+            <div class="user-avatar" id="userAvatarToggle">
+                <img src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="用户头像">
+                <div class="user-info">
+                    <p class="user-name">{{ session.get('username', '用户') }}</p>
+                </div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </div>
+            <div class="user-dropdown" id="userDropdown">
+                <a href="{{ url_for('auth.user_center') }}" class="dropdown-item">
+                    <i class="fas fa-user"></i> 个人中心
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{ url_for('auth.logout') }}" class="dropdown-item logout-item">
+                    <i class="fas fa-sign-out-alt"></i> 退出登录
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <a href="{{ url_for('auth.login') }}" class="auth"><button class="login-btn">登录/注册</button></a>
+        {% endif %}
+        
+    </div>
+    <!-- 移动端菜单按钮 -->
+    <div class="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="{{ url_for('auth.shouye') }}" onclick="closeMobileMenu()" {% if active_page == 'home' %}class="active"{% endif %}>首页</a>
+        <a href="#courses" onclick="closeMobileMenu()" {% if active_page == 'courses' %}class="active"{% endif %}>健身课程</a>
+        <a href="{{ url_for('fitness.start_fitness') }}" onclick="closeMobileMenu()" {% if active_page == 'start_fitness' %}class="active"{% endif %}>开始健身</a>
+        <a href="{{ url_for('ai_assistant.ai_assistant') }}" onclick="closeMobileMenu()" {% if active_page == 'ai_assistant' %}class="active"{% endif %}>智能助手</a>
+        <a href="{{ url_for('community.community') }}" onclick="closeMobileMenu()" {% if active_page == 'community' %}class="active"{% endif %}>健身社区</a>
+        <a href="#nutrition" onclick="closeMobileMenu()" {% if active_page == 'nutrition' %}class="active"{% endif %}>营养指导</a>
+        
+        {% if session.get('user_id') %}
+        <div class="mobile-user-section">
+            <div class="mobile-user-header">
+                <img src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="用户头像">
+                <div class="mobile-user-info">
+                    <h4>{{ session.get('username', '用户') }}</h4>
+                </div>
+            </div>
+            <a href="{{ url_for('auth.user_center') }}" class="mobile-menu-item" onclick="closeMobileMenu()">
+                <i class="fas fa-user"></i> 个人中心
+            </a>
+            <a href="{{ url_for('auth.logout') }}" class="mobile-menu-item logout" onclick="closeMobileMenu()">
+                <i class="fas fa-sign-out-alt"></i> 退出登录
+            </a>
+        </div>
+        {% else %}
+        <a href="{{ url_for('auth.login') }}" onclick="closeMobileMenu()">登录/注册</a>
+        {% endif %}
+    </div>
+</div>
+

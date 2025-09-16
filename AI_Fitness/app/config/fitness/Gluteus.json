@@ -1,0 +1,21 @@
+{
+    "Gluteus": {
+        "comment": "臀部",
+        "name": "臀部",
+        "description": "臀部是人体的重要组成部分，它负责支撑身体的重量和力量。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃臀桥",
+            "video_src": {
+                "man": "../static/vedio/Gluteus_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Gluteus_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "仰卧，膝盖弯曲，脚平放在地面上",
+                "在髋部上方放置一个哑铃",
+                "抬起臀部，直到躯干与地面形成一条直线",
+                "保持姿势片刻，然后缓慢放下回到起始位置"
+            ]
+        }
+    }
+}

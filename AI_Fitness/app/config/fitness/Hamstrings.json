@@ -1,0 +1,21 @@
+{
+    "Hamstrings": {
+        "comment": "腘绳肌",
+        "name": "腘绳肌",
+        "description": "腘绳肌是人体中最敏感的肌肉，也是最容易受伤的肌肉。它位于大腿的后部，是大腿的核心，也是大腿的支撑。腘绳肌的作用是支撑大腿，保护大腿，促进大腿的运动。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃硬拉",
+            "video_src": {
+                "man": "../static/vedio/Hamstrings_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Hamstrings_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "站立，双脚与肩同宽，膝盖微屈",
+                "保持背部挺直，臀部向后推",
+                "双手各握一个哑铃，弯腰向前",
+                "收紧核心，伸直膝盖和臀部，回到站立位置"
+            ]
+        }
+    }
+}

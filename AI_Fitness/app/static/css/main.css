@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: 'Arial', sans-serif; */
+}
+
+body {
+    background-color: #0c1a2a;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.container{
+    padding-top: 100px;
+}
+
+
+
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

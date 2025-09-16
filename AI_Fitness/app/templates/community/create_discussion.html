@@ -1,0 +1,103 @@
+{% extends "main.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/community.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="create-discussion-container">
+    <div class="create-discussion-header">
+        <h1>发起讨论</h1>
+        <p>分享你的健身经验和问题，与社区成员一起交流</p>
+    </div>
+    
+    <div class="create-discussion-form">
+        <form action="{{ url_for('community.create_discussion') }}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">标题</label>
+                <input type="text" id="title" name="title" placeholder="请输入讨论标题（5-50字）" required minlength="5" maxlength="50">
+            </div>
+            
+            <div class="form-group">
+                <label for="content">内容</label>
+                <textarea id="content" name="content" rows="10" placeholder="请详细描述你的问题或分享内容..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="image">添加图片（可选）</label>
+                <div class="image-upload">
+                    <input type="file" id="image" name="image" accept="image/*">
+                    <div class="image-preview" id="imagePreview">
+                        <span class="image-placeholder">
+                            <i class="fas fa-image"></i>
+                            <span>点击上传图片</span>
+                        </span>
+                        <img src="#" alt="预览图" style="display: none;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="tags">标签（可选）</label>
+                <div class="tags-input">
+                    <input type="text" id="tagInput" placeholder="输入标签后按回车添加">
+                    <div class="tags-container" id="tagsContainer"></div>
+                    <input type="hidden" name="tags" id="tags">
+                </div>
+                <div class="tags-suggestions">
+                    <span class="tag-suggestion" data-tag="增肌">增肌</span>
+                    <span class="tag-suggestion" data-tag="减脂">减脂</span>
+                    <span class="tag-suggestion" data-tag="饮食">饮食</span>
+                    <span class="tag-suggestion" data-tag="器材">器材</span>
+                    <span class="tag-suggestion" data-tag="训练计划">训练计划</span>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <a href="{{ url_for('community.community') }}" class="btn-cancel">取消</a>
+                <button type="submit" class="btn-submit">发布讨论</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="create-discussion-tips">
+        <h3>发帖小贴士</h3>
+        <ul>
+            <li><i class="fas fa-check-circle"></i> 标题简明扼要，清晰表达主题</li>
+            <li><i class="fas fa-check-circle"></i> 内容详细具体，提供必要的背景信息</li>
+            <li><i class="fas fa-check-circle"></i> 添加相关图片可以更好地说明问题</li>
+            <li><i class="fas fa-check-circle"></i> 使用适当的标签，便于他人查找</li>
+            <li><i class="fas fa-check-circle"></i> 遵守社区规则，保持友善的交流态度</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 预览弹窗 -->
+<div class="modal" id="previewModal">
+    <div class="modal-content preview-modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>预览讨论</h3>
+        <div class="preview-container">
+            <h2 id="previewTitle"></h2>
+            <div class="preview-meta">
+                <span class="preview-author">作者: 当前用户</span>
+                <span class="preview-time">时间: 刚刚</span>
+            </div>
+            <div class="preview-content" id="previewContent"></div>
+            <div class="preview-image" id="previewImage" style="display: none;">
+                <img src="#" alt="预览图片">
+            </div>
+            <div class="preview-tags" id="previewTags"></div>
+        </div>
+        <div class="preview-actions">
+            <button class="btn-back">返回编辑</button>
+            <button class="btn-publish">确认发布</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/community.js') }}"></script>
+<script src="{{ url_for('static', filename='js/create_discussion.js') }}"></script>
+{% endblock %}

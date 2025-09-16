@@ -1,0 +1,21 @@
+{
+    "Quadriceps": {
+        "comment": "大腿",
+        "name": "大腿",
+        "description": "大腿是身体的重要组成部分，它负责支撑身体的重量和力量。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃深蹲",
+            "video_src": {
+                "man": "../static/vedio/Quadriceps_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Quadriceps_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "站立，双脚略宽于肩，双手各握一个哑铃",
+                "保持背部挺直，向下蹲",
+                "直到大腿与地面平行",
+                "然后缓慢回到起始位置"
+            ]
+        }
+    }
+}

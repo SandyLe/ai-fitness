@@ -1,0 +1,21 @@
+{
+    "Biceps": {
+        "comment": "肱二头肌",
+        "name": "肱二头肌",
+        "description": "肱二头肌是人体的重要肌肉，它位于上肢的前缘，是上肢的主要力量来源。肱二头肌的作用包括上肢的力量、灵活性、柔韧性和运动能力。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃弯举",
+            "video_src": {
+                "man": "../static/vedio/Biceps_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Biceps_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "站立，双手各握一个哑铃，手臂自然下垂",
+                "保持上臂固定，弯曲肘部",
+                "将哑铃向上举至肩部",
+                "缓慢放下回到起始位置"
+            ]
+        }
+    }
+}

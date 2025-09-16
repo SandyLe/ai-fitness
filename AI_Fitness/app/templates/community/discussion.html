@@ -1,0 +1,257 @@
+{% extends "main.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/community.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="discussion-container">
+    <div class="discussion-breadcrumb">
+        <a href="{{ url_for('community.community') }}"><i class="fas fa-home"></i> 社区首页</a>
+        <span class="separator">/</span>
+        <span class="current">{{ discussion.title }}</span>
+    </div>
+    
+    <div class="discussion-main">
+        <div class="discussion-header">
+            <h1>{{ discussion.title }}</h1>
+            <div class="discussion-meta">
+                <div class="author-info">
+                    <img src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="作者头像" class="author-avatar">
+                    <span class="author-name">{{ discussion.author_name or '匿名用户' }}</span>
+                </div>
+                <div class="post-info">
+                    <span class="post-time"><i class="far fa-clock"></i> {{ discussion.created_time.strftime('%Y-%m-%d %H:%M') if discussion.created_time else '未知时间' }}</span>
+                    <span class="post-views"><i class="far fa-eye"></i> {{ discussion.views|default(0) }} 浏览</span>
+                    <span class="post-replies"><i class="far fa-comment"></i> {{ replies|length }} 回复</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="discussion-content">
+            <div class="content-text">
+                {{ discussion.content|safe }}
+            </div>
+            
+            {% if discussion.image_path %}
+            <div class="content-image">
+                <img src="{{ url_for('static', filename=discussion.image_path) }}" alt="讨论图片">
+            </div>
+            {% endif %}
+            
+            <div class="content-actions">
+                <button class="action-btn like-btn" id="likeBtn">
+                    <i class="far fa-thumbs-up"></i> 点赞 <span class="count">0</span>
+                </button>
+                <button class="action-btn share-btn" id="shareBtn">
+                    <i class="fas fa-share-alt"></i> 分享
+                </button>
+                <button class="action-btn report-btn" id="reportBtn">
+                    <i class="fas fa-flag"></i> 举报
+                </button>
+                {% if id|int == discussion.created_by|int %}
+                <button class="action-btn delete-btn" id="deleteBtn" data-id="{{ discussion.id }}">
+                    <i class="fas fa-trash-alt"></i> 删除
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="discussion-replies">
+            <h3>全部回复 ({{ replies|length }})</h3>
+            
+            {% if replies %}
+                {% for reply in replies %}
+                <div class="reply-item" id="reply-{{ reply.id }}">
+                    <div class="reply-author">
+                        <img src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="回复者头像" class="reply-avatar">
+                        <div class="reply-author-info">
+                            <span class="reply-author-name">{{ reply.author_name or '匿名用户' }}</span>
+                            <span class="reply-time">{{ reply.created_time.strftime('%Y-%m-%d %H:%M') if reply.created_time else '未知时间' }}</span>
+                        </div>
+                    </div>
+                    <div class="reply-content">
+                        {% if reply.parent_id|int > 0 %}
+                            <div class="reply-quote">
+                                <i class="fas fa-quote-left"></i>
+                                <span>引用 #{{ reply.parent_id }}</span>
+                            </div>
+                        {% endif %}
+                        <div class="reply-text">
+                            {{ reply.content|safe }}
+                        </div>
+                    </div>
+                    <div class="reply-actions">
+                        <button class="reply-action-btn reply-to-btn" data-id="{{ reply.id }}">
+                            <i class="fas fa-reply"></i> 回复
+                        </button>
+                        <button class="reply-action-btn like-btn">
+                            <i class="far fa-thumbs-up"></i> 点赞 <span class="count">0</span>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-replies">
+                    <i class="far fa-comment-dots"></i>
+                    <p>暂无回复，来发表第一条回复吧！</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="reply-form">
+            <h3>发表回复</h3>
+            {% if id|int > 0 %}
+                <form id="replyForm" data-discussion-id="{{ discussion.id }}">
+                    <input type="hidden" name="parent_id" id="parentId" value="0">
+                    <div class="form-group">
+                        <textarea name="content" id="replyContent" rows="5" placeholder="写下你的回复..." required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancelReply" style="display: none;">取消回复</button>
+                        <button type="submit" id="submitReply">发表回复</button>
+                    </div>
+                </form>
+            {% else %}
+                <div class="login-to-reply">
+                    <p>请先<a href="{{ url_for('auth.login') }}">登录</a>后再回复</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="discussion-sidebar">
+        <div class="sidebar-section author-card">
+            <h3>关于作者</h3>
+            <div class="author-profile">
+                <img src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="作者头像" class="author-avatar">
+                <h4 class="author-name">{{ discussion.author_name or '匿名用户' }}</h4>
+                <p class="author-bio">健身爱好者，热爱分享健身经验</p>
+                <div class="author-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">10</span>
+                        <span class="stat-label">主题</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">128</span>
+                        <span class="stat-label">回复</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">256</span>
+                        <span class="stat-label">获赞</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-section related-discussions">
+            <h3>相关讨论</h3>
+            <ul>
+                <li>
+                    <a href="#">如何科学增肌减脂？</a>
+                    <span class="related-replies">12 回复</span>
+                </li>
+                <li>
+                    <a href="#">健身初学者应该注意什么？</a>
+                    <span class="related-replies">8 回复</span>
+                </li>
+                <li>
+                    <a href="#">推荐几款增肌补剂</a>
+                    <span class="related-replies">15 回复</span>
+                </li>
+                <li>
+                    <a href="#">家庭健身器材推荐</a>
+                    <span class="related-replies">6 回复</span>
+                </li>
+                <li>
+                    <a href="#">健身饮食计划分享</a>
+                    <span class="related-replies">9 回复</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section hot-tags">
+            <h3>热门标签</h3>
+            <div class="tags-cloud">
+                <a href="#" class="tag">增肌</a>
+                <a href="#" class="tag">减脂</a>
+                <a href="#" class="tag">饮食</a>
+                <a href="#" class="tag">器材</a>
+                <a href="#" class="tag">训练计划</a>
+                <a href="#" class="tag">健身常识</a>
+                <a href="#" class="tag">动作指导</a>
+                <a href="#" class="tag">健身房</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分享弹窗 -->
+<div class="modal" id="shareModal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>分享此讨论</h3>
+        <div class="share-options">
+            <a href="#" class="share-option">
+                <i class="fab fa-weixin"></i>
+                <span>微信</span>
+            </a>
+            <a href="#" class="share-option">
+                <i class="fab fa-weibo"></i>
+                <span>微博</span>
+            </a>
+            <a href="#" class="share-option">
+                <i class="fab fa-qq"></i>
+                <span>QQ</span>
+            </a>
+            <a href="#" class="share-option">
+                <i class="fas fa-link"></i>
+                <span>复制链接</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- 举报弹窗 -->
+<div class="modal" id="reportModal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>举报此讨论</h3>
+        <form id="reportForm">
+            <div class="form-group">
+                <label>举报原因</label>
+                <select name="reason" required>
+                    <option value="">请选择举报原因</option>
+                    <option value="spam">垃圾广告</option>
+                    <option value="offensive">冒犯性内容</option>
+                    <option value="inappropriate">不适当内容</option>
+                    <option value="copyright">侵犯版权</option>
+                    <option value="other">其他原因</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>详细说明</label>
+                <textarea name="description" rows="4" placeholder="请详细描述举报原因..."></textarea>
+            </div>
+            <button type="submit" class="btn-submit">提交举报</button>
+        </form>
+    </div>
+</div>
+
+<!-- 删除确认弹窗 -->
+<div class="modal" id="deleteModal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>确认删除</h3>
+        <p>你确定要删除这个讨论吗？此操作不可撤销。</p>
+        <div class="modal-actions">
+            <button class="btn-cancel">取消</button>
+            <button class="btn-confirm" id="confirmDelete">确认删除</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/community.js') }}"></script>
+{% endblock %}

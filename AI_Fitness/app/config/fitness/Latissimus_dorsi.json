@@ -1,0 +1,33 @@
+{
+    "Latissimus_dorsi":{
+        "comment":"背阔肌",
+        "name":"背阔肌",
+        "description":"背阔肌是指人体的背部肌肉，它位于脊柱下方，是脊柱的一部分。背阔肌主要负责支撑脊柱和身体的其他部分，例如颈部、胸部和腹部。背阔肌的作用是保持脊柱的稳定性和灵活性，同时还可以促进脊柱的运动和放松。",
+        "Dumbbell":{
+            "comment":"哑铃",
+            "action":"哑铃划船",
+            "video_src":{
+                "man":"../static/vedio/Latissimus_dorsi_Dumbbell_man.mp4",
+                "woman":"../static/vedio/Latissimus_dorsi_Dumbbell_woman.mp4"
+            },
+            "Action_points":[
+                "将右腿放在长凳的顶端，使膝盖和胫骨平放在长凳上，脚悬在末端",
+                "将躯干弯曲到地板上，然后将手掌平放在长凳上，以右臂支撑自己",
+                "用左手握住重物，然后将其笔直拉至胸部。重复动作",
+                "切换支撑腿和手臂以在另一侧工作"
+            ]
+        },
+        "Karate":{
+            "comment":"刀锋",
+            "action":"刀锋",
+            "video_src":{
+                "man":"../static/vedio/Latissimus_dorsi_Karate_man.mp4",
+                "woman":"../static/vedio/Latissimus_dorsi_Karate_woman.mp4"
+            },
+            "Action_points":[
+                "aaaa"
+            ]
+        }
+        
+    }
+}

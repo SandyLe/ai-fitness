@@ -1,0 +1,21 @@
+{
+    "Pectoralis": {
+        "comment": "胸肌",
+        "name": "胸肌",
+        "description": "胸肌是人体的重要组成部分，它位于颈部的上方，是人体的重要支撑和保护部位。胸肌的力量和灵活性对于保护颈部和颈部周围的肌肉起到重要作用。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃上斜卧推",
+            "video_src": {
+                "man": "../static/vedio/Pectoralis_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Pectoralis_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "在上斜长凳上仰卧，双脚平放在地面上",
+                "双手各握一个哑铃，置于肩部两侧",
+                "将哑铃向上推举至手臂完全伸直",
+                "缓慢放下回到起始位置"
+            ]
+        }
+    }
+}

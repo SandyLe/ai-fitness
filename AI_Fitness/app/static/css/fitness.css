@@ -1,0 +1,507 @@
+.main-fitness {
+    display: flex;
+    padding: 0 40px;
+    /* 添加网格模板，确保内容不会超出容器 */
+    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 标题区域 */
+.main-fitness .header-simple {
+    margin-bottom: 15px;
+    /* border-bottom: 1px solid #eee; */
+    /* padding-bottom: 10px; */
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+.main-fitness .header-simple h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: rgb(255, 255, 255);
+}
+
+.main-fitness .action-title {
+    font-size: 1.4rem;
+    color: #b9f0ff;
+    margin: 0;
+}
+
+/* 视频和要点区域 */
+.main-fitness .content-area {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    /* 添加这些属性确保内容不会溢出 */
+    max-width: 100%;
+    min-width: 0;
+}
+
+@media (min-width: 992px) {
+    .main-fitness .content-area {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+/* 视频容器 */
+.main-fitness .video-section {
+    background-color: #000;
+    border-radius: 5%;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    position: relative;
+}
+
+.main-fitness .video-container {
+    position: relative;
+    padding-top: 56.25%;
+    /* 16:9比例 */
+    width: 100%;
+}
+
+.main-fitness .video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content_left{
+    /* 设置内部盒子为垂直布局 */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.content_left .fitness-config {
+    color: #ffffff;
+    background-color: #0c1a2a;
+    border-radius: var(--border-radius);
+    /* padding: 20px; */
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 训练组数和每组次数配置样式 */
+.fitness-config .training-sets,
+.fitness-config .reps-per-set {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.fitness-config label {
+    font-size: 1.1rem;
+    color: #b9f0ff;
+    margin-right: 10px;
+}
+
+.fitness-config input[type="number"] {
+    width: 60px;
+    padding: 8px;
+    border: 1px solid #2a4a6a;
+    border-radius: 4px;
+    background-color: #1c3045;
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* 当前动作显示样式 */
+.fitness-config .current-exercise {
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #1c3045;
+    border-radius: 5px;
+    border-left: 4px solid #4a90e2;
+}
+
+.fitness-config .current-exercise span:first-child {
+    color: #b9f0ff;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.fitness-config .current-exercise #currentExercise {
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+/* 训练控制按钮样式 */
+.fitness-config .control-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.fitness-config .control-buttons button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+}
+
+.fitness-config .start-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.fitness-config .start-btn:hover {
+    background-color: #45a049;
+}
+
+.fitness-config .pause-btn {
+    background-color: #ff9800;
+    color: white;
+}
+
+.fitness-config .pause-btn:hover {
+    background-color: #e68a00;
+}
+
+.fitness-config .reset-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.fitness-config .reset-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* 动作要点 */
+.main-fitness .action-points {
+    color: #ffffff;
+    background-color: #0c1a2a;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+}
+
+.main-fitness .action-points h2 {
+    color: #b9f0ff;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 1.5rem;
+}
+
+.main-fitness .action-points ul {
+    padding-left: 5px;
+    list-style-type: none;
+    margin-bottom: 0;
+}
+
+.main-fitness .action-points li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.main-fitness .action-points li:last-child {
+    margin-bottom: 0;
+}
+
+.main-fitness .action-points li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* 肌肉描述样式 */
+.main-fitness .description {
+    margin-top: 20px;
+    background-color: #0c1a2a;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 100%;
+    /* 添加这些属性确保内容不会溢出 */
+    min-width: 0;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.main-fitness .description span {
+    color: #ffffff;
+    display: block;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    /* 防止内容溢出 */
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+
+}
+
+
+
+.main-fitness #toggleBtn:hover {
+    background-color: var(--primary-color-dark);
+}
+
+/* 选择器链接 - 隐藏但保留功能 */
+.main-fitness .selector-links {
+    display: none;
+}
+
+
+/* 侧拉框样式 */
+.sidebarContent {
+    position: fixed;
+    top: 100PX;
+    left: -100%;
+    width: 45%;
+    height: 100%;
+    background-color: #b6d8f9;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* 侧拉框按钮样式 */
+.menu {
+    position: absolute;
+    top: 200px;
+    right: 20px;
+    z-index: 999;
+}
+
+#toggleBtn {
+    padding: 8px 15px;
+    background-color: #bcd4ee;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#toggleBtn:hover {
+    background-color: #badafd;
+}
+
+
+/*侧拉框*/
+.sidebar {
+    margin-top: 140px;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    /* 初始时侧拉框隐藏在页面左侧 */
+    width: 50%;
+    height: 70%;
+    color: #ffffff;
+    background-color: #0f2133;
+    transition: left 0.3s ease;
+    font-size: 20px;
+    /* 添加过渡效果 */
+    z-index: 1000; /* 增加z-index确保在其他元素之上 */
+}
+
+/* 侧拉框按钮样式 - 重新设计 */
+#toggleBtn {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 80px;
+    background-color: #bcd4ee;
+    color: #ffffff;
+    border: none;
+    border-radius: 0 40px 40px 0; /* 右侧半圆 */
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.3s ease;
+    padding: 0 10px 0 0; /* 右侧增加内边距 */
+    overflow: hidden;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 添加一个伪元素作为悬停区域扩展 */
+#toggleBtn::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+}
+
+#toggleBtn:hover {
+    width: 80px;
+    border-radius: 0 40px 40px 0; /* 保持半圆形状 */
+    background-color: #badafd;
+    left: 0; /* 不再移动位置 */
+}
+
+/* 修改文本显示方式，避免使用 display:none 导致的布局变化 */
+#toggleBtn::after {
+    content: "›"; /* 使用右箭头符号 */
+    font-size: 24px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#toggleBtn:hover::after {
+    content: "切换";
+    font-size: 14px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* 移除不再需要的元素 */
+.menu {
+    display: none;
+}
+
+
+/* 姿态识别训练侧边栏样式 */
+.sidebar-pose-fitness {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 40%;
+    height: 100%;
+    background-color: #0c1a2a;
+    color: #fff;
+    transition: right 0.3s ease;
+    z-index: 1002;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+}
+
+.sidebar-pose-fitness.active {
+    right: 0;
+}
+
+.pose-fitness-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.pose-fitness-content h2 {
+    color: #b9f0ff;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #2a4a6a;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+#pose-video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; /* 4:3 比例 */
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #000;
+}
+
+#pose-webcam, #pose-output-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#pose-output-canvas {
+    z-index: 1;
+}
+
+.pose-info {
+    background-color: #1c3045;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pose-info > div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+}
+
+.pose-info span:first-child {
+    color: #b9f0ff;
+}
+
+.pose-info span:last-child {
+    font-weight: bold;
+}
+
+#pose-timer {
+    display: none;
+}
+
+#pose-timer.active {
+    display: flex;
+}
+
+.pose-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.pose-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#pose-stop-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+#pose-stop-btn:hover {
+    background-color: #d32f2f;
+}
+
+#pose-close-btn {
+    background-color: #607d8b;
+    color: white;
+}
+
+#pose-close-btn:hover {
+    background-color: #455a64;
+}
+

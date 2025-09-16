@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI计算器</title>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            font-family: "楷体";
+            font-size: 18px;
+            color: #666;
+        }
+        #bmiForm {
+            margin-top: 10px;
+        }
+        label {
+            margin-left: 30px;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        .bmi[type="text"], select {
+            width: 10%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #a{
+            width: 10%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #a:hover {
+            background-color: #45a049;
+        }
+        .lb,.bmi {
+            display: inline-block;
+        }
+        #result {
+            margin-top: 10px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        th:first-child, td:first-child {
+            text-align: left;
+        }
+        strong{
+            color: red;
+        }
+ /* 导航栏样式 */
+        .navbar {
+            height: 64px;
+        display: flex;
+        justify-content: center;
+        background-color: white;
+        position: relative;
+    }
+        .center-links{
+            display: flex;
+        }
+
+
+        .navbar form {
+        margin: 0;
+    }
+    .navbar input[type="submit"] {
+        width: 150px;
+        padding: 14px 20px;
+        display: block;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        text-decoration: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: color 0.3s;
+        font-size: 20px;
+        font-weight: bolder;
+    }
+    .navbar input[type="submit"]:hover {
+        background-color: orange;
+        border-radius: 30px;
+    }
+    .highlight {
+        position: absolute;
+        height: 100%;
+        width: 0;
+        background-color: orange;
+        transition: all 0.3s;
+        z-index: -1;
+    }
+    .navbar form:nth-child(1):hover ~ .highlight {
+        width: calc(100% / 6);
+        left: 0;
+    }
+    .navbar form:nth-child(2):hover ~ .highlight {
+        width: calc(100% / 6);
+        left: calc(100% / 6);
+    }
+    .navbar form:nth-child(3):hover ~ .highlight {
+        width: calc(100% / 6);
+        left: calc(2 * 100% / 6);
+    }
+    .navbar form:nth-child(4):hover ~ .highlight {
+        width: calc(100% / 6);
+        left: calc(3 * 100% / 6);
+    }
+    .navbar form:nth-child(5):hover ~ .highlight {
+        width: calc(100% / 6);
+        left: calc(4 * 100% / 6);
+    }
+    .navbar form:nth-child(6):hover ~ .highlight {
+        width: calc(100% / 6);
+        left: calc(5 * 100% / 6);
+    }
+
+
+
+          /*侧拉框*/
+        .sidebar {
+          position: fixed;
+          top: 0;
+          left: -100%; /* 初始时侧拉框隐藏在页面左侧 */
+          width: 50%;
+          height: 100%;
+          background-color: #F5F8FA;
+          color: #fff;
+          transition: left 0.3s ease; /* 添加过渡效果 */
+                z-index: 1;
+        }
+        #toggleBtn{
+            position: absolute;
+            margin-left: 0;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 0 20px;
+            font-size: 16px;
+        }
+        .sidebar .content {
+          padding: 20px;
+        }
+        .cd {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            /*background-image: url("https://bpic.588ku.com/back_origin_min_pic/19/04/16/e94ff942bf87ccdcb3a6be9335f11894.jpg!/fw/750/quality/99/unsharp/true/compress/true");*/
+            background-size: 100%;
+
+        }
+        .message-container {
+          margin-bottom: 10px;
+        }
+        .bot-message {
+          text-align: left;
+          padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="hidden" id="userid" value="{{user[2]}}">
+        <div id="daohang" ></div>
+
+     <script src="../static/js/daohang.js"></script>
+
+    <div class="cd" style="display: flex">
+        <div class="sidebar" id="sidebar" style="margin-top: 64px">
+          <div class="content" id="sidebarContent" >
+            <!-- 侧拉框内容 -->
+          </div>
+        </div>
+
+        <button id="toggleBtn" style="margin-top: 100px;margin-left: 1200px">菜单</button>
+        <script src="../static/js/base.musclewiki.min.js"></script>
+        <script src="../static/js/base.js"></script>
+        
+        <script src="../static/js/celakuang.js"></script>
+    </div>
+
+    <div style="margin: 0 70px ">
+        <h1>BMI计算器</h1>
+        <p>身体质量指数（BMI）是衡量一个人是否体重过重或过轻的常用指标。它是根据人的体重和身高来计算的。</p>
+        <p>使用本计算器，您可以输入您的身高、体重、年龄和性别，然后点击“计算BMI”按钮，我们将为您计算出BMI值并给出相关的健康建议。</p>
+        <form id="bmiForm">
+            <label class="lb" for="height">身高（厘米）：</label>
+            <input type="text" class="bmi" id="height" name="height" placeholder="请输入身高">
+            <label class="lb" for="weight">体重（公斤）：</label>
+            <input type="text" class="bmi" id="weight" name="weight" placeholder="请输入体重">
+            <label class="lb" for="age">年龄：</label>
+            <input type="text" class="bmi" id="age" name="age" placeholder="请输入年龄">
+            <label class="lb" for="gender">性别：</label>
+            <select id="gender" class="bmi" name="gender">
+                <option value="male">男性</option>
+                <option value="female">女性</option>
+            </select>
+
+            <input id="a" class="bmi"  type="submit" value="计算BMI">
+        </form>
+        <p>成年人身体质量指数参照表：</p>
+        <table>
+            <tr>
+                <th>轻体重BMI</th>
+                <th>健康体重BMI</th>
+                <th>超重BMI</th>
+                <th>肥胖BMI</th>
+            </tr>
+            <tr>
+                <td>BMI&lt;18.5</td>
+                <td>18.5≤BMI&lt;24</td>
+                <td>24≤BMI&lt;28</td>
+                <td>28≤BMI</td>
+            </tr>
+        </table>
+        <div id="result"></div>
+    </div>
+
+        <script>
+            var height;
+            var weight;
+            var age;
+            var gender;
+            document.getElementById("bmiForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                var height = parseFloat(document.getElementById("height").value);
+                var weight = parseFloat(document.getElementById("weight").value);
+                var age = parseInt(document.getElementById("age").value);
+                var gender = document.getElementById("gender").value;
+                var maxHeartRate = 220 - age;
+                var lowIntensityRate = Math.round(maxHeartRate * 0.5);
+                var highIntensityRate = Math.round(maxHeartRate * 0.7);
+
+                var bmi = weight / ((height / 100) * (height / 100));
+                var healthWeightRange = "健康的体重范围：<strong>18.5 - 24.0</strong>";
+                var standardWeight = "您的身高对应标准体重为：<strong>" + ((height - 100) * 0.9).toFixed(2) + "</strong>公斤";
+                var bmr = (gender === "male") ? (66 + (13.7 * weight) + (5 * height) - (6.8 * age)) : (655 + (9.6 * weight) + (1.8 * height) - (4.7 * age));
+                var exerciseAdvice = (bmi < 18.5) ? "建议多吃均衡营养并适量进行力量训练" :
+                                     (bmi >= 18.5 && bmi <= 24.9) ? "保持健康饮食和适度运动" :
+                                     (bmi > 24.9) ? "减少高热量食物和多进行有氧运动" :
+                                     "";
+
+                var resultText = "<p>您的BMI为：<strong>" + bmi.toFixed(2) + "</strong></p>" +
+                                 "<p>" + healthWeightRange + "</p>" +
+                                 "<p>" + standardWeight + "</p>" +
+                                 "<p>基础代谢率：<strong>" + bmr.toFixed(2) + "</strong>千卡/天</p>" +
+                                 "<p>运动建议：<strong>" + exerciseAdvice + "</strong></p>"+
+                                 "<p>您的中低强度运动心率范围为：<strong>" + lowIntensityRate + " </strong>到<strong>" + highIntensityRate + " </strong>次/分钟。</p>"+
+                                 "<p>人体要燃烧脂肪，需要满足三个必要条件：</p> <ol>    <li>该运动要达到中低强度的运动心率；</li>    <li>这种中低强度运动心率的运动要持续20分钟以上；</li><li>这种运动必须是大肌肉群的运动，如慢跑、游泳、健身操等。</li></ol>";
+
+                document.getElementById("result").innerHTML = resultText;
+            });
+
+        </script>
+
+</body>
+</html>

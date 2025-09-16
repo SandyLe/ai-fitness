@@ -1,0 +1,21 @@
+{
+    "Deltoid": {
+        "comment": "三角肌",
+        "name": "肩",
+        "description": "三角肌是人体的基础肌肉，是人体的骨架和关节的基础。三角肌的作用是支撑身体的骨架和关节，同时还可以促进血液循环和呼吸。三角肌的运动可以增强肌肉的力量和灵活性，同时也可以提高人体的运动能力和健康水平。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃肩上推举",
+            "video_src": {
+                "man": "../static/vedio/Deltoid_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Deltoid_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "坐姿或站姿，双手各握一个哑铃，置于肩部",
+                "手掌朝前，肘部弯曲",
+                "将哑铃向上推举至手臂完全伸直",
+                "缓慢放下回到起始位置"
+            ]
+        }
+    }
+}

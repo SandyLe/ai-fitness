@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="static-url" content="{{ url_for('static', filename='') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/png">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/png">
+    <title>注册 - 智能健身私教</title>
+    <!-- 引入Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- 引入字体图标 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+    <!-- 页面主CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/register.css') }}">
+</head>
+<body>
+    <div id="register-page">
+        <div class="auth-container">
+            <div class="auth-image">
+                <div class="image-overlay"></div>
+                <div class="auth-quote">
+                    <h3>"今天的努力，是明天的资本"</h3>
+                    <p>— 智能健身私教</p>
+                </div>
+            </div>
+            
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="logo-container">
+                        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
+                        <h1>智能健身私教</h1>
+                    </div>
+                    <h2>创建账户</h2>
+                    <p>开始您的专业健身之旅</p>
+                </div>
+
+                <!-- 添加 flash 消息显示区域 -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- 注册表单内容保持不变 -->
+                <form id="register-form" @submit.prevent="submitRegister">
+                    <div class="form-group">
+                        <label for="username">用户名</label>
+                        <div class="input-with-icon" :class="{'error': usernameError}">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="username" v-model="registerForm.username" required ref="usernameInput">
+                        </div>
+                        <small class="form-tip" :class="{'error': usernameError}" v-text="usernameError || '用户名至少需要3个字符'"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">电子邮箱</label>
+                        <div class="input-with-icon" :class="{'error': emailError}">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" v-model="registerForm.email" required ref="emailInput">
+                        </div>
+                        <small class="form-tip" :class="{'error': emailError}" v-text="emailError || '请输入有效的电子邮箱地址'"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <div class="input-with-icon" :class="{'error': passwordError}">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" v-model="registerForm.password" required ref="passwordInput">
+                        </div>
+                        <small class="form-tip" :class="{'error': passwordError}" v-text="passwordError || '密码至少包含8个字符，包括字母和数字'"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">确认密码</label>
+                        <div class="input-with-icon" :class="{'error': confirmPasswordError}">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirm-password" v-model="registerForm.confirmPassword" required ref="confirmPasswordInput">
+                        </div>
+                        <small class="form-tip" :class="{'error': confirmPasswordError}" v-text="confirmPasswordError || '请再次输入密码进行确认'"></small>
+                    </div>
+                    
+                    <div class="form-options">
+                        <div class="terms-agreement" :class="{'error': termsError}">
+                            <input type="checkbox" id="terms" v-model="registerForm.agreeTerms" required>
+                            <label for="terms" :class="{'error': termsError}">我同意<a href="#">服务条款</a>和<a href="#">隐私政策</a></label>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="auth-btn" @click="validateAndRegister">注册</button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>已有账户? <a href="{{ url_for('auth.login') }}">立即登录</a></p>
+                    
+                    <div class="social-login">
+                        <p>或使用以下方式注册</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-qq"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="back-to-home">
+                        <a href="{{ url_for('auth.shouye') }}"><i class="fas fa-arrow-left"></i> 返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 滑动验证弹窗保持不变，但添加v-cloak指令 -->
+        <div class="slider-captcha-modal" v-if="showCaptcha" v-cloak>
+            <div class="slider-captcha-container">
+                <div class="slider-captcha-header">
+                    <h3>安全验证</h3>
+                    <span class="close-captcha" @click="closeCaptcha">&times;</span>
+                </div>
+                
+                <div class="slider-captcha-body">
+                    <div class="captcha-image-container">
+                        <img :src="captchaBackground" alt="验证背景" class="captcha-bg">
+                        <div class="captcha-puzzle" :style="puzzleStyle">
+                            <img :src="captchaPuzzle" alt="验证拼图">
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slider-bar" :style="{ width: sliderValue + '%' }"></div>
+                            <div class="slider-button" 
+                                 @mousedown="startSlide" 
+                                 @touchstart="startSlide"
+                                 :style="{ left: sliderValue + '%' }">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </div>
+                        </div>
+                        <p class="slider-tip">{{ sliderTip }}</p>
+                    </div>
+                    
+                    <div class="captcha-result" :class="captchaResultClass" v-if="captchaResult">
+                        {{ captchaResult }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 智能健身私教. 保留所有权利.</p>
+        <p>备案号: 渝ICP备2024041947号.</p>
+    </div>
+    
+    <!-- 添加内联样式以确保验证弹窗在Vue加载前隐藏 -->
+    <style>
+        [v-cloak] { display: none; }
+    </style>
+    <script src="{{ url_for('static', filename='js/auth/register.js') }}" defer></script>
+</body>
+</html>

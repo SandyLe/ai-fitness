@@ -1,0 +1,237 @@
+/* 页脚基本样式 */
+.footer {
+    background-color: #0a1522;
+    padding: 20px 0 20px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    flex: 1;
+}
+
+.footer-logo img {
+    display: block;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+}
+
+.footer-logo h3 {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.footer-logo p {
+    text-align: center;
+    color: #a0a0a0;
+    line-height: 1.5;
+}
+
+.footer-links {
+    flex: 2;
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer-links-column h4 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #00c8ff;
+}
+
+.footer-links-column ul {
+    list-style: none;
+}
+
+.footer-links-column li {
+    margin-bottom: 10px;
+}
+
+.footer-links-column a {
+    color: #a0a0a0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links-column a:hover {
+    color: #00c8ff;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-icon {
+    color: #a0a0a0;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.social-icon:hover {
+    color: #00c8ff;
+}
+
+.app-download {
+    margin-top: 20px;
+}
+
+.app-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.app-button {
+    display: flex;
+    align-items: center;
+    background-color: #0c1a2a;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.app-button:hover {
+    background-color: #00c8ff;
+}
+
+.app-button i {
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #1c3654;
+    color: #a0a0a0;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .footer-content {
+        padding: 0 20px;
+    }
+    
+    .footer-links {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 992px) {
+    .footer-links {
+        flex-wrap: wrap;
+    }
+    
+    .footer-links-column {
+        flex-basis: 45%;
+        margin-bottom: 25px;
+    }
+    
+    .app-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        padding: 0 15px;
+    }
+    
+    .footer-logo {
+        margin-bottom: 30px;
+        max-width: 100%;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .footer-links-column {
+        margin-bottom: 30px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .footer-links-column ul {
+        padding-left: 0;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+    
+    .app-buttons {
+        justify-content: center;
+    }
+    
+    .app-button {
+        width: 140px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 30px 0 15px;
+    }
+    
+    .footer-logo img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .footer-logo h3 {
+        font-size: 18px;
+    }
+    
+    .footer-logo p {
+        font-size: 14px;
+    }
+    
+    .footer-links-column h4 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    
+    .footer-links-column li {
+        margin-bottom: 8px;
+    }
+    
+    .footer-links-column a {
+        font-size: 14px;
+    }
+    
+    .social-icons {
+        gap: 20px;
+    }
+    
+    .social-icon {
+        font-size: 22px; /* 移动端增大图标尺寸，提高可点击性 */
+    }
+    
+    .app-download h4 {
+        font-size: 16px;
+    }
+    
+    .footer-bottom {
+        font-size: 12px;
+    }
+    
+    .footer-bottom p {
+        margin: 5px 0;
+    }
+}

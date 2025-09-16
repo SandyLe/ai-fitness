@@ -1,0 +1,145 @@
+{% extends "main.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/community.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="community-container">
+    <div class="community-header">
+        <h1>健身社区</h1>
+        <p>分享你的健身经验，寻求专业建议，结交志同道合的朋友</p>
+    </div>
+    
+    <div class="community-actions">
+        <div class="search-box">
+            <form action="{{ url_for('community.search_discussions') }}" method="get">
+                <input type="text" name="keyword" placeholder="搜索讨论..." required>
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="create-discussion">
+            <a href="{{ url_for('community.create_discussion') }}" class="btn-create">
+                <i class="fas fa-plus"></i> 发起讨论
+            </a>
+        </div>
+    </div>
+    
+    <div class="community-content">
+        <div class="discussion-filters">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="popular">热门</button>
+            <button class="filter-btn" data-filter="recent">最新</button>
+            <button class="filter-btn" data-filter="unanswered">未回复</button>
+        </div>
+        
+        <div class="discussions-list">
+            {% if discussions %}
+                {% for discussion in discussions %}
+                <div class="discussion-card">
+                    <div class="discussion-avatar">
+                        <img src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="用户头像">
+                    </div>
+                    <div class="discussion-content">
+                        <h3 class="discussion-title">
+                            <a href="{{ url_for('community.view_discussion', discussion_id=discussion.id) }}">{{ discussion.title }}</a>
+                        </h3>
+                        <div class="discussion-meta">
+                            <span class="author">{{ discussion.author_name or '匿名用户' }}</span>
+                            <span class="time">{{ discussion.created_time.strftime('%Y-%m-%d %H:%M') if discussion.created_time else '未知时间' }}</span>
+                            <span class="replies"><i class="fas fa-comment"></i> {{ discussion.reply_count or 0 }}</span>
+                        </div>
+                        <p class="discussion-excerpt">{{ discussion.content[:150] + '...' if discussion.content|length > 150 else discussion.content }}</p>
+                        {% if discussion.image_path %}
+                        <div class="discussion-image">
+                            <img src="{{ url_for('static', filename=discussion.image_path) }}" alt="讨论图片">
+                        </div>
+                        {% endif %}
+                        <div class="discussion-tags">
+                            <span class="tag">健身</span>
+                            <span class="tag">讨论</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-discussions">
+                    <i class="fas fa-comments"></i>
+                    <p>暂无讨论，来发起第一个话题吧！</p>
+                    <a href="{{ url_for('community.create_discussion') }}" class="btn-create-empty">发起讨论</a>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="pagination">
+            <a href="#" class="page-link disabled"><i class="fas fa-chevron-left"></i></a>
+            <a href="#" class="page-link active">1</a>
+            <a href="#" class="page-link">2</a>
+            <a href="#" class="page-link">3</a>
+            <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+    
+    <div class="community-sidebar">
+        <div class="sidebar-section hot-topics">
+            <h3>热门话题</h3>
+            <ul>
+                <li><a href="#">如何科学增肌减脂？</a></li>
+                <li><a href="#">健身初学者应该注意什么？</a></li>
+                <li><a href="#">推荐几款增肌补剂</a></li>
+                <li><a href="#">家庭健身器材推荐</a></li>
+                <li><a href="#">健身饮食计划分享</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section community-stats">
+            <h3>社区数据</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value">1,234</span>
+                        <span class="stat-label">社区成员</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-comments"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value">{{ discussions|length }}</span>
+                        <span class="stat-label">讨论主题</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-reply"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value">5,678</span>
+                        <span class="stat-label">回复总数</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value">今日</span>
+                        <span class="stat-label">最新活动</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-section community-rules">
+            <h3>社区规则</h3>
+            <ol>
+                <li>尊重他人，禁止人身攻击</li>
+                <li>禁止发布垃圾广告内容</li>
+                <li>分享内容需遵守相关法律法规</li>
+                <li>鼓励原创，尊重知识产权</li>
+                <li>提问前请先搜索是否有类似问题</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/community.js') }}"></script>
+{% endblock %}

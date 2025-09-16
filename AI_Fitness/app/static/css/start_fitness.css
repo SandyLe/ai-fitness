@@ -1,0 +1,335 @@
+/* 右侧内容样式 */
+.right-content {
+    width: 300px;
+    margin-left: 20px;
+    float: right;
+}
+
+/* 通用部分标题样式 */
+.right-content .section-title {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+    border-radius: 8px 8px 0 0;
+    border-bottom: 2px solid #0c4da2;
+    color: white;
+}
+
+.right-content .section-title img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    filter: brightness(0) invert(1);
+}
+
+.right-content .section-title span {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* 打卡部分样式 */
+.right-content .clock-section {
+    background-color: #0f2133;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    /* border: 1px solid #e0e0e0; */
+    overflow: hidden;
+}
+
+.right-content .clock-content {
+    background-color: #0f2133;
+    padding: 20px;
+}
+
+.right-content .clock-status {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.right-content .status-text {
+    font-weight: 500;
+    color: #555;
+}
+
+.right-content .status-value {
+    color: #ff5252;
+    font-weight: bold;
+    background-color: #ffebee;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+.right-content .clock-streak {
+    margin-bottom: 15px;
+    background-color: #e3f2fd;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-content .streak-days {
+    color: #1976d2;
+    font-weight: bold;
+    font-size: 24px;
+    margin: 0 5px;
+}
+
+.right-content .clock-progress {
+    margin-bottom: 20px;
+}
+
+.right-content .progress-bar {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.right-content .progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, #4caf50, #8bc34a);
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+.right-content .progress-text {
+    text-align: right;
+    font-size: 12px;
+    color: #757575;
+}
+
+.right-content .clock-btn {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(to right, #4caf50, #8bc34a);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.right-content .clock-btn:hover {
+    background: linear-gradient(to right, #43a047, #7cb342);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.right-content .clock-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.right-content .clock-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('https://cdn-icons-png.flaticon.com/512/2088/2088617.png') no-repeat center;
+    background-size: contain;
+    margin-right: 8px;
+    filter: brightness(0) invert(1);
+}
+
+/* 排行榜部分样式 */
+.right-content .leaderboard-section {
+    background-color: #95e7fe;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* border: 1px solid #e0e0e0; */
+    overflow: hidden;
+}
+
+.right-content .leaderboard-tabs {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.right-content .tab-btn {
+    flex: 1;
+    padding: 12px 10px;
+    background-color: #f5f5f5;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-content .tab-btn.active {
+    background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+    color: white;
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.right-content .tab-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.right-content .clock-tab-icon {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2088/2088617.png');
+}
+
+.right-content .training-tab-icon {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2936/2936886.png');
+}
+
+.right-content .tab-btn.active .tab-icon {
+    filter: brightness(0) invert(1);
+}
+
+.right-content .leaderboard-content {
+    background-color: #0f2133;
+    color: white;
+    padding: 15px;
+}
+
+.right-content .leaderboard-list {
+    display: none;
+}
+
+.right-content .leaderboard-list.active {
+    display: block;
+}
+
+.right-content .leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.3s;
+}
+
+.right-content .leaderboard-item:hover {
+    background-color: #f9f9f9;
+}
+
+.right-content .leaderboard-item:last-child {
+    border-bottom: none;
+}
+
+.right-content .rank {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #555;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.right-content .rank-1 {
+    background: linear-gradient(135deg, #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%);
+    color: #8a5300;
+}
+
+.right-content .rank-2 {
+    background: linear-gradient(135deg, #e6e6e6 0%, #d9d9d9 50%, #c4c4c4 51%, #f5f5f5 100%);
+    color: #555;
+}
+
+.right-content .rank-3 {
+    background: linear-gradient(135deg, #f3c5bd 0%, #e0a693 50%, #c88a77 51%, #f5cfc2 100%);
+    color: #7d4e41;
+}
+
+.right-content .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid #fff;
+}
+
+.right-content .user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.right-content .user-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.right-content .user-name {
+    font-weight: bold;
+    color: #95e7fe;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.right-content .user-level {
+    font-size: 12px;
+    color: #757575;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.right-content .user-score {
+    color: #ff9800;
+    font-weight: bold;
+    background-color: #fff8e1;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+    .right-content {
+        width: 250px;
+    }
+}
+
+@media (max-width: 992px) {
+    .right-content {
+        width: 100%;
+        float: none;
+        margin-left: 0;
+        margin-top: 30px;
+    }
+    
+    .right-content .leaderboard-item {
+        padding: 15px;
+    }
+    
+    .right-content .user-avatar {
+        width: 50px;
+        height: 50px;
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "version": "1.0",
+    "description": "AI健身报告数据",
+    "reports": [
+        "pectoralis_report.json",
+        "deltoid_report.json",
+        "biceps_report.json",
+        "triceps_report.json",
+        "forearm_report.json",
+        "latissimus_dorsi_report.json",
+        "trapezius_report.json",
+        "quadriceps_report.json",
+        "hamstrings_report.json"
+    ]
+}

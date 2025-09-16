@@ -1,0 +1,21 @@
+{
+    "Triceps": {
+        "comment": "肱三头肌",
+        "name": "肱三头肌",
+        "description": "肱三头肌是人体的重要肌肉，它位于胸部和颈部之间，是人体的核心力量。肱三头肌的作用是支撑胸部和颈部，同时也起到保护颈部和肩部的作用。肱三头肌的运动可以提高人体的力量和耐力，同时也可以改善人体的 posture（姿势）。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃臂屈伸",
+            "video_src": {
+                "man": "../static/vedio/Triceps_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Triceps_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "站立或坐姿，双手握住一个哑铃，举过头顶",
+                "保持上臂固定，弯曲肘部",
+                "将哑铃放低至头部后方",
+                "伸直手臂回到起始位置"
+            ]
+        }
+    }
+}

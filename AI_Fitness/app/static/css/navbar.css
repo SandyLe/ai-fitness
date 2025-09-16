@@ -1,0 +1,383 @@
+/* 导航栏基本样式 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: rgba(12, 26, 42, 0.9);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+.header .navbar-logo-a {
+    text-decoration: none;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    font-size: 24px;
+    background: linear-gradient(to right, #00c8ff, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu .navbar-a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-menu .navbar-a:hover {
+    color: #00c8ff;
+}
+
+.nav-menu .navbar-a.active {
+    color: #00c8ff;
+    font-weight: bold;
+}
+
+.login-btn {
+    background-color: #00c8ff;
+    color: #0c1a2a;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 移动端菜单 */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ffffff; /* 确保图标颜色可见 */
+    z-index: 1001; /* 确保在移动菜单之上 */
+}
+
+.menu-toggle i {
+    pointer-events: none; /* 防止点击图标而不是容器 */
+}
+
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background-color: #0c1a2a;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(-130%);
+    transition: transform 0.3s;
+    z-index: 999;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影增强可见性 */
+}
+
+.mobile-menu.active {
+    transform: translateY(-4%);
+    display: flex; /* 确保激活时显示 */
+}
+
+.mobile-menu a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 10px 0;
+    font-size: 16px;
+    transition: color 0.3s;
+    width: 100%; /* 使点击区域更大 */
+    text-align: center; /* 居中文本 */
+    padding: 10px 0; /* 增加点击区域 */
+}
+
+.mobile-menu a:hover {
+    color: #00c8ff;
+}
+
+.mobile-menu a.active {
+    color: #00c8ff;
+    font-weight: bold;
+}
+
+.mobile-menu .login-btn {
+    margin-top: 15px; /* 增加与其他项的间距 */
+    width: auto; /* 保持按钮原有宽度 */
+}
+
+/* 响应式设计 */
+@media (max-width: 992px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .mobile-menu {
+        display: flex;
+    }
+    
+    /* 确保logo在移动端也正确显示 */
+    .logo h1 {
+        font-size: 20px; /* 减小字体大小 */
+    }
+    
+    .logo img {
+        height: 40px; /* 减小logo大小 */
+    }
+    
+    /* 调整header padding以适应移动设备 */
+    .header {
+        padding: 15px 20px;
+    }
+    
+    /* 移动端用户菜单 */
+    .mobile-user-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 10px;
+        padding-top: 10px;
+        width: 100%;
+    }
+    
+    .mobile-user-header {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+    }
+    
+    .mobile-user-header img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #00c8ff;
+        margin-right: 10px;
+    }
+    
+    .mobile-user-info h4 {
+        margin: 0;
+        color: #fff;
+        font-size: 16px;
+    }
+    
+    .mobile-user-info p {
+        margin: 0;
+        color: #a0a0a0;
+        font-size: 12px;
+    }
+    
+    .mobile-menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 0;
+        color: #e0e0e0;
+        text-decoration: none;
+    }
+    
+    .mobile-menu-item i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+    }
+    
+    .mobile-menu-item.logout {
+        color: #ff6b6b;
+    }
+}
+
+/* 简化用户头像和下拉菜单样式 */
+.user-profile-nav {
+    position: relative;
+    margin-left: 15px;
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.user-avatar:hover {
+    background-color: rgba(0, 200, 255, 0.1);
+}
+
+.user-avatar img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00c8ff;
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+}
+
+.user-info {
+    margin-left: 10px;
+    display: none;
+}
+
+@media (min-width: 1100px) {
+    .user-info {
+        display: block;
+    }
+}
+
+.user-name {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.dropdown-icon {
+    color: #a0a0a0;
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.user-avatar.active .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 180px;
+    background-color: #1a2635;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 10px 0;
+    margin-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+    border: 1px solid #2a3a4a;
+}
+
+.user-dropdown:before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    background-color: #1a2635;
+    transform: rotate(45deg);
+    border-top: 1px solid #2a3a4a;
+    border-left: 1px solid #2a3a4a;
+}
+
+.user-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(0, 200, 255, 0.1);
+    color: #00c8ff;
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #2a3a4a;
+    margin: 5px 0;
+}
+
+.logout-item {
+    color: #ff6b6b;
+}
+
+.logout-item:hover {
+    background-color: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+}
+
+/* 简化移动端用户菜单 */
+.mobile-user-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+.mobile-user-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.mobile-user-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #00c8ff;
+    margin-right: 10px;
+}
+
+.mobile-user-info h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+}
+
+.mobile-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    color: #e0e0e0;
+    text-decoration: none;
+}
+
+.mobile-menu-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.mobile-menu-item.logout {
+    color: #ff6b6b;
+}

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能健身姿态识别</title>
+    <link rel="stylesheet" href="../static/css/baseBig.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            height: 90vh;
+            padding: 20px;
+        }
+        #video-container {
+            flex: 3;
+            position: relative;
+            border: 2px solid #000;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 20px;
+        }
+        #output-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #webcam {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #controls {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+        }
+        .info-box {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .info-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        .info-content {
+            font-size: 18px;
+            color: #dc3545;
+        }
+        #exercise-select {
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #reset-btn {
+            background-color: #dc3545;
+        }
+        #reset-btn:hover {
+            background-color: #c82333;
+        }
+        #guide-text {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            height: 150px;
+            overflow-y: auto;
+        }
+        /* 现有样式保持不变 */
+        
+        /* 添加训练配置样式 */
+        .training-config {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+        
+        .config-item {
+            margin-bottom: 10px;
+        }
+        
+        .config-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .config-item input, .config-item select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        /* 健身报告样式 */
+        .fitness-report-container {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .fitness-report-container h2 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        
+        .report-exercise-name {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .report-score-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .report-score-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        .report-summary-container {
+            margin-bottom: 20px;
+        }
+        
+        .report-summary-text {
+            background-color: #e9f7ef;
+            padding: 15px;
+            border-left: 4px solid #28a745;
+            border-radius: 4px;
+        }
+        
+        .report-issues-container, .report-suggestions-container {
+            margin-bottom: 20px;
+        }
+        
+        .report-issues-list li, .report-suggestions-list li {
+            margin-bottom: 15px;
+        }
+        
+        .report-issues-list strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #007bff;
+        }
+        
+        .report-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .report-close-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .report-close-button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* 添加报告加载动效样式 */
+        #report-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 报告样式优化 */
+        .fitness-report-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        
+        .report-score-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .report-score-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .report-summary-text {
+            background-color: #e9f7ef;
+            padding: 15px;
+            border-left: 4px solid #28a745;
+            border-radius: 4px;
+        }
+        
+        .report-issues-list, .report-suggestions-list {
+            padding-left: 20px;
+        }
+        
+        .report-close-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .report-close-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- 在页面中添加一个隐藏字段，用于存储用户ID -->
+    <input type="hidden" id="current-user-id" value="{{ session.get('user_id', '0') }}">
+    <input type="hidden" id="userid" value="{{id}}">
+    <div class="navbar">
+        <div class="center-links">
+            <a href="/zhuyemian?id={{id}}">首页</a>
+            <a href="/bmi?id={{id}}">BMI计算器</a>
+            <a href="/ai?id={{id}}">智能健身助手</a>
+            <a href="/luntan?id={{id}}">健身论坛</a>
+            <a href="/pose_detection?id={{id}}">姿态识别</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div id="video-container">
+            <video id="webcam" autoplay playsinline></video>
+            <canvas id="output-canvas"></canvas>
+        </div>
+        
+        <div id="controls">
+            <h2>智能健身姿态识别</h2>
+            
+            <!-- 添加训练配置区域 -->
+            <div class="training-config">
+                <div class="config-item">
+                    <label for="exercise-select">选择训练动作:</label>
+                    <select id="exercise-select">
+                        <option value="">请选择训练动作</option>
+                        <option value="哑铃推肩">哑铃推肩</option>
+                        <option value="哑铃飞鸟">哑铃飞鸟</option>
+                        <option value="高脚杯深蹲">高脚杯深蹲</option>
+                        <option value="哑铃二头弯举">哑铃二头弯举</option>
+                        <option value="哑铃上斜卧推">哑铃上斜卧推</option>
+                        <option value="哑铃砍伐者">哑铃砍伐者</option>
+                        <option value="哑铃仰卧起坐">哑铃仰卧起坐</option>
+                        <option value="右手哑铃划船">右手哑铃划船</option>
+                        <option value="左手哑铃划船">左手哑铃划船</option>
+                        <option value="躺姿哑铃臂屈伸">躺姿哑铃臂屈伸</option>
+                        <option value="哑铃早安鞠躬挺">哑铃早安鞠躬挺</option>
+                        <option value="哑铃保加利亚单腿深蹲左">哑铃保加利亚单腿深蹲左</option>
+                        <option value="哑铃保加利亚单腿深蹲右">哑铃保加利亚单腿深蹲右</option>
+                    </select>
+                </div>
+                
+                <div class="config-item">
+                    <label for="reps-input">每组重复次数:</label>
+                    <input type="number" id="reps-input" min="1" value="10">
+                </div>
+                
+                <div class="config-item">
+                    <label for="sets-input">训练组数:</label>
+                    <input type="number" id="sets-input" min="1" value="3">
+                </div>
+            </div>
+            
+            <button id="start-btn">开始识别</button>
+            <button id="stop-btn">停止识别</button>
+            <button id="reset-btn">计数清零</button>
+            
+            <div class="info-box">
+                <div class="info-title">项目名称:</div>
+                <div id="exercise-name" class="info-content">未选择</div>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-title">合格个数:</div>
+                <div id="counter" class="info-content">0</div>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-title">动作建议:</div>
+                <div id="guide-text">请选择一个训练动作并点击"开始识别"</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入MediaPipe姿态识别库 -->
+    <script src="{{ url_for('static', filename='pose_fitness_js/camera_utils.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='pose_fitness_js/control_utils.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='pose_fitness_js/drawing_utils.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='pose_fitness_js/pose.js') }}" crossorigin="anonymous"></script>
+    
+    <script src="{{ url_for('static', filename='pose_fitness_js/pose_detection.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pose_fitness_sidebar.js') }}"></script>
+</body>
+</html>

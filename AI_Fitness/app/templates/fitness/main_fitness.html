@@ -1,0 +1,224 @@
+{% extends "main.html" %}
+
+{% block title %}健身训练 - {{ current_data.name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/fitness.css') }}">
+<style>
+    /* 健身报告样式 */
+    .fitness-report-container {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .fitness-report-container h2 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+    
+    .report-exercise-name {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 15px;
+    }
+    
+    .report-score-container {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .report-score-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #28a745;
+    }
+    
+    .report-summary-container {
+        margin-bottom: 20px;
+    }
+    
+    .report-summary-text {
+        background-color: #e9f7ef;
+        padding: 15px;
+        border-left: 4px solid #28a745;
+        border-radius: 4px;
+    }
+    
+    .report-issues-container, .report-suggestions-container {
+        margin-bottom: 20px;
+    }
+    
+    .report-issues-list li, .report-suggestions-list li {
+        margin-bottom: 15px;
+    }
+    
+    .report-issues-list strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #007bff;
+    }
+    
+    .report-button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+    
+    .report-close-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    .report-close-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+            
+<div class="main-fitness">
+    <!-- 内容区域 -->
+    <div class="main-fitness-container">
+        <!-- 简化的标题区域 -->
+        <div class="header-simple">
+            <h1>{{current_data.name}}</h1>
+            <h2 class="action-title">{{current_data.equipment.action}}</h2>
+        </div>
+        
+        <!-- 主要内容区域 - 视频和要点 -->
+        <div class="content-area">
+            <!-- 视频区域 - 更大的尺寸 -->
+            <div class="video-section">
+                <div class="video-container">
+                    <video controls autoplay loop muted>
+                        <source src="{{url_for('static', filename=current_data.equipment.video_src)}}" type="video/mp4">
+                        您的浏览器不支持视频标签
+                    </video>
+                </div>
+            </div>
+            
+            
+            <div class="content_left">
+                <!-- 训练配置(组数，个数，显示当前动作，开始按钮等) -->
+                <div class="fitness-config">
+                    <!-- 训练组数配置 -->
+                    <div class="training-sets">
+                        <label for="sets">训练组数:</label>
+                        <input type="number" id="sets" min="1" value="3">
+                    </div>
+                    
+                    <!-- 每组重复次数配置 -->
+                    <div class="reps-per-set">
+                        <label for="reps">每组次数:</label>
+                        <input type="number" id="reps" min="1" value="12">
+                    </div>
+                    
+                    <!-- 当前动作显示 -->
+                    <div class="current-exercise">
+                        <span>当前动作: </span>
+                        <span id="currentExercise">{{current_data.equipment.action}}</span>
+                    </div>
+                    
+                    <!-- 训练控制按钮 -->
+                    <div class="control-buttons">
+                        <button id="startTraining" class="start-btn">开始训练</button>
+                        <button id="pauseTraining" class="pause-btn" style="display: none;">暂停</button>
+                        <button id="resetTraining" class="reset-btn" style="display: none;">重置</button>
+                    </div>
+                </div>
+                <!-- 动作要点 -->
+                <div class="action-points">
+                    <h2>动作要点</h2>
+                    <ul>
+                        {% for point in current_data.equipment.Action_points %}
+                        <li>{{point}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>    
+            </div>
+
+            <!-- 姿态识别训练按钮 -->
+        </div>
+    </div>
+    
+    <!-- 在页面中添加一个隐藏字段，用于存储用户ID -->
+    <input type="hidden" id="current-user-id" value="{{ session.get('user_id', '0') }}">
+    
+    <div class="sidebar" id="sidebar">
+        <div class="content" id="sidebarContent">
+          <!-- 侧拉框内容 -->
+        </div>
+    </div>
+    <!-- 训练侧边框 -->
+    <div class="sidebar-pose-fitness" id="sidebar-pose-fitness">
+        <div class="pose-fitness-content">
+            <h2>姿态识别训练</h2>
+            <div id="pose-video-container">
+                <video id="pose-webcam" autoplay playsinline></video>
+                <canvas id="pose-output-canvas"></canvas>
+            </div>
+            <div class="pose-info">
+                <div class="pose-status">
+                    <span>当前状态: </span>
+                    <span id="pose-status-text">准备中</span>
+                </div>
+                <div class="pose-counter">
+                    <span>剩余次数: </span>
+                    <span id="pose-counter">0</span>
+                </div>
+                <div class="pose-sets">
+                    <span>剩余组数: </span>
+                    <span id="pose-sets">0</span>
+                </div>
+                <div class="pose-timer" id="pose-timer">
+                    <span>休息时间: </span>
+                    <span id="pose-timer-text">0</span>
+                </div>
+            </div>
+            <div class="pose-controls">
+                <button id="pose-stop-btn" class="pose-btn">停止训练</button>
+                <button id="pose-close-btn" class="pose-btn">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 侧拉框按钮 - 简化结构 -->
+    <button id="toggleBtn"></button>
+    
+    <!-- 描述 -->
+    <div class="description">
+        <span>{{ current_data.description }}</span>
+    </div>
+    
+</div>
+            
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{{ url_for('static',filename='js/base.musclewiki.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/base.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/muscle.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/sidebar.js')}}"></script>
+
+<!-- 添加姿态识别所需的脚本 -->
+<script src="{{ url_for('static', filename='pose_fitness_js/camera_utils.js') }}" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='pose_fitness_js/control_utils.js') }}" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='pose_fitness_js/drawing_utils.js') }}" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='pose_fitness_js/pose.js') }}" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/pose_fitness_sidebar.js')}}"></script>
+{% endblock %}

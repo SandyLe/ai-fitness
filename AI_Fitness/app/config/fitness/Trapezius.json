@@ -1,0 +1,21 @@
+{
+    "Trapezius": {
+        "comment": "斜方肌",
+        "name": "斜方肌",
+        "description":  "斜方肌是人体中最常见的肌肉，也是最容易受伤的肌肉。斜方肌的作用是支撑身体的骨架，保持身体的平衡。",
+        "Dumbbell": {
+            "comment": "哑铃",
+            "action": "哑铃划船",
+            "video_src": {
+                "man": "../static/vedio/Trapezius_Dumbbell_man.mp4",
+                "woman": "../static/vedio/Trapezius_Dumbbell_woman.mp4"
+            },
+            "Action_points": [
+                "弯腰，保持背部平直",
+                "双手各握一个哑铃，手臂自然下垂",
+                "将哑铃向上拉至腹部两侧，肘部向后",
+                "缓慢放下回到起始位置"
+            ]
+        }
+    }
+}
