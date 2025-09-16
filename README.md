@@ -1,4 +1,4 @@
-# AI-Fitness 智能健身助手
+# AI-Fitness 智能健身辅助系统
 
 ## 项目简介
 
