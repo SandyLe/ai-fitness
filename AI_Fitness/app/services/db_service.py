@@ -7,7 +7,8 @@ def get_connection():
         host=DB_CONFIG['host'],
         user=DB_CONFIG['user'],
         password=DB_CONFIG['password'],
-        database=DB_CONFIG['database']
+        database=DB_CONFIG['database'],
+        port=DB_CONFIG['port']
     )
 
 # 在db_service.py中添加以下函数

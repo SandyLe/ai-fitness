@@ -19,6 +19,7 @@ conn = MYSQL(
         dbuser = DB_CONFIG['user'],
         dbpwd = DB_CONFIG['password'],
         dbname = DB_CONFIG['database'],
+    dbport=DB_CONFIG['port'],
         dbcharset = 'utf8')
 
 TABLE_NAME = "user_discussion"
