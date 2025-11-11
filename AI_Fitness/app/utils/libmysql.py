@@ -13,6 +13,7 @@ SQL Injection Warning: pymysql.escape_string(value)
 
 from pymysql import (connect, cursors, err)
 from pymysql.converters import escape_sequence
+from app.utils.connectionpool import ConnectionPool
 
 def connect_db(mysqldb_conn):
     # msyql dababase connection info
@@ -53,14 +54,23 @@ class MYSQL:
 
     def session(self):
         """Connect to the database return dbsession"""
-        connection = connect(
+        """connection = connect(
             host=self.dbhost,
             port=self.dbport,
             user=self.dbuser,
             password=self.dbpwd,
             db=self.dbname,
             charset=self.dbcharset,
-            cursorclass=cursors.DictCursor)
+            cursorclass=cursors.DictCursor)"""
+        connection = ConnectionPool({
+            'host': self.dbhost,
+            'user': self.dbuser,
+            'port': self.dbport,
+            'password': self.dbpwd,
+            'database': self.dbname,
+            'charset': self.dbcharset,
+            'cursorclass': cursors.DictCursor
+        }).get_connection()
         return connection
 
     def insert(self, table: str, data: dict) -> int:

@@ -40,6 +40,7 @@ window.onload = function() {
         document.getElementById("sexchooserfemalelabel").classList.add("active");
         document.getElementById("sexchoosermalelabel").classList.remove("active");
     }
+//    alert(document.getElementById("streak-days").innerHTML)
 }
 
 document.onclick = function(event) {

@@ -24,7 +24,8 @@ logger = python_logging.getLogger(__name__)
 def start_fitness():
     # 从session获取用户ID
     user_id = session.get('user_id', '0')
-    user = ''
+    logger.info(f"user_id>>>={user_id}")
+    user = {"user_id": user_id, "user_name": session.get("username"), "clock": 2}
     return render_template('fitness/start_fitness.html', active_page='start_fitness', user=user)
 
 
