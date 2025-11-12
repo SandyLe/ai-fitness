@@ -2359,7 +2359,7 @@
     background-color: #0c1a2a;
 }
 
-/* 添加健身相关图标 */
+/* 添加康训相关图标 */
 .fa-dumbbell:before {
     content: "\f44b";
 }
@@ -2408,7 +2408,7 @@
     display: none
 }
 
-/* 添加健身相关图标和按钮样式 */
+/* 添加康训相关图标和按钮样式 */
 .fa-dumbbell:before {
     content: "\f44b";
 }

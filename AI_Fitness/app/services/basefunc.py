@@ -129,7 +129,7 @@ def get_current_data(muscle, gender, equipment):
         return current_data
         
     except Exception as e:
-        logger.error(f"处理健身数据时出错: {str(e)}")
+        logger.error(f"处理康训数据时出错: {str(e)}")
         return {
             'name': f'错误: {muscle}',
             'equipment': {

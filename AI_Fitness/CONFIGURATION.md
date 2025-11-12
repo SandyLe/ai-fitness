@@ -2,7 +2,7 @@
 
 ## 数据库配置
 
-项目使用MySQL数据库存储用户信息、健身数据等。需要在 [app/config.py](file:///d%3A/myItem/%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E8%BE%85%E5%8A%A9%E7%B3%BB%E7%BB%9F/AI_Fitness/app/config.py) 文件中配置数据库连接信息：
+项目使用MySQL数据库存储用户信息、康训数据等。需要在 [app/config.py](file:///d%3A/myItem/%E6%99%BA%E8%83%BD%E5%81%A5%E8%BA%AB%E8%BE%85%E5%8A%A9%E7%B3%BB%E7%BB%9F/AI_Fitness/app/config.py) 文件中配置数据库连接信息：
 
 ```python
 DB_CONFIG = {

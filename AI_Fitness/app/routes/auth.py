@@ -103,11 +103,11 @@ def user_center():
     
     user = user_result.data
     
-    # 获取用户健身数据
+    # 获取用户康训数据
     fitness_data_result = user_date.get_latest_fitness_reports(user_id, limit=10)
     fitness_data = fitness_data_result.data if fitness_data_result.success else []
     
-    # 获取用户健身统计数据
+    # 获取用户康训统计数据
     fitness_stats_result = user_date.get_user_fitness_stats(user_id)
     fitness_stats = fitness_stats_result.data if fitness_stats_result.success else {}
     

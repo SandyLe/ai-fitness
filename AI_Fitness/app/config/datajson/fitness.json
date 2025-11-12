@@ -1,6 +1,6 @@
 {
     "version": "1.0",
-    "description": "AI健身报告数据",
+    "description": "AI康训报告数据",
     "reports": [
         "pectoralis_report.json",
         "deltoid_report.json",

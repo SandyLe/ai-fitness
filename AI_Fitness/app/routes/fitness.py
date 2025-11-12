@@ -19,7 +19,7 @@ python_logging.basicConfig(
 )
 logger = python_logging.getLogger(__name__)
 
-# 开始健身
+# 开始训练
 @fitness_bp.route('/start', methods=['GET', 'POST'])
 def start_fitness():
     # 从session获取用户ID
@@ -43,7 +43,7 @@ def fitness_muscle(muscle, gender, equipment):
         user_id = session.get('user_id', '0')
         
         # 记录请求信息
-        logger.info(f"健身请求: 肌肉={muscle}, 性别={gender}, 器材={equipment}, 用户ID={user_id}")
+        logger.info(f"康训请求: 肌肉={muscle}, 性别={gender}, 器材={equipment}, 用户ID={user_id}")
         
         # 验证性别参数
         if gender not in ['man', 'woman']:
@@ -66,22 +66,22 @@ def fitness_muscle(muscle, gender, equipment):
     
     except Exception as e:
         # 记录错误
-        logger.error(f"处理健身请求时出错: {str(e)}")
+        logger.error(f"处理康训请求时出错: {str(e)}")
         
         # 返回错误页面或重定向到开始页面
-        flash(f"加载健身内容时出错: {str(e)}", "error")
+        flash(f"加载康训内容时出错: {str(e)}", "error")
         return redirect(url_for('fitness.start_fitness'))
 
 
 @fitness_bp.route('/get_report', methods=['GET'])
 def get_fitness_report():
-    """获取健身报告数据"""
+    """获取康训报告数据"""
     try:
         # 获取请求参数
         muscle = request.args.get('muscle', 'trapezius')
         exercise = request.args.get('exercise', '哑铃划船')
         
-        logger.info(f"收到健身报告请求: 肌肉={muscle}, 动作={exercise}")
+        logger.info(f"收到康训报告请求: 肌肉={muscle}, 动作={exercise}")
         
         # 添加延迟，模拟报告生成过程
         time.sleep(1)  # 延迟1秒，与前端的延迟一起，总共约3-4秒的加载时间
@@ -136,7 +136,7 @@ def get_fitness_report():
             selected_report['suggestions'] = ["保持良好的训练习惯", "注意动作的标准性"]
         
         # 添加日志
-        logger.info(f"成功获取健身报告: 肌肉={muscle}, 动作={exercise}, 评分={selected_report.get('score', 'N/A')}")
+        logger.info(f"成功获取康训报告: 肌肉={muscle}, 动作={exercise}, 评分={selected_report.get('score', 'N/A')}")
         
         # 返回前检查数据完整性
         logger.debug(f"返回报告数据: {json.dumps(selected_report, ensure_ascii=False)[:100]}...")
@@ -154,7 +154,7 @@ def get_fitness_report():
         }), 200
     
     except Exception as e:
-        logger.exception(f"获取健身报告时出错: {str(e)}")
+        logger.exception(f"获取康训报告时出错: {str(e)}")
         return jsonify({
             "error": "获取报告数据失败", 
             "message": str(e),
@@ -177,7 +177,7 @@ from app.services.db_services.user_date import save_fitness_report
 # 在现有路由下添加
 @fitness_bp.route('/save_report', methods=['POST'])
 def save_fitness_report_route():
-    """保存健身报告数据到数据库"""
+    """保存康训报告数据到数据库"""
     try:
         # 获取请求数据
         data = request.json
@@ -216,7 +216,7 @@ def save_fitness_report_route():
             return jsonify({"success": False, "msg": result.msg}), 400
             
     except Exception as e:
-        logger.exception(f"保存健身报告时出错: {str(e)}")
+        logger.exception(f"保存康训报告时出错: {str(e)}")
         return jsonify({"success": False, "msg": f"保存报告失败: {str(e)}"}), 500
 
 

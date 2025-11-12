@@ -137,7 +137,7 @@ def count_discussions(condition: dict = None):
         return Response.fail(code=500, msg=f"统计论坛信息失败: {str(e)}")
 
 # print(add_discussion({
-#         "title":"如何健身",
+#         "title":"如何康训",
 #         "content":"1.坚持打卡 ， 2.坚持锻炼",
 #         "image_path" : "https://123.png",
 #         "created_by" : None ,
@@ -152,7 +152,7 @@ def count_discussions(condition: dict = None):
 
 # print(update_discussion({
 #         "id": 22,
-#         "title":"如何健身",
+#         "title":"如何康训",
 #         "content":"1.坚持打卡",
 #         "image_path" : "https://123.png",
 #         "created_by" : None ,
@@ -162,7 +162,7 @@ def count_discussions(condition: dict = None):
 # },
 #     {
 #         "id": 22,
-#         "title": "如何健身",
+#         "title": "如何康训",
 #         "content": "1.坚持打卡 ， 2.坚持锻炼",
 #         "image_path": "https://123.png",
 #         "created_by": None,

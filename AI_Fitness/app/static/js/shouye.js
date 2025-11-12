@@ -33,22 +33,22 @@ document.addEventListener('DOMContentLoaded', function() {
             features: [
                 { text: '个性化训练计划' },
                 { text: '专业营养指导' },
-                { text: '实时健身数据追踪' }
+                { text: '实时康训数据追踪' }
             ],
             slides: [
                 { 
                     image: staticUrl + 'img/fitness-hero.avif', 
-                    alt: "健身形象1", 
+                    alt: "康训形象1",
                     fallback: "this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'; this.onerror=null;"
                 },
                 { 
                     image: staticUrl + 'img/fitness-hero2.avif', 
-                    alt: "健身形象2", 
+                    alt: "康训形象2",
                     fallback: "this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'; this.onerror=null;"
                 },
                 { 
                     image: staticUrl + 'img/fitness-hero3.avif', 
-                    alt: "健身形象3", 
+                    alt: "康训形象3",
                     fallback: "this.src='https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'; this.onerror=null;"
                 }
             ],
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 {
                     name: '李教练',
                     specialty: '力量训练专家',
-                    bio: '拥有10年健身教练经验，专注于力量训练和体能提升',
+                    bio: '拥有10年康训教练经验，专注于力量训练和体能提升',
                     image: staticUrl + 'img/trainer1.avif',
                     fallback: "this.src='https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'; this.onerror=null;"
                 },
@@ -106,21 +106,21 @@ document.addEventListener('DOMContentLoaded', function() {
             ],
             testimonials: [
                 {
-                    quote: '加入智能健身私教是我做过的最好的决定之一。专业的教练和个性化的训练计划帮助我在短时间内达到了理想的健身效果。',
+                    quote: '加入智体康训是我做过的最好的决定之一。专业的教练和个性化的训练计划帮助我在短时间内达到了理想的康训效果。',
                     name: '张先生',
                     title: '会员 · 6个月',
                     avatar: staticUrl + 'img/user1.jpg',
                     fallback: "this.src='https://randomuser.me/api/portraits/men/32.jpg'; this.onerror=null;"
                 },
                 {
-                    quote: '教练们非常专业和耐心，不仅教授正确的训练方法，还提供了很多健康饮食的建议，让我的健身之旅变得更加轻松和有效。',
+                    quote: '教练们非常专业和耐心，不仅教授正确的训练方法，还提供了很多健康饮食的建议，让我的康训之旅变得更加轻松和有效。',
                     name: '李女士',
                     title: '会员 · 1年',
                     avatar: staticUrl + 'img/user2.jpg',
                     fallback: "this.src='https://randomuser.me/api/portraits/women/44.jpg'; this.onerror=null;"
                 },
                 {
-                    quote: '智能健身私教的环境非常好，设备齐全，而且很干净。最重要的是，这里的社区氛围非常棒，让我每次锻炼都充满动力。',
+                    quote: '智体康训的环境非常好，设备齐全，而且很干净。最重要的是，这里的社区氛围非常棒，让我每次锻炼都充满动力。',
                     name: '王先生',
                     title: '会员 · 3个月',
                     avatar: staticUrl + 'img/user3.jpg',

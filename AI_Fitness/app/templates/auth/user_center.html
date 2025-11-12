@@ -21,7 +21,7 @@
                     <i class="fas fa-user"></i> 个人资料
                 </li>
                 <li class="nav-item" data-tab="fitness-data">
-                    <i class="fas fa-chart-line"></i> 健身数据
+                    <i class="fas fa-chart-line"></i> 康训数据
                 </li>
                 <li class="nav-item" data-tab="training-plan">
                     <i class="fas fa-dumbbell"></i> 训练计划
@@ -94,7 +94,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="fitness_goal">健身目标</label>
+                            <label for="fitness_goal">康训目标</label>
                             <select id="fitness_goal" name="fitness_goal">
                                 <option value="">请选择</option>
                                 <option value="lose_weight" {% if user.fitness_goal == 'lose_weight' %}selected{% endif %}>减肥</option>
@@ -109,9 +109,9 @@
                 </div>
             </div>
             
-            <!-- 健身数据 -->
+            <!-- 康训数据 -->
             <div class="content-section" id="fitness-data">
-                <h2>健身数据</h2>
+                <h2>康训数据</h2>
                 <div class="card">
                     <div class="fitness-stats">
                         <div class="stat-card">
@@ -188,8 +188,8 @@
                         </div>
                         {% else %}
                         <div class="no-data">
-                            <p>暂无训练记录，快去开始您的健身之旅吧！</p>
-                            <a href="{{ url_for('fitness.start_fitness') }}" class="btn btn-primary">开始健身</a>
+                            <p>暂无训练记录，快去开始您的康训之旅吧！</p>
+                            <a href="{{ url_for('fitness.start_fitness') }}" class="btn btn-primary">开始训练</a>
                         </div>
                         {% endif %}
                     </div>
@@ -397,7 +397,7 @@
                         <div class="setting-item">
                             <div class="setting-info">
                                 <h4>成就通知</h4>
-                                <p>当达成健身目标时通知我</p>
+                                <p>当达成康训目标时通知我</p>
                             </div>
                             <label class="switch">
                                 <input type="checkbox" checked>

@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // 添加查看健身报告功能
+    // 添加查看康训报告功能
     const viewReportButtons = document.querySelectorAll('.view-report-btn');
     
     viewReportButtons.forEach(button => {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 创建报告标题
         const reportTitle = document.createElement('h2');
-        reportTitle.textContent = '健身训练报告';
+        reportTitle.textContent = '康训训练报告';
         reportTitle.style.textAlign = 'center';
         reportTitle.style.color = '#00c8ff';
         reportTitle.style.borderBottom = '2px solid #00c8ff';

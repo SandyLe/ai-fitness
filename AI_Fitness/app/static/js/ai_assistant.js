@@ -5,8 +5,8 @@ $(document).ready(function() {
   // 会话ID - 用于区分不同用户的请求
   const sessionId = generateSessionId();
   
-  // 健身助手头像URL
-  const botAvatarUrl = "/static/img/fitness_assistant.png"; // 健身助手头像路径
+  // 康训助手头像URL
+  const botAvatarUrl = "/static/img/fitness_assistant.png"; // 康训助手头像路径
   
   // 自动调整文本区域高度
   function autoResizeTextarea() {
@@ -158,13 +158,13 @@ $(document).ready(function() {
       <div class="message-container">
         <div class="bot-avatar-container">
           <div class="avatar">
-            <img src="${botAvatarUrl}" alt="健身助手" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2936/2936886.png'">
+            <img src="${botAvatarUrl}" alt="康训助手" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2936/2936886.png'">
           </div>
-          <div class="username">健身助手</div>
+          <div class="username">康训助手</div>
         </div>
         <div class="bot-message">
           <div class="message-content">
-            你好！我是你的健身智能助手。我可以帮你制定训练计划、解答健身疑问、提供饮食建议等。请告诉我你需要什么帮助？
+            你好！我是你的康训智能助手。我可以帮你制定训练计划、解答康训疑问、提供饮食建议等。请告诉我你需要什么帮助？
           </div>
         </div>
       </div>
@@ -266,9 +266,9 @@ $(document).ready(function() {
         <div class="message-container">
           <div class="bot-avatar-container">
             <div class="avatar">
-              <img src="${botAvatarUrl}" alt="健身助手" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2936/2936886.png'">
+              <img src="${botAvatarUrl}" alt="康训助手" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2936/2936886.png'">
             </div>
-            <div class="username">健身助手</div>
+            <div class="username">康训助手</div>
           </div>
           <div class="bot-message">
             <div class="message-content">

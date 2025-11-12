@@ -100,27 +100,27 @@ CREATE TABLE `user_discussion`  (
 -- ----------------------------
 -- Records of user_discussion
 -- ----------------------------
-INSERT INTO `user_discussion` VALUES (2, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/1老刘_2024-05-02_13-44-35背景.png', 'test_unit', '2025-04-13 14:01:42', NULL, '2025-04-13 14:01:42', 0);
-INSERT INTO `user_discussion` VALUES (3, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/1老刘_2024-05-02_14-40-02背景.png', '1', '2025-04-13 13:37:31', NULL, '2025-04-13 13:37:31', 0);
-INSERT INTO `user_discussion` VALUES (4, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/1老刘_2024-05-02_15-30-38登录背景.jpg', '1', '2025-04-13 13:50:57', NULL, '2025-04-13 13:50:57', 0);
-INSERT INTO `user_discussion` VALUES (5, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-02_16-33-08cc563448_E779265_2dcaf48f.jpg', '1', '2025-04-13 13:52:01', NULL, '2025-04-13 13:52:01', 0);
-INSERT INTO `user_discussion` VALUES (6, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-03_12-00-54下载2.png', '1', '2025-04-13 13:52:01', NULL, '2025-04-13 13:52:01', 0);
-INSERT INTO `user_discussion` VALUES (7, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-03_13-22-55书.jpg', '1', '2025-04-13 13:56:09', NULL, '2025-04-13 13:56:09', 0);
-INSERT INTO `user_discussion` VALUES (8, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-06_07-57-19cc563448_E779265_2dcaf48f.jpg', '1', '2025-04-13 13:56:34', NULL, '2025-04-13 13:56:34', 0);
-INSERT INTO `user_discussion` VALUES (9, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-06_07-57-47下载2.png', '1', '2025-04-13 13:58:18', NULL, '2025-04-13 13:58:18', 0);
-INSERT INTO `user_discussion` VALUES (10, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/2老刘_2024-05-04_17-29-51下载2.png', '1', '2025-04-13 13:59:36', NULL, '2025-04-13 13:59:36', 0);
-INSERT INTO `user_discussion` VALUES (11, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:00:21', NULL, '2025-04-13 14:00:21', 0);
-INSERT INTO `user_discussion` VALUES (12, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:01:42', NULL, '2025-04-13 14:01:42', 0);
-INSERT INTO `user_discussion` VALUES (13, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:06:34', NULL, '2025-04-13 14:06:34', 0);
-INSERT INTO `user_discussion` VALUES (14, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:06:52', NULL, '2025-04-13 14:06:52', 0);
-INSERT INTO `user_discussion` VALUES (15, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:12:38', NULL, '2025-04-13 14:12:38', 0);
-INSERT INTO `user_discussion` VALUES (16, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:12:38', NULL, '2025-04-13 14:12:38', 0);
-INSERT INTO `user_discussion` VALUES (17, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:13:13', NULL, '2025-04-13 14:13:13', 0);
-INSERT INTO `user_discussion` VALUES (18, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:13:13', NULL, '2025-04-13 14:13:13', 0);
-INSERT INTO `user_discussion` VALUES (19, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-14 11:25:13', NULL, '2025-04-14 11:25:13', 0);
-INSERT INTO `user_discussion` VALUES (20, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-14 11:31:24', NULL, '2025-04-14 11:31:24', 0);
-INSERT INTO `user_discussion` VALUES (21, '如何健身', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-14 11:33:14', NULL, '2025-04-14 11:33:14', 0);
-INSERT INTO `user_discussion` VALUES (22, '如何健身', '1.坚持打卡', 'images/', '1', '2025-04-14 19:57:25', NULL, '2025-04-14 19:57:25', 0);
+INSERT INTO `user_discussion` VALUES (2, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/1老刘_2024-05-02_13-44-35背景.png', 'test_unit', '2025-04-13 14:01:42', NULL, '2025-04-13 14:01:42', 0);
+INSERT INTO `user_discussion` VALUES (3, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/1老刘_2024-05-02_14-40-02背景.png', '1', '2025-04-13 13:37:31', NULL, '2025-04-13 13:37:31', 0);
+INSERT INTO `user_discussion` VALUES (4, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/1老刘_2024-05-02_15-30-38登录背景.jpg', '1', '2025-04-13 13:50:57', NULL, '2025-04-13 13:50:57', 0);
+INSERT INTO `user_discussion` VALUES (5, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-02_16-33-08cc563448_E779265_2dcaf48f.jpg', '1', '2025-04-13 13:52:01', NULL, '2025-04-13 13:52:01', 0);
+INSERT INTO `user_discussion` VALUES (6, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-03_12-00-54下载2.png', '1', '2025-04-13 13:52:01', NULL, '2025-04-13 13:52:01', 0);
+INSERT INTO `user_discussion` VALUES (7, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-03_13-22-55书.jpg', '1', '2025-04-13 13:56:09', NULL, '2025-04-13 13:56:09', 0);
+INSERT INTO `user_discussion` VALUES (8, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-06_07-57-19cc563448_E779265_2dcaf48f.jpg', '1', '2025-04-13 13:56:34', NULL, '2025-04-13 13:56:34', 0);
+INSERT INTO `user_discussion` VALUES (9, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/1李建立666_2024-05-06_07-57-47下载2.png', '1', '2025-04-13 13:58:18', NULL, '2025-04-13 13:58:18', 0);
+INSERT INTO `user_discussion` VALUES (10, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/2老刘_2024-05-04_17-29-51下载2.png', '1', '2025-04-13 13:59:36', NULL, '2025-04-13 13:59:36', 0);
+INSERT INTO `user_discussion` VALUES (11, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:00:21', NULL, '2025-04-13 14:00:21', 0);
+INSERT INTO `user_discussion` VALUES (12, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:01:42', NULL, '2025-04-13 14:01:42', 0);
+INSERT INTO `user_discussion` VALUES (13, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:06:34', NULL, '2025-04-13 14:06:34', 0);
+INSERT INTO `user_discussion` VALUES (14, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:06:52', NULL, '2025-04-13 14:06:52', 0);
+INSERT INTO `user_discussion` VALUES (15, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:12:38', NULL, '2025-04-13 14:12:38', 0);
+INSERT INTO `user_discussion` VALUES (16, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:12:38', NULL, '2025-04-13 14:12:38', 0);
+INSERT INTO `user_discussion` VALUES (17, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:13:13', NULL, '2025-04-13 14:13:13', 0);
+INSERT INTO `user_discussion` VALUES (18, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-13 14:13:13', NULL, '2025-04-13 14:13:13', 0);
+INSERT INTO `user_discussion` VALUES (19, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-14 11:25:13', NULL, '2025-04-14 11:25:13', 0);
+INSERT INTO `user_discussion` VALUES (20, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-14 11:31:24', NULL, '2025-04-14 11:31:24', 0);
+INSERT INTO `user_discussion` VALUES (21, '如何康训', '1.坚持打卡 ， 2.坚持锻炼', 'images/', '1', '2025-04-14 11:33:14', NULL, '2025-04-14 11:33:14', 0);
+INSERT INTO `user_discussion` VALUES (22, '如何康训', '1.坚持打卡', 'images/', '1', '2025-04-14 19:57:25', NULL, '2025-04-14 19:57:25', 0);
 INSERT INTO `user_discussion` VALUES (23, 'Test Title', 'Test content', 'images/1老刘_2024-05-02_13-44-35背景.png', '1', '2025-04-15 14:40:16', NULL, '2025-04-15 14:40:16', 0);
 INSERT INTO `user_discussion` VALUES (24, 'title', 'hello world', 'images/', '3', '2025-04-16 18:57:28', '3', '2025-04-16 18:57:28', 0);
 

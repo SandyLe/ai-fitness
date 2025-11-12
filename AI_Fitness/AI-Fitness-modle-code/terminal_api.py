@@ -111,7 +111,7 @@ def main():
     print("配置路径:", CONFIG_PATH)
     
     try:
-        print("欢迎使用健身助手终端API！输入'退出'来结束对话。")
+        print("欢迎使用康训助手终端API！输入'退出'来结束对话。")
         
         while True:
             # 获取用户输入
@@ -119,7 +119,7 @@ def main():
             
             # 退出条件
             if user_input.lower() in ["退出", "exit", "quit"]:
-                print("助手：再见！祝你健身顺利！")
+                print("助手：再见！祝你康训顺利！")
                 break
                 
             print("正在生成响应...")

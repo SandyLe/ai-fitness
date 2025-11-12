@@ -6,7 +6,7 @@ from datetime import datetime
 class MyTestCase(unittest.TestCase):
     def test_add_discussion(self):
         add_discussion({
-            "title": "如何健身",
+            "title": "如何康训",
             "content": "1.坚持打卡 ， 2.坚持锻炼",
             "image_path": "https://123.png",
             "created_by": None,
@@ -16,7 +16,7 @@ class MyTestCase(unittest.TestCase):
         })
     def test_update_discussion(self):
         update_discussion({
-            "title": "如何健身",
+            "title": "如何康训",
             "content": "1.坚持打卡 ， 2.坚持锻炼",
             "image_path": "https://123.png",
             "created_by": "test_unit",

@@ -3,15 +3,15 @@
     <a href="{{ url_for('auth.shouye') }}" class="navbar-logo-a">
         <div class="logo">
             <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
-            <h1>智能健身私教</h1>
+            <h1>智体康训</h1>
         </div>
     </a>
     <div class="nav-menu">
         <a href="{{ url_for('auth.shouye') }}" class="navbar-a {% if active_page == 'home' %}active{% endif %}">首页</a>
-        <a href="#courses" class="navbar-a {% if active_page == 'courses' %}active{% endif %}">健身课程</a>
-        <a href="{{ url_for('fitness.start_fitness') }}" class="navbar-a {% if active_page == 'start_fitness' %}active{% endif %}">开始健身</a>
+        <a href="#courses" class="navbar-a {% if active_page == 'courses' %}active{% endif %}">康训课程</a>
+        <a href="{{ url_for('fitness.start_fitness') }}" class="navbar-a {% if active_page == 'start_fitness' %}active{% endif %}">开始训练</a>
         <a href="{{ url_for('ai_assistant.ai_assistant') }}" class="navbar-a {% if active_page == 'ai_assistant' %}active{% endif %}">智能助手</a>
-        <a href="{{ url_for('community.community') }}" class="navbar-a {% if active_page == 'community' %}active{% endif %}">健身社区</a>
+        <a href="{{ url_for('community.community') }}" class="navbar-a {% if active_page == 'community' %}active{% endif %}">康训社区</a>
         <a href="#nutrition" class="navbar-a {% if active_page == 'nutrition' %}active{% endif %}">营养指导</a>
         
         <!-- 修改用户下拉菜单部分 -->
@@ -46,10 +46,10 @@
     <!-- 移动端菜单 -->
     <div class="mobile-menu" id="mobileMenu">
         <a href="{{ url_for('auth.shouye') }}" onclick="closeMobileMenu()" {% if active_page == 'home' %}class="active"{% endif %}>首页</a>
-        <a href="#courses" onclick="closeMobileMenu()" {% if active_page == 'courses' %}class="active"{% endif %}>健身课程</a>
-        <a href="{{ url_for('fitness.start_fitness') }}" onclick="closeMobileMenu()" {% if active_page == 'start_fitness' %}class="active"{% endif %}>开始健身</a>
+        <a href="#courses" onclick="closeMobileMenu()" {% if active_page == 'courses' %}class="active"{% endif %}>康训课程</a>
+        <a href="{{ url_for('fitness.start_fitness') }}" onclick="closeMobileMenu()" {% if active_page == 'start_fitness' %}class="active"{% endif %}>开始训练</a>
         <a href="{{ url_for('ai_assistant.ai_assistant') }}" onclick="closeMobileMenu()" {% if active_page == 'ai_assistant' %}class="active"{% endif %}>智能助手</a>
-        <a href="{{ url_for('community.community') }}" onclick="closeMobileMenu()" {% if active_page == 'community' %}class="active"{% endif %}>健身社区</a>
+        <a href="{{ url_for('community.community') }}" onclick="closeMobileMenu()" {% if active_page == 'community' %}class="active"{% endif %}>康训社区</a>
         <a href="#nutrition" onclick="closeMobileMenu()" {% if active_page == 'nutrition' %}class="active"{% endif %}>营养指导</a>
         
         {% if session.get('user_id') %}

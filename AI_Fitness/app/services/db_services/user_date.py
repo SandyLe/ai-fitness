@@ -138,11 +138,11 @@ def get_score_data_for_user(user_id: int):
 
 def save_fitness_report(user_id: int, report_data: dict, exercise_type: str, action_analyse: str = ''):
     """
-    保存健身报告数据到用户数据表
+    保存康训报告数据到用户数据表
     
     Args:
         user_id: 用户ID
-        report_data: 健身报告数据，包含score, analysis, advice等字段
+        report_data: 康训报告数据，包含score, analysis, advice等字段
         exercise_type: 训练动作类型
         action_analyse: 动作分析内容，默认为空字符串
         
@@ -183,14 +183,14 @@ def save_fitness_report(user_id: int, report_data: dict, exercise_type: str, act
 
 def get_latest_fitness_reports(user_id: int, limit: int = 5):
     """
-    获取用户最近的健身报告数据
+    获取用户最近的康训报告数据
     
     Args:
         user_id: 用户ID
         limit: 限制返回的记录数量，默认5条
         
     Returns:
-        Response对象，包含最近的健身报告数据
+        Response对象，包含最近的康训报告数据
     """
     if not user_id:
         return Response.fail(code=500, msg="用户ID不能为空")
@@ -208,21 +208,21 @@ def get_latest_fitness_reports(user_id: int, limit: int = 5):
         )
         
         if result is None or len(result) == 0:
-            return Response.fail(code=404, msg="未找到用户健身报告数据")
+            return Response.fail(code=404, msg="未找到用户康训报告数据")
         
         return Response.success(data=result)
     except Exception as e:
-        return Response.fail(code=500, msg=f"查询用户健身报告数据失败: {str(e)}")
+        return Response.fail(code=500, msg=f"查询用户康训报告数据失败: {str(e)}")
 
 def get_user_fitness_stats(user_id: int):
     """
-    获取用户健身统计数据，包括总训练次数、平均分数等
+    获取用户康训统计数据，包括总训练次数、平均分数等
     
     Args:
         user_id: 用户ID
         
     Returns:
-        Response对象，包含用户健身统计数据
+        Response对象，包含用户康训统计数据
     """
     if not user_id:
         return Response.fail(code=500, msg="用户ID不能为空")
@@ -243,7 +243,7 @@ def get_user_fitness_stats(user_id: int):
         result = conn.query(sql, [user_id])
         
         if not result:
-            return Response.fail(code=404, msg="未找到用户健身统计数据")
+            return Response.fail(code=404, msg="未找到用户康训统计数据")
         
         # 处理结果
         stats = {
@@ -255,4 +255,4 @@ def get_user_fitness_stats(user_id: int):
         
         return Response.success(data=stats)
     except Exception as e:
-        return Response.fail(code=500, msg=f"查询用户健身统计数据失败: {str(e)}")
+        return Response.fail(code=500, msg=f"查询用户康训统计数据失败: {str(e)}")

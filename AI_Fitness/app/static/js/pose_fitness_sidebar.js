@@ -962,9 +962,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(overlay);
     }
     
-    // 显示健身报告 - 移到内部
+    // 显示康训报告 - 移到内部
     function showFitnessReport() {
-        console.log("显示健身报告", exerciseType); // 添加日志
+        console.log("显示康训报告", exerciseType); // 添加日志
         
         // 移除加载动效
         const overlay = document.getElementById('report-loading-overlay');
@@ -991,7 +991,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 createReportUI(reportData);
             })
             .catch(error => {
-                console.error('获取健身报告失败:', error);
+                console.error('获取康训报告失败:', error);
                 
                 // 创建错误报告
                 const contentContainer = document.querySelector('.container') || document.body;
@@ -1028,7 +1028,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-    // 获取健身报告数据 - 移到内部
+    // 获取康训报告数据 - 移到内部
     async function fetchFitnessReport(exerciseType) {
         console.log("请求报告数据", exerciseType); // 添加日志
         
@@ -1107,7 +1107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 创建报告标题
         const reportTitle = document.createElement('h2');
-        reportTitle.textContent = '健身训练报告';
+        reportTitle.textContent = '康训训练报告';
         reportTitle.style.textAlign = 'center';
         reportTitle.style.color = '#00c8ff';
         reportTitle.style.borderBottom = '2px solid #00c8ff';
@@ -1375,7 +1375,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 添加保存健身报告的函数
+    // 添加保存康训报告的函数
     async function saveFitnessReport(reportData) {
         try {
             // 获取当前用户ID
