@@ -84,7 +84,8 @@ class MYSQL:
                 table=table, params=params)
 
             cursor.execute(sql, tuple(data.values()))
-            last_id = self.connection.insert_id()
+            # last_id = self.connection.insert_id()
+            last_id = cursor.lastrowid
 
             self.connection.commit()
             return last_id

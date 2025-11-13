@@ -9,6 +9,8 @@
 '''
 from datetime import datetime
 
+from sympy.strategies.branch import condition
+
 from app.config import DB_CONFIG
 from app.utils.libmysql import MYSQL
 from app.utils.result_type import Response
@@ -121,4 +123,18 @@ def get_clock_ins_for_user(user_id: int, start_date=None, end_date=None):
     # if end_date:
     #     condition['data_lte'] = end_date   # Placeholder for actual condition
 
-    return get_clock_in(condition) 
+    return get_clock_in(condition)
+
+def get_clock_ins_for_user_date(user_id: int, start_date=None, end_date=None):
+    """获取指定用户的所有打卡记录 (可选日期范围)"""
+    if not user_id:
+        return Response.fail(code=500, msg="用户ID不能为空")
+    # condition = {"user_id": user_id}
+    # Add date range filtering on the 'data' column if needed
+    # Example requires specific implementation in libmysql or raw SQL
+    # if start_date:
+    #     condition['data_gte'] = start_date # Placeholder for actual condition
+    # if end_date:
+    #     condition['data_lte'] = end_date   # Placeholder for actual condition
+    condition = 'user_id = ' + user_id + ' AND data < \'2025-11-14\' limit 1'
+    return get_clock_in(condition)
