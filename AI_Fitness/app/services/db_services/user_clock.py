@@ -9,11 +9,10 @@
 '''
 from datetime import datetime
 
-from sympy.strategies.branch import condition
-
 from app.config import DB_CONFIG
 from app.utils.libmysql import MYSQL
 from app.utils.result_type import Response
+import time
 
 conn = MYSQL(
     dbhost=DB_CONFIG['host'],
@@ -136,5 +135,27 @@ def get_clock_ins_for_user_date(user_id: int, start_date=None, end_date=None):
     #     condition['data_gte'] = start_date # Placeholder for actual condition
     # if end_date:
     #     condition['data_lte'] = end_date   # Placeholder for actual condition
-    condition = 'user_id = ' + user_id + ' AND data < \'2025-11-14\' limit 1'
+    start_time = time.strftime("%Y-%m-%d", time.localtime(start_date)) + ' 00:00:00'
+    end_time = time.strftime("%Y-%m-%d", time.localtime(end_date)) + ' 23:59:59'
+    condition = 'user_id = {} AND (data > \'{}\') AND data < \'{}\' limit 1'.format(user_id, start_time, end_time)
     return get_clock_in(condition)
+
+def count_clock_in(user_id: int, start_date=None, end_date=None):
+    condition = 'user_id = {} '.format(user_id)
+    if (start_date is not None) :
+        start_time = time.strftime("%Y-%m-%d", time.localtime(start_date)) + ' 00:00:00'
+        condition = condition + ' AND (data > \'{}\') '.format(start_time)
+    if (end_date is not None) :
+       end_time = time.strftime("%Y-%m-%d", time.localtime(end_date)) + ' 23:59:59'
+       condition = condition + ' AND (data < \'{}\') '.format(end_time)
+
+    if not condition or len(condition) == 0:
+        return Response.fail(code=500, msg="查询条件不能为空")
+    try:
+        result = conn.count(TABLE_NAME, condition=condition)
+        # Rename 'data' field in list response if desired
+        # for row in result:
+        #     row['clock_time'] = row.pop('data')
+        return Response.success(data=result) # 返回列表
+    except Exception as e:
+        return Response.fail(code=500, msg=f"查询打卡记录失败: {str(e)}")

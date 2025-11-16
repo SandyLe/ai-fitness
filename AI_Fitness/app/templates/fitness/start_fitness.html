@@ -213,7 +213,7 @@
                 </div>
                 <div class="clock-content">
                     <div class="clock-status">
-                        <span class="status-text">今日打卡状态：</span>
+                        <span class="status-text">今日打卡状态：<input type="hidden" id ="clickedBtn" value={{user.clocked}}></span>
                         <span class="status-value">未打卡</span>
                     </div>
                     <div class="clock-streak">
@@ -225,7 +225,7 @@
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: 0%"></div>
                         </div>
-                        <div class="progress-text">本月打卡：0/30天</div>
+                        <div class="progress-text">本月打卡：{{user.clock_month}}/{{user.month}}天</div>
                     </div>
                     <button class="clock-btn">
                         <i class="clock-icon"></i>立即打卡
@@ -375,4 +375,6 @@
 <script type="text/javascript" src="{{ url_for('static',filename='js/base.musclewiki.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static',filename='js/base.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static',filename='js/muscle.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/jquery/jquery-3.7.1.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/start_fitness.js')}}"></script>
 {% endblock %}

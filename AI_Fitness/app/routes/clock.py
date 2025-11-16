@@ -29,8 +29,7 @@ def add_clock_in():
     # 从session获取用户ID
     user_clock_data = request.get_json()
     # user_clock_data = json.loads(data)
-    user_id = session.get('user_id', '7')
-    result_clock = user_clock.get_clock_ins_for_user_date(user_id)
+    user_id = session.get('user_id', '0')
     logger.info(f"user_id>>>={user_id}")
     user_clock_data['data'] = datetime.now()
     user_clock_data['created_by'] = user_id
@@ -43,6 +42,12 @@ def add_clock_in():
     return jsonify(result.__dict__)
 
 
+@clock_bp.route('/get_clock_ins_for_user_date', methods=['GET'])
+def get_clock_ins_for_user_date():
+    """获取当前登录用户的ID"""
+    user_id = session.get('user_id', '7')
+    result_clock = user_clock.count_clock_in(user_id, datetime.now().timestamp(), datetime.now().timestamp())
+    return jsonify(result_clock.__dict__)
 '''
 肌肉练习
 muscle:肌肉名称
@@ -235,8 +240,3 @@ def save_fitness_report_route():
 
 
 # 添加获取当前用户ID的路由
-@clock_bp.route('/get_current_user_id', methods=['GET'])
-def get_current_user_id():
-    """获取当前登录用户的ID"""
-    user_id = session.get('user_id', '0')
-    return jsonify({"user_id": user_id})

@@ -1,7 +1,10 @@
 import logging as python_logging
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, jsonify
 from app.services import db_service
+from app.services.db_services import user_clock
 from app.services.basefunc import get_current_data
+from datetime import datetime
+import calendar
 from functools import wraps
 import json
 import os
@@ -25,7 +28,21 @@ def start_fitness():
     # 从session获取用户ID
     user_id = session.get('user_id', '0')
     logger.info(f"user_id>>>={user_id}")
-    user = {"user_id": user_id, "user_name": session.get("username"), "clock": 2}
+    today = datetime.now()
+    first_day_of_month = today.replace(day=1)
+    _,last_day_of_month_num = calendar.monthrange(today.year, today.month)
+    last_day_of_month = today.replace(day=last_day_of_month_num)
+    clock_count = user_clock.count_clock_in(user_id, datetime.now().timestamp(), datetime.now().timestamp())
+    clock_count_month = user_clock.count_clock_in(user_id, first_day_of_month.timestamp(), last_day_of_month.timestamp())
+    clock_count_continue = user_clock.count_clock_in(user_id)
+    user = {
+        "user_id": user_id,
+        "user_name": session.get("username"),
+        "clock": clock_count_continue.data,
+        "clocked": clock_count.data,
+        "clock_month": clock_count_month.data,
+        "month": last_day_of_month_num
+    }
     return render_template('fitness/start_fitness.html', active_page='start_fitness', user=user)
 
 

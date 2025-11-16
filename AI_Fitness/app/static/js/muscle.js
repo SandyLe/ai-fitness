@@ -251,6 +251,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const clockBtn = document.querySelector('.clock-btn');
     if (clockBtn) {
         clockBtn.addEventListener('click', function() {
+            /*if (clockBtn.textContent == '今日已打卡') {
+                return;
+            }*/
+            $.ajax({
+                url: '/clock/add_clock_in',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({user_id: 7}),
+                success: function(response) {
+                    console.log('Success:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                },
+                complete: function() {}
+            });
+
             // 更新打卡状态
             const statusValue = document.querySelector('.status-value');
             if (statusValue.textContent === '未打卡') {
