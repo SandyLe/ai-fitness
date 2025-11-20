@@ -9,5 +9,8 @@ ai_assistant_bp = Blueprint('ai_assistant', __name__, url_prefix='/ai_assistant'
 def ai_assistant():
     # 从session获取用户ID，如果没有则默认为0
     user_id = session.get('user_id', '0')
-    user = ''
+    user = {
+        "user_id": user_id,
+        "user_name": session.get("username")
+    }
     return render_template("ai_assistant/ai_assistant.html", id=user_id, user=user, active_page='ai_assistant')

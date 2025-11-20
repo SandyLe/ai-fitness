@@ -392,12 +392,12 @@ $(document).ready(function() {
       alert("当前没有可添加到计划的内容");
       return;
     }
-    
+
     const lastAssistantMessage = assistantMessages[assistantMessages.length - 1].content;
     
     $("#loading").show();
     // 发送数据到服务器
-    $.ajax({
+    /*$.ajax({
       url: "/add-to-plan?id=" + userid,
       type: "post",
       contentType: "application/x-www-form-urlencoded",
@@ -414,9 +414,96 @@ $(document).ready(function() {
     }).fail(function() {
       alert("网络错误，请稍后重试！");
       $("#loading").hide();
-    });
+    });*/
   });
-  
+
+  $("#add_to_plan_button").modalInput({
+      title: "请给计划起个名吧",
+      animation: "zoom", // fade / zoom / slide
+
+      fields: [
+        {
+          type: "text",
+          name: "title",
+          label: "计划名称",
+          placeholder: "请输入计划名称",
+          validate: v => v ? {valid:true} : {valid:false, msg:"计划名称不能为空"}
+        },
+        /*{
+          type: "textarea",
+          name: "desc",
+          label: "描述",
+          placeholder: "请输入描述内容",
+          default: "",
+          validate: v => ({valid:true})
+        },
+        {
+          type: "select",
+          name: "category",
+          label: "类别",
+          default: "sport",
+          options: [
+            {value:"sport", label:"运动"},
+            {value:"diet",  label:"饮食"},
+            {value:"rest",  label:"休息"}
+          ]
+        },
+        {
+          type: "radio",
+          name: "level",
+          label: "强度等级",
+          default: "middle",
+          options: [
+            {value:"low", label:"低"},
+            {value:"middle", label:"中"},
+            {value:"high", label:"高"},
+          ]
+        }*/
+      ],
+
+      onConfirm: function(values){
+        alert("提交的数据：" + JSON.stringify(values, null, 2));
+        submitPlan(values.title);
+      }
+    });
+
+  function submitPlan(title) {
+      // 获取当前对话中最后一条助手消息
+        const chat = chatHistory.find(c => c.id === currentChatId);
+        if (!chat || !chat.messages.length) {
+          alert("当前没有可添加到计划的内容");
+          return;
+        }
+
+        const assistantMessages = chat.messages.filter(m => m.role === 'assistant');
+        if (!assistantMessages.length) {
+          alert("当前没有可添加到计划的内容");
+          return;
+        }
+
+        const lastAssistantMessage = assistantMessages[assistantMessages.length - 1].content;
+
+        $("#loading").show();
+        // 发送数据到服务器
+        $.ajax({
+          url: "/add-to-plan?id=" + userid,
+          type: "post",
+          contentType: "application/x-www-form-urlencoded",
+          data: 'message=' + encodeURIComponent(lastAssistantMessage) + '&title=' + title
+        }).done(function(response) {
+          if (!response.success) {
+            alert(response.error);
+          } else if (response.success) {
+            alert("已成功加入您的计划！");
+          } else {
+            alert("加入计划失败，请稍后重试！");
+          }
+          $("#loading").hide();
+        }).fail(function() {
+          alert("网络错误，请稍后重试！");
+          $("#loading").hide();
+        });
+    }
   // 初始化
   loadChatHistory();
 });

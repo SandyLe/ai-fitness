@@ -189,7 +189,7 @@ CREATE TABLE `user_plan`  (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `user_id` int(20) NULL DEFAULT NULL COMMENT '用户id',
   `plan` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '用户计划完成目标',
-  `context` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '实际完成的目标',
+  `context` varchar(2000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '实际完成的目标',
   `created_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
   `created_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '更新人',
@@ -252,3 +252,21 @@ CREATE TABLE `user_topic`  (
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
+-- work_out.user_plan definition
+
+DROP TABLE IF EXISTS `user_plan_detail`;
+CREATE TABLE `user_plan_detail` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `parent_id` int(20) NOT NULL COMMENT '父级id',
+  `user_id` int(20) DEFAULT NULL COMMENT '用户id',
+  `plan` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '用户计划完成目标',
+  `context` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '完成的目标明细',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `plan_time` datetime DEFAULT NULL COMMENT '计划实施时间',
+  `plan_day` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '计划实施时间周几',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='用户计划表明细';

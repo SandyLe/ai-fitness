@@ -1,7 +1,8 @@
-from flask import request, jsonify, render_template
+from flask import request, jsonify, render_template, session
 from app import app
 from app.services import db_service
 from app.services.aiApi import config, getText, checklen, main
+from app.services.db_services import user_plan, user_plan_detail
 import threading
 import queue
 import uuid
@@ -331,6 +332,7 @@ def append_prompt_to_question(question_text):
 
     # 将原问题和提示语句拼接
     enhanced_question = f"用户的输入:{question_text};\n回答这个问题或输入内容之前前请先判断:{system_prompt}\n\n;"
+    # enhanced_question = f"用户的输入:{question_text};\n 用印尼语输出回答内容\n\n"
     return enhanced_question
 
 
@@ -543,8 +545,41 @@ def add_to_plan():
         if id == '0':
             return jsonify({"success": False, 'error': "您还未登录，请登录后使用！！"})
 
+        user_id = session.get('user_id', '0');
         # 从前端获取数据
         message = request.form.get('message')
+        title = request.form.get('title')
+
+        plan_parent = {
+            "user_id": user_id,
+            "plan": title,
+            "context": message,
+            "is_deleted": 0
+        }
+
+        parent = user_plan.add_plan(plan_parent)
+
+        plan = analizePlan(message)
+        for day_, plan_day_arr in plan.items():
+            day_title = '';
+            day_content = ''
+            for arr in plan_day_arr:
+                if (arr['type'] == 'title'):
+                    day_title = arr['text']
+                else:
+                    day_content = day_content + arr['text'] + "\n"
+            plan_detail = {
+                "parent_id": parent.data['id'],
+                "user_id": user_id,
+                "plan_day": day_,
+                "plan_time": None,
+                "plan": day_title,
+                "context": day_content,
+                "is_deleted": 0
+            }
+            user_plan_detail.add_plan_detail(plan_detail)
+            print(day_, plan_day_arr)
+
         if not message or message == '666':
             return jsonify({"success": False, "error": "当前未生成计划"})
 
@@ -584,6 +619,49 @@ def cleanup_thread_func():
             print(f"Cleanup thread error: {str(e)}")
         
         time.sleep(1800)  # 每30分钟清理一次
+
+def analizePlan(text):
+    week_days = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    plan = {day: [] for day in week_days}
+
+    # 正则：匹配 #### 周一：标题
+    day_header_re = re.compile(r"^####\s*([^：:]+)[:：](.*)$")
+
+    current_days = []  # 解析到“周六/周日”时会出现多个 day
+    current_title = ""
+
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+
+        # 是否遇到新的 “#### 周X：标题”
+        m = day_header_re.match(line)
+        if m:
+            day_text = m.group(1).strip()
+            current_title = m.group(2).strip()
+
+            # 处理 "周六/周日" 这种情况
+            current_days = [d.strip() for d in re.split(r"[、/]", day_text)]
+
+            # 初始化条目：在每一天写入标题
+            for d in current_days:
+                if d in plan:
+                    plan[d].append({"type": "title", "text": current_title})
+            continue
+
+        # 内容行（动作/说明）
+        if current_days:
+            for d in current_days:
+                if d in plan:
+                    plan[d].append({"type": "item", "text": line})
+
+    # ====== 输出结果 ======
+    print("\n=== 按周一~周日解析结果 ===\n")
+    print(plan)
+    return plan
+
+
 
 # 启动清理线程
 start_cleanup_thread()
