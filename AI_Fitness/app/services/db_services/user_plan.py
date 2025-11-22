@@ -139,3 +139,11 @@ def get_plans_for_user(user_id: int):
         return Response.fail(code=500, msg="用户ID不能为空")
     condition = {"user_id": user_id, "is_deleted": 0}
     return get_plan(condition)
+
+
+def get_active_plan_for_user(user_id: int):
+    """获取指定用户的所有计划 (未删除的)"""
+    if not user_id:
+        return Response.fail(code=500, msg="用户ID不能为空")
+    condition = {"user_id": user_id, "is_deleted": 2}
+    return get_plan(condition)

@@ -270,3 +270,38 @@ CREATE TABLE `user_plan_detail` (
   `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='用户计划表明细';
+
+
+DROP TABLE IF EXISTS `course_theme`;
+CREATE TABLE `course_theme` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `theme_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '名称',
+  `indications` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '适用病症',
+  `rehabilitation_goal` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '康复目标',
+  `training_frequency` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '训练运动频率',
+  `training_action` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '训练运动',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程主题表';
+
+
+DROP TABLE IF EXISTS `course`;
+CREATE TABLE `course` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `theme` int(20)  COMMENT '主题id',
+  `name` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程名称',
+  `brife_introduction` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程简介',
+  `video_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '视频地址',
+  `img_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '图片地址',
+  `course_desc` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程描述',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程表';

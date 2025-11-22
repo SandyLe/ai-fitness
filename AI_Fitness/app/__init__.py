@@ -34,12 +34,14 @@ def create_app():
     from app.routes.community import community_bp
     from app.routes.fitness import fitness_bp
     from app.routes.clock import clock_bp
+    from app.services.userPlanApi import user_plan_bp
     
     app.register_blueprint(auth_bp)
     app.register_blueprint(ai_assistant_bp)
     app.register_blueprint(community_bp)
     app.register_blueprint(fitness_bp)
     app.register_blueprint(clock_bp)
+    app.register_blueprint(user_plan_bp)
     
     logger.info("应用程序初始化完成")
     return app

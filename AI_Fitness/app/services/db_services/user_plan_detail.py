@@ -141,7 +141,7 @@ def get_plans_detail_for_user(user_id: int):
     return get_plan_detail(condition)
 
 
-def get_plan_by_id(plan_id: int):
+def get_plan_detail_by_plan_id(plan_id: int):
      """根据ID获取单个用户计划信息"""
      if not plan_id:
          return Response.fail(code=500, msg="计划ID不能为空")

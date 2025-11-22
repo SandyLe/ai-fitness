@@ -385,6 +385,7 @@ small {
 .day-card p {
     margin: 0 0 10px;
     font-size: 14px;
+    height: 40%;
     color: #a0a0a0;
 }
 

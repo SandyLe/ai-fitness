@@ -23,7 +23,7 @@
                 <li class="nav-item" data-tab="fitness-data">
                     <i class="fas fa-chart-line"></i> 康训数据
                 </li>
-                <li class="nav-item" data-tab="training-plan">
+                <li class="nav-item" data-tab="training-plan" id="nav_training-plan">
                     <i class="fas fa-dumbbell"></i> 训练计划
                 </li>
                 <li class="nav-item" data-tab="nutrition">
@@ -51,6 +51,7 @@
                         <div class="form-group">
                             <label for="username">用户名</label>
                             <input type="text" id="username" value="{{ user.user_name }}" disabled>
+                            <input type="hidden" id="userid" value="{{ user.user_id|default('0') }}">
                             <small>用户名不可修改</small>
                         </div>
                         
@@ -206,7 +207,7 @@
                     </div>
                     
                     <div class="current-plan">
-                        <h4>增肌塑形 - 中级计划</h4>
+                        <h4 id = "plan-title">增肌塑形 - 中级计划</h4>
                         <div class="plan-progress">
                             <div class="progress-bar">
                                 <div class="progress" style="width: 65%;"></div>
@@ -217,37 +218,37 @@
                         <div class="weekly-schedule">
                             <div class="day-card">
                                 <h5>周一</h5>
-                                <p>胸部 + 三头肌</p>
+                                <p id = "p-mon">胸部 + 三头肌</p>
                                 <span class="status completed">已完成</span>
                             </div>
                             <div class="day-card">
                                 <h5>周二</h5>
-                                <p>背部 + 二头肌</p>
+                                <p id = "p-tues">背部 + 二头肌</p>
                                 <span class="status completed">已完成</span>
                             </div>
                             <div class="day-card active">
                                 <h5>周三</h5>
-                                <p>腿部 + 肩部</p>
+                                <p id = "p-wed">腿部 + 肩部</p>
                                 <span class="status">今日训练</span>
                             </div>
                             <div class="day-card">
                                 <h5>周四</h5>
-                                <p>休息日</p>
+                                <p id = "p-thur">休息日</p>
                                 <span class="status">休息</span>
                             </div>
                             <div class="day-card">
                                 <h5>周五</h5>
-                                <p>全身训练</p>
+                                <p id = "p-fri">全身训练</p>
                                 <span class="status">未开始</span>
                             </div>
                             <div class="day-card">
                                 <h5>周六</h5>
-                                <p>有氧训练</p>
+                                <p id = "p-sat">有氧训练</p>
                                 <span class="status">未开始</span>
                             </div>
                             <div class="day-card">
                                 <h5>周日</h5>
-                                <p>休息日</p>
+                                <p id = "p-sun">休息日</p>
                                 <span class="status">休息</span>
                             </div>
                         </div>
@@ -412,5 +413,8 @@
 {% endblock %}
 
 {% block extra_js %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dialog/dialog.css') }}">>
+<script type="text/javascript" src="{{ url_for('static',filename='js/jquery/jquery-3.7.1.min.js')}}"></script>
+<script src="{{ url_for('static', filename='dialog/dialog.js') }}"></script>
 <script src="{{ url_for('static', filename='js/user_center.js') }}"></script>
 {% endblock %}
