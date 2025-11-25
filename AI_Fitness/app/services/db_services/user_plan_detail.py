@@ -4,8 +4,8 @@
 @Project ：fitenss_items
 @File    ：user_plan_detail.py
 @IDE     ：PyCharm
-@Author  ：写BUG的Botter
-@Date    ：2025/4/12
+@Author  ：SandyLee
+@Date    ：2025/11/14
 '''
 from datetime import datetime
 

@@ -289,15 +289,19 @@ CREATE TABLE `course_theme` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程主题表';
 
 
+
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `theme` int(20)  COMMENT '主题id',
+  `theme_id` int(20)  COMMENT '主题id',
   `name` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程名称',
+  `level` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '等级',
   `brife_introduction` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程简介',
   `video_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '视频地址',
   `img_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '图片地址',
   `course_desc` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程描述',
+  `duration` int(4) DEFAULT NULL COMMENT '课程时长',
+  `is_show_index` int(2) DEFAULT NULL COMMENT '是否首頁展示',
   `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',

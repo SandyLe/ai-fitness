@@ -92,14 +92,14 @@
                     <p>为您精选多种类型的专业康训课程</p>
                 </div>
                 <div class="courses-grid row">
-                    <div class="course-card col-md-4" v-for="course in courses">
+                    <div class="course-card col-md-4" v-for="course in {{courses.data}}">
                         <div class="course-image">
-                            <img :src="course.image" :alt="course.title" :onerror="course.fallback">
+                            <img :src="course.img_url" :alt="course.title" :onerror="course.fallback">
                             <div class="course-badge">{% raw %}{{ course.level }}{% endraw %}</div>
                         </div>
                         <div class="course-content">
-                            <h3>{% raw %}{{ course.title }}{% endraw %}</h3>
-                            <p>{% raw %}{{ course.description }}{% endraw %}</p>
+                            <h3>{% raw %}{{ course.name }}{% endraw %}</h3>
+                            <p>{% raw %}{{ course.brife_introduction }}{% endraw %}</p>
                             <div class="course-meta">
                                 <span><i class="fas fa-clock"></i> {% raw %}{{ course.duration }}{% endraw %}</span>
                                 <span><i class="fas fa-fire"></i> {% raw %}{{ course.calories }}{% endraw %} 卡路里</span>

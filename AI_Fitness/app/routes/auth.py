@@ -2,17 +2,19 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, jsonify
 from app.services import db_service
-from app.services.db_services import user_info, user_date
+from app.services.db_services import user_info, user_date, course
 # 创建蓝图
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/')
 def shouye2():
-    return render_template('shouye.html', active_page='home')
+    courses = course.get_course({"is_deleted": 0, "is_show_index": 1})
+    return render_template('shouye.html', active_page='home', courses=courses)
 
 @auth_bp.route('/shouye', methods=['GET', 'POST'])
 def shouye():
-    return render_template("shouye.html", active_page='home')
+    courses = course.get_course({"is_deleted": 0, "is_show_index": 1})
+    return render_template("shouye.html", active_page='home', courses=courses)
 
 # 添加登录路由
 # 在登录成功后保存更多用户信息到session

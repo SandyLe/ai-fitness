@@ -37,17 +37,17 @@ document.addEventListener('DOMContentLoaded', function() {
             ],
             slides: [
                 { 
-                    image: staticUrl + 'img/fitness-hero.avif', 
+                    image: staticUrl + 'img/pic1.png',
                     alt: "康训形象1",
                     fallback: "this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'; this.onerror=null;"
                 },
                 { 
-                    image: staticUrl + 'img/fitness-hero2.avif', 
+                    image: staticUrl + 'img/pic2.jpg',
                     alt: "康训形象2",
                     fallback: "this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'; this.onerror=null;"
                 },
                 { 
-                    image: staticUrl + 'img/fitness-hero3.avif', 
+                    image: staticUrl + 'img/pic3.jpg',
                     alt: "康训形象3",
                     fallback: "this.src='https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'; this.onerror=null;"
                 }
