@@ -592,6 +592,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 定义各种动作的条件
         // 定义各种动作的条件
+
+        //Sandylee
+        const out_abdominal_begin = angle_left_arm < -100 && angle_right_arm < -100
+        const out_abdominal_finish = angle_left_arm > -120 && angle_right_arm > -120
+        console.log("angle_left_arm： "+angle_left_arm + ", " + out_abdominal_begin);
+        console.log("angle_right_arm： "+angle_right_arm + ", " + out_abdominal_finish);
+
+
         // 哑铃推肩条件
         const shoulder_push_begin = (angle_right_leg > -90 && angle_left_leg < 90);
         const shoulder_push_finish = (angle_right_leg < -150 && angle_left_leg > 150);
@@ -656,6 +664,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 根据不同动作类型判断
         switch (type) {
+            case "外科腹腔镜术后康复操":
+                if (out_abdominal_begin) {
+                    this.poseFlag[type] = 1;
+                    guideText = "请张开双臂";
+                } else if (out_abdominal_finish && this.poseFlag[type]) {
+                    counter = 1;
+                    this.poseFlag[type] = 0;
+                    guideText = "动作完成，请放下双臂";
+                }
+                break;
             case "哑铃推肩":
                 if (shoulder_push_begin) {
                     this.poseFlag[type] = 1;

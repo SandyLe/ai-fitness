@@ -75,7 +75,7 @@ def get_current_data(muscle, gender, equipment):
         
         # 检查器材数据是否存在
         if equipment_key not in data[anatomical_muscle]:
-            logger.error(f"肌肉 {anatomical_muscle} 不支持器材: {equipment_key}")
+            logger.error(f"肌肉 {anatomical_muscle} 不支持科室: {equipment_key}")
             # 尝试使用默认器材
             default_keys = [k for k in data[anatomical_muscle].keys() if k not in ['comment', 'name']]
             if default_keys:
