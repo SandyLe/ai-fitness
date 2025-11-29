@@ -7,6 +7,12 @@ new Vue({
             email: '',
             password: '',
             confirmPassword: '',
+            questionId: '',
+            answer: '',
+            gender: '',
+            age: '',
+            height: '',
+            weight: '',
             agreeTerms: false
         },
         usernameError: '',
@@ -14,6 +20,7 @@ new Vue({
         passwordError: '',
         confirmPasswordError: '',
         termsError: '',
+        confirmQuestionError: '',
         showCaptcha: false,  // 确保初始值为false
         captchaBackground: '',
         captchaPuzzle: '',
@@ -61,6 +68,7 @@ new Vue({
             this.passwordError = '';
             this.confirmPasswordError = '';
             this.termsError = '';
+            this.confirmQuestionError = '';
             
             let isValid = true;
             let firstErrorField = null;
@@ -102,7 +110,12 @@ new Vue({
                 isValid = false;
                 firstErrorField = firstErrorField || 'confirmPasswordInput';
             }
-            
+            //找回密码问题
+            if (!this.registerForm.questionId) {
+                this.confirmQuestionError = '请选择找回密码问题';
+                isValid = false;
+                firstErrorField = 'confirmQuestionInput';
+            }
             // 验证是否同意条款
             if (!this.registerForm.agreeTerms) {
                 this.termsError = '请同意服务条款和隐私政策';
@@ -159,7 +172,49 @@ new Vue({
             confirmPasswordInput.name = 'confirm_password';
             confirmPasswordInput.value = this.registerForm.confirmPassword;
             form.appendChild(confirmPasswordInput);
-            
+
+            // 添加提示问题字段
+            const questionInput = document.createElement('input');
+            questionInput.type = 'text';
+            questionInput.name = 'questionId';
+            questionInput.value = this.registerForm.questionId;
+            form.appendChild(questionInput);
+
+            // 添加答案字段
+            const answerInput = document.createElement('input');
+            answerInput.type = 'text';
+            answerInput.name = 'answer';
+            answerInput.value = this.registerForm.answer;
+            form.appendChild(answerInput);
+
+            // 添加性别字段
+            const genderInput = document.createElement('input');
+            genderInput.type = 'text';
+            genderInput.name = 'gender';
+            genderInput.value = this.registerForm.gender;
+            form.appendChild(genderInput);
+
+            // 添加年齡字段
+            const ageInput = document.createElement('input');
+            ageInput.type = 'text';
+            ageInput.name = 'age';
+            ageInput.value = this.registerForm.age;
+            form.appendChild(ageInput);
+
+            // 添加身高字段
+            const heightInput = document.createElement('input');
+            heightInput.type = 'text';
+            heightInput.name = 'height';
+            heightInput.value = this.registerForm.height;
+            form.appendChild(heightInput);
+
+            // 添加体重字段
+            const weightInput = document.createElement('input');
+            weightInput.type = 'text';
+            weightInput.name = 'weight';
+            weightInput.value = this.registerForm.weight;
+            form.appendChild(weightInput);
+
             // 将表单添加到文档中并提交
             document.body.appendChild(form);
             form.submit();

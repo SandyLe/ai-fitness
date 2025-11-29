@@ -84,7 +84,71 @@
                         </div>
                         <small class="form-tip" :class="{'error': confirmPasswordError}" v-text="confirmPasswordError || '请再次输入密码进行确认'"></small>
                     </div>
-                    
+
+                    <div class="form-group">
+                        <label for="question">提示问题及答案</label>
+                        <div class="input-with-icon" :class="{'error': confirmQuestionError}">
+                            <i class="fas fa-question-circle"></i>
+                            <select id="question" v-model="registerForm.questionId" ref="confirmQuestionInput">
+                                <option value="">请选择</option>
+                                    {% for question in questions %}
+                                        <option value="{{question.id}}">{{question.question_desc}}</option>
+                                    {% endfor %}
+                            </select>
+                        </div>
+                        <small class="form-tip" :class="{'error': confirmQuestionError}" v-text="confirmQuestionError || '请选择找回密码时提示问题'"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="answer">答案</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-edit"></i>
+                            <input type="text" id="answer" v-model="registerForm.answer" required ref="answerInput">
+                        </div>
+                        <small class="form-tip"  v-text="'请输入您的答案'"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">性别</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-crosshairs"></i>
+                            <select id="gender" v-model="registerForm.gender">
+                                <option value="">请选择</option>
+                                <option value="male">男</option>
+                                <option value="female">女</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <small class="form-tip" v-text="'请选择性别'"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">年龄</label>
+                        <div class="input-with-icon" >
+                            <i class="fas fa-ban"></i>
+                                <input type="number" id="age" v-model="registerForm.age">
+                        </div>
+                        <small class="form-tip" v-text="'请填写年龄'"></small>
+                    </div>
+
+                    <div class="form-group">
+                                <label for="height">身高 (cm)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-text-height"></i>
+                                <input type="number" id="height" v-model="registerForm.height">
+                        </div>
+                        <small class="form-tip" v-text="'请填写身高'"></small>
+                    </div>
+
+                    <div class="form-group">
+                                <label for="weight">体重 (kg)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-text-width"></i>
+                             <input type="number" id="weight" v-model="registerForm.weight">
+                        </div>
+                        <small class="form-tip" v-text="'请填写体重'"></small>
+                    </div>
+
                     <div class="form-options">
                         <div class="terms-agreement" :class="{'error': termsError}">
                             <input type="checkbox" id="terms" v-model="registerForm.agreeTerms" required>
@@ -98,14 +162,14 @@
                 <div class="auth-footer">
                     <p>已有账户? <a href="{{ url_for('auth.login') }}">立即登录</a></p>
                     
-                    <div class="social-login">
+                    <!--<div class="social-login">
                         <p>或使用以下方式注册</p>
                         <div class="social-icons">
                             <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
                             <a href="#" class="social-icon"><i class="fab fa-qq"></i></a>
                             <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
                         </div>
-                    </div>
+                    </div>-->
                     
                     <div class="back-to-home">
                         <a href="{{ url_for('auth.shouye') }}"><i class="fas fa-arrow-left"></i> 返回首页</a>

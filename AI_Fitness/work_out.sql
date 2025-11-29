@@ -309,3 +309,32 @@ CREATE TABLE `course` (
   `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程表';
+
+
+DROP TABLE IF EXISTS `question`;
+CREATE TABLE `question` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `question_desc` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '问题描述',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='问题表';
+
+
+DROP TABLE IF EXISTS `user_question_answer`;
+CREATE TABLE `user_question_answer` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `question_id` int(20) NOT NULL COMMENT '主键id',
+  `question_answer` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '问题回答',
+  `user_id` int(20) DEFAULT NULL COMMENT '用户id',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='问题回答表';
+

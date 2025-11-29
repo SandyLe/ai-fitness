@@ -2,7 +2,8 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, jsonify
 from app.services import db_service
-from app.services.db_services import user_info, user_date, course
+from datetime import datetime
+from app.services.db_services import user_info, user_date, course, question, user_question_answer
 # 创建蓝图
 auth_bp = Blueprint('auth', __name__)
 
@@ -55,11 +56,18 @@ def logout():
 # 添加用户注册路由
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
+    questions = []
     if request.method == 'POST':
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
+        questionId = request.form.get('questionId')
+        answer = request.form.get('answer')
+        gender = request.form.get('gender')
+        age = request.form.get('age')
+        height = request.form.get('height')
+        weight = request.form.get('weight')
 
         # 验证密码
         if password != confirm_password:
@@ -76,17 +84,32 @@ def register():
             'user_name':username,
             'email':email,
             'password':password,
+            'gender':gender,
+            'age':age,
+            'height':height,
+            'weight':weight
         }
         print(user)
         result = user_info.add_user(user)
         print(result)
+        userquestionanswer = {
+            'question_id': questionId,
+            'user_id': result.data.get('id'),
+            'question_answer': answer,
+            'is_deleted': '0',
+        }
+        user_question_answer.add_question_answer(userquestionanswer)
+
+
         if result.code == 200:
             flash('注册成功，请登录', 'success')
             return redirect(url_for('auth.login'))
         else:
             flash(f'注册失败,{result.msg}', 'error')
+    else:
+        questions = question.get_question({'is_deleted':'0'}).data
 
-    return render_template('auth/register.html', active_page='register')
+    return render_template('auth/register.html', questions=questions, active_page='register')
 
 # 个人中心路由
 @auth_bp.route('/user_center')
