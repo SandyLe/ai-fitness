@@ -10,12 +10,12 @@
         <!-- 英雄区域 -->
         <div class="hero row">
             <div class="hero-content col-md-6">
-                <h2 class="title1">专业动作</h2>
-                <h2 class="title2">智能计划</h2>
-                <p>智能的康训计划，个性化的训练方案，帮助你达到理想的健康状态。</p>
-                <button class="cta-btn" onclick=location.href="{{ url_for('fitness.start_fitness') }}">开始训练</button>
+                <h2 class="title1">专业康复营养指导</h2>
+                <h2 class="title2">AI智能动作训练</h2>
+                <p>随着大众健康意识的日益提升，科学规范的康复训练已成为众多人群重拾健康状态、提升生活质量的关键路径。AI智体康训系统精准锚定这一需求，依托前沿人工智能技术，为用户量身打造高度个性化的康复训练方案。系统不仅能根据用户的身体指标、康复目标与训练反馈动态优化训练计划，更创新性整合专业营养指导模块，依据康复阶段为用户匹配膳食建议，实现“训练+营养”的双轨协同干预;同时搭载智能助手功能，实时解答训练疑问、督促训练进度，全方位助力用户以更科学、更高效的方式推进康复进程。</p>
+                <!--<button class="cta-btn" onclick=location.href="{{ url_for('fitness.start_fitness') }}">开始训练</button>-->
                 
-                <div class="stats">
+                <!--<div class="stats">
                     <div class="stat-item">
                         <div class="stat-number">{% raw %}{{ stats.courses }}{% endraw %}+</div>
                         <div class="stat-label">专业课程</div>
@@ -28,7 +28,7 @@
                         <div class="stat-number">{% raw %}{{ stats.users }}{% endraw %}+</div>
                         <div class="stat-label">满意用户</div>
                     </div>
-                </div>
+                </div>-->
                 
                 <div class="features">
                     <div class="feature-item" v-for="feature in features">
@@ -55,35 +55,7 @@
                 </div>
             </div>
         </div>
-        
-        <!-- 关于我们部分 -->
-        <section id="about" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>关于我们</h2>
-                    <p>专注于提供高品质的康训服务和个性化康训方案</p>
-                </div>
-                <div class="about-content row">
-                    <div class="about-image col-md-6">
-                        <img src="{{ url_for('static', filename='img/about.jpg') }}" alt="关于我们" onerror="this.src='https://tse3-mm.cn.bing.net/th/id/OIP-C.2aWokYQ2iVA-TIMkuzhLAgHaE7?w=265&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7'">
-                    </div>
-                    <div class="about-text col-md-6">
-                        <h3>我们的使命</h3>
-                        <p>我们致力于通过科学的康训方法和先进的技术手段，帮助每一位用户实现健康目标。无论您是康训新手还是资深康训爱好者，我们都能为您提供专业的指导和支持。</p>
-                        <h3>我们的优势</h3>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> 专业的教练团队</li>
-                            <li><i class="fas fa-check-circle"></i> 个性化的训练计划</li>
-                            <li><i class="fas fa-check-circle"></i> 科学的康训方法</li>
-                            <li><i class="fas fa-check-circle"></i> 先进的康训设备</li>
-                            <li><i class="fas fa-check-circle"></i> 全面的营养指导</li>
-                        </ul>
-                        <button class="btn" onclick="location.href='#about'">了解更多</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
+
         <!-- 康训课程部分 -->
         <section id="courses" class="section section-dark">
             <div class="container">
@@ -99,10 +71,10 @@
                         </div>
                         <div class="course-content">
                             <h3>{% raw %}{{ course.name }}{% endraw %}</h3>
-                            <p>{% raw %}{{ course.brife_introduction }}{% endraw %}</p>
+                            <p style="white-space: pre;">{% raw %}{{ course.brife_introduction }}{% endraw %}</p>
                             <div class="course-meta">
                                 <span><i class="fas fa-clock"></i> {% raw %}{{ course.duration }}{% endraw %}</span>
-                                <span><i class="fas fa-fire"></i> {% raw %}{{ course.calories }}{% endraw %} 卡路里</span>
+                                <!--<span><i class="fas fa-fire"></i> {% raw %}{{ course.calories }}{% endraw %} 卡路里</span>-->
                             </div>
                             <button class="btn">查看详情</button>
                         </div>
@@ -113,67 +85,7 @@
                 </div>
             </div>
         </section>
-        
-        <!-- 教练团队部分 -->
-        <section id="trainers" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>专业教练</h2>
-                    <p>我们拥有一支经验丰富、专业素质高的教练团队</p>
-                </div>
-                <div class="trainers-grid row">
-                    <div class="trainer-card col-md-4" v-for="trainer in trainers">
-                        <div class="trainer-image">
-                            <img :src="trainer.image" :alt="trainer.name" :onerror="trainer.fallback">
-                        </div>
-                        <div class="trainer-content">
-                            <h3>{% raw %}{{ trainer.name }}{% endraw %}</h3>
-                            <p class="trainer-specialty">{% raw %}{{ trainer.specialty }}{% endraw %}</p>
-                            <p class="trainer-bio">{% raw %}{{ trainer.bio }}{% endraw %}</p>
-                            <div class="trainer-social">
-                                <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
-                                <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
-                                <a href="#" class="social-icon"><i class="fab fa-qq"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 用户评价部分 -->
-        <section id="testimonials" class="section section-dark">
-            <div class="container">
-                <div class="section-header">
-                    <h2>用户评价</h2>
-                    <p>听听我们的用户怎么说</p>
-                </div>
-                <div class="testimonials-slider">
-                    <div class="testimonial-card" v-for="(testimonial, index) in testimonials" :key="index" :class="{ 'active': currentTestimonial === index }">
-                        <div class="testimonial-content">
-                            <div class="testimonial-quote">
-                                <i class="fas fa-quote-left"></i>
-                                <p>{% raw %}{{ testimonial.quote }}{% endraw %}</p>
-                                <i class="fas fa-quote-right"></i>
-                            </div>
-                            <div class="testimonial-author">
-                                <img :src="testimonial.avatar" :alt="testimonial.name" :onerror="testimonial.fallback">
-                                <div class="testimonial-info">
-                                    <h4>{% raw %}{{ testimonial.name }}{% endraw %}</h4>
-                                    <p>{% raw %}{{ testimonial.title }}{% endraw %}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-controls">
-                        <div class="testimonial-dot" v-for="(testimonial, index) in testimonials" :key="index" 
-                             :class="{ 'active': currentTestimonial === index }" 
-                             @click="goToTestimonial(index)"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
+
         <!-- 联系我们部分 -->
         <section id="contact" class="section">
             <div class="container">
