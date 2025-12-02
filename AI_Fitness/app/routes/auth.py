@@ -99,8 +99,6 @@ def register():
             'is_deleted': '0',
         }
         user_question_answer.add_question_answer(userquestionanswer)
-
-
         if result.code == 200:
             flash('注册成功，请登录', 'success')
             return redirect(url_for('auth.login'))
@@ -110,6 +108,62 @@ def register():
         questions = question.get_question({'is_deleted':'0'}).data
 
     return render_template('auth/register.html', questions=questions, active_page='register')
+
+# 忘记密码
+@auth_bp.route('/forgetPwd', methods=['GET', 'POST'])
+def forgetPwd():
+    questions = []
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+        questionId = request.form.get('questionId')
+        answer = request.form.get('answer')
+        gender = request.form.get('gender')
+        age = request.form.get('age')
+        height = request.form.get('height')
+        weight = request.form.get('weight')
+
+        # 验证密码
+        if password != confirm_password:
+            flash('两次输入的密码不一致', 'error')
+            return render_template('auth/register.html', active_page='register')
+
+        # 检查用户名是否已存在
+        if user_info.get_count_username(username):
+            flash('用户名已存在', 'error')
+            return render_template('auth/register.html', active_page='register')
+
+        # 创建新用户
+        user = {
+            'user_name':username,
+            'email':email,
+            'password':password,
+            'gender':gender,
+            'age':age,
+            'height':height,
+            'weight':weight
+        }
+        print(user)
+        result = user_info.add_user(user)
+        print(result)
+        userquestionanswer = {
+            'question_id': questionId,
+            'user_id': result.data.get('id'),
+            'question_answer': answer,
+            'is_deleted': '0',
+        }
+        user_question_answer.add_question_answer(userquestionanswer)
+        if result.code == 200:
+            flash('注册成功，请登录', 'success')
+            return redirect(url_for('auth.login'))
+        else:
+            flash(f'注册失败,{result.msg}', 'error')
+    else:
+        questions = question.get_question({'is_deleted':'0'}).data
+
+    return render_template('auth/forgetPwd.html', questions=questions, active_page='register')
 
 # 个人中心路由
 @auth_bp.route('/user_center')

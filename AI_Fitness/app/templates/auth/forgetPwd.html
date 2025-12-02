@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="static-url" content="{{ url_for('static', filename='') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/png">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/png">
+    <title>注册 - 智体康训</title>
+    <!-- 引入Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- 引入字体图标 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+    <!-- 页面主CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/forgetPwd.css') }}">
+</head>
+<body>
+    <div id="forget-pwd-page">
+        <div class="auth-container">
+            <div class="auth-image">
+                <div class="image-overlay"></div>
+                <div class="auth-quote">
+                    <h3>"心中有数，口中不言"</h3>
+                    <p>— 智体康训</p>
+                </div>
+            </div>
+            
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="logo-container">
+                        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
+                        <h1>智体康训</h1>
+                    </div>
+                    <h2>忘记密码</h2>
+                    <p>开始您的找回密码之旅</p>
+                </div>
+
+                <!-- 添加 flash 消息显示区域 -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- 注册表单内容保持不变 -->
+                <form id="register-form" @submit.prevent="submitRegister">
+                    <div class="form-group" v-if="usernameInputVisiable">
+                        <label for="username">用户名</label>
+                        <div class="input-with-icon" :class="{'error': usernameError}">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="username" v-model="registerForm.username" required ref="usernameInput">
+                        </div>
+                        <small class="form-tip" :class="{'error': usernameError}" v-text="usernameError || '用户名至少需要3个字符'"></small>
+                    </div>
+                    
+                    <div class="form-group" v-if="emailInputVisiable">
+                        <label for="email">电子邮箱</label>
+                        <div class="input-with-icon" :class="{'error': emailError}">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" v-model="registerForm.email" required ref="emailInput">
+                        </div>
+                        <small class="form-tip" :class="{'error': emailError}" v-text="emailError || '请输入有效的电子邮箱地址'"></small>
+                    </div>
+                    
+                    <div class="form-group" v-if="pwdInputVisiable">
+                        <label for="password">密码</label>
+                        <div class="input-with-icon" :class="{'error': passwordError}">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" v-model="registerForm.password" required ref="passwordInput">
+                        </div>
+                        <small class="form-tip" :class="{'error': passwordError}" v-text="passwordError || '密码至少包含8个字符，包括字母和数字'"></small>
+                    </div>
+                    
+                    <div class="form-group" v-if="pwdInputVisiable">
+                        <label for="confirm-password">确认密码</label>
+                        <div class="input-with-icon" :class="{'error': confirmPasswordError}">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirm-password" v-model="registerForm.confirmPassword" required ref="confirmPasswordInput">
+                        </div>
+                        <small class="form-tip" :class="{'error': confirmPasswordError}" v-text="confirmPasswordError || '请再次输入密码进行确认'"></small>
+                    </div>
+
+                    <div class="form-group" v-if="questionInputVisiable">
+                        <label for="question">提示问题及答案</label>
+                        <div class="input-with-icon" :class="{'error': confirmQuestionError}">
+                            <i class="fas fa-question-circle"></i>
+                            <select id="question" v-model="registerForm.questionId" ref="confirmQuestionInput">
+                                <option value="">请选择</option>
+                                    {% for question in questions %}
+                                        <option value="{{question.id}}">{{question.question_desc}}</option>
+                                    {% endfor %}
+                            </select>
+                        </div>
+                        <small class="form-tip" :class="{'error': confirmQuestionError}" v-text="confirmQuestionError || '请选择找回密码时提示问题'"></small>
+                    </div>
+
+                    <div class="form-group" v-if="questionInputVisiable">
+                        <label for="answer">答案</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-edit"></i>
+                            <input type="text" id="answer" v-model="registerForm.answer" required ref="answerInput">
+                        </div>
+                        <small class="form-tip"  v-text="'请输入您的答案'"></small>
+                    </div>
+
+                    <button type="button" class="auth-btn" ref = "forgetBtn" @click="nextStep">下一步</button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>已有账户? <a href="{{ url_for('auth.login') }}">立即登录</a></p>
+                    
+                    <!--<div class="social-login">
+                        <p>或使用以下方式注册</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-qq"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                        </div>
+                    </div>-->
+                    
+                    <div class="back-to-home">
+                        <a href="{{ url_for('auth.shouye') }}"><i class="fas fa-arrow-left"></i> 返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 智体康训. 保留所有权利.</p>
+        <p>备案号: ***.</p>
+    </div>
+    
+    <!-- 添加内联样式以确保验证弹窗在Vue加载前隐藏 -->
+    <style>
+        [v-cloak] { display: none; }
+    </style>
+    <script src="{{ url_for('static', filename='js/auth/forgetPwd.js') }}" defer></script>
+</body>
+</html>
