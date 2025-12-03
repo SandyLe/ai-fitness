@@ -560,12 +560,14 @@
 }
 
 #shouye .contact-info {
-    flex: 1;
+    /* flex: 1; */
+    margin: 0 auto;
+
 }
 
 #shouye .contact-item {
     display: flex;
-    margin-bottom: 30px;
+    margin:0 auto 10px;
 }
 
 #shouye .contact-item i {
@@ -628,6 +630,7 @@
     #shouye .stat-number {
         font-size: 30px;
     }
+
 }
 
 @media (max-width: 992px) {
@@ -645,6 +648,7 @@
     #shouye .trainers-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
 }
 
 @media (max-width: 768px) {
@@ -709,6 +713,7 @@
         height: 30px;
         font-size: 16px;
     }
+
 }
 
 @media (max-width: 480px) {
@@ -761,4 +766,8 @@
         margin-bottom: 10px;
         margin-right: 0;
     }
+
+}
+.preserve-line-breaks {
+  white-space: pre-line;
 }

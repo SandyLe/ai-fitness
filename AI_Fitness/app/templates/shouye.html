@@ -71,7 +71,7 @@
                         </div>
                         <div class="course-content">
                             <h3>{% raw %}{{ course.name }}{% endraw %}</h3>
-                            <p style="white-space: pre;">{% raw %}{{ course.brife_introduction }}{% endraw %}</p>
+                            <p class="preserve-line-breaks">{% raw %}{{ course.brife_introduction.replace(/\\n/g, '\n') }}{% endraw %}</p>
                             <div class="course-meta">
                                 <span><i class="fas fa-clock"></i> {% raw %}{{ course.duration }}{% endraw %}</span>
                                 <!--<span><i class="fas fa-fire"></i> {% raw %}{{ course.calories }}{% endraw %} 卡路里</span>-->
@@ -99,7 +99,7 @@
                             <i class="fas fa-map-marker-alt"></i>
                             <div>
                                 <h4>地址</h4>
-                                <p>北京市海淀区中关村大街1号</p>
+                                <p>上海市普陀区西康路1143号</p>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -113,18 +113,18 @@
                             <i class="fas fa-envelope"></i>
                             <div>
                                 <h4>邮箱</h4>
-                                <p>info@fitness.com</p>
+                                <p>admin@microware1985.com</p>
                             </div>
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-clock"></i>
                             <div>
                                 <h4>营业时间</h4>
-                                <p>周一至周日 08:00 - 22:00</p>
+                                <p>周一至周五 09:00-18:00</p>
                             </div>
                         </div>
                     </div>
-                    <div class="contact-form col-md-6">
+                    <!-- <div class="contact-form col-md-6">
                         <form @submit.prevent="submitForm">
                             <div class="form-group">
                                 <label for="name">姓名</label>
@@ -144,7 +144,7 @@
                             </div>
                             <button type="submit" class="btn">发送消息</button>
                         </form>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
