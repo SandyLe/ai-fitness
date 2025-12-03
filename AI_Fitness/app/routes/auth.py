@@ -31,6 +31,12 @@ def login():
             "password": password,
         }
         res = user_info.get_user(user)
+        if res.code == 404:
+            user = {
+                "email": username,
+                "password": password,
+            }
+        res = user_info.get_user(user)
         
         # 处理常规表单提交
         if res.code == 200:

@@ -9,87 +9,106 @@ new Vue({
         },
         showCaptcha: false,  // 确保初始值为false
         // 使用本地图片资源
-        captchaConfig: {
-            backgrounds: [
-                // 使用本地背景图片
-                '/static/img/captcha/bg1.jpg',
-                '/static/img/captcha/bg2.jpg',
-                // '/static/img/captcha/bg3.jpg',
-                // '/static/img/captcha/bg4.jpg',
-                // '/static/img/captcha/bg5.jpg'
-            ],
-            puzzles: [
-                // 使用本地拼图形状
-                '/static/img/captcha/puzzle_1.png',
-                // '/static/img/captcha/puzzle_2.png',
-                // '/static/img/captcha/puzzle_3.png'
-            ]
-        },
-        captchaBackground: '',
-        captchaPuzzle: '',
-        puzzlePosition: { x: 0, y: 0 },
-        targetPosition: { x: 180, y: 70 }, // 目标位置
-        sliderValue: 0,
-        isDragging: false,
-        startX: 0,
-        captchaResult: '',
-        captchaResultClass: '',
-        sliderTip: '向右滑动完成验证',
+
+        width: 420,
+        height: 220,
+        pieceSize: 56,
+        tolerance: 16,
+        pieceY: 40,
+        pieceX: 12,
+        handleX: 0,
+        dragging: false,
+        startClientX: 0,
+        startHandleX: 0,
+        status: '请将滑块拖动到图中正确位置',
+        showTarget: false,
+        images: [
+            'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80',
+            'https://ix-marketing.imgix.net/global.jpg?auto=format,compress&w=1200&q=80',
+            'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&q=80',
+            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80'
+        ],
+        currentIndex: Math.floor(Math.random()*4),
+        targetX: 0,
+
+
         verificationSuccess: false,
         formSubmitted: false, // 标记表单是否已提交
         captchaLoaded: false  // 新增：标记验证码资源是否已加载
     },
     computed: {
-        puzzleStyle() {
+        currentImage() {
+            return this.images[this.currentIndex]
+        },
+        imageWrapStyle() {
             return {
-                left: this.puzzlePosition.x + 'px',
-                top: this.puzzlePosition.y + 'px'
-            };
+                position: 'relative', width: this.width+'px', height: this.height+'px',
+                borderRadius: '6px', overflow: 'hidden', boxShadow: '0 6px 20px rgba(0,0,0,0.12)'
+            }
+        },
+        imgStyle() {
+            return { width:'100%', height:'100%', objectFit:'cover' }
+        },
+        targetStyle() {
+            return {
+                position:'absolute', left:this.targetX+'px', top:this.pieceY+'px',
+                width:this.pieceSize+'px', height:this.pieceSize+'px',
+                border:'2px dashed rgba(255,255,255,0.9)', transform:'translateY(-50%)'
+            }
+        },
+        pieceStyle() {
+            return {
+                position:'absolute', left:this.pieceX+'px', top:'10px',
+                width:this.pieceSize+'px', height:this.pieceSize+'px',
+                background:'rgba(255,255,255,0.9)', boxShadow:'0 6px 22px rgba(0,0,0,0.25)',
+                borderRadius:'4px', display:'flex', alignItems:'center', justifyContent:'center'
+                }
+        },
+        trackStyle() {
+            return { position:'relative', height:'44px', background:'#f1f1f1', borderRadius:'6px', overflow:'hidden' }
+        },
+        progressStyle() {
+            return {
+                position:'absolute', left:0, top:0, bottom:0,
+                width: Math.min(this.handleX + 22, this.width)+'px'
+            }
+        },
+        handleStyle() {
+            return {
+                position:'absolute', left:this.handleX+'px', top:'6px', width:'44px', height:'32px',
+                borderRadius:'6px', background:'#a69f9e', boxShadow:'0 4px 12px rgba(0,0,0,0.15)', cursor:'grab'
+            }
         }
     },
     mounted() {
-        // 预加载验证码资源但不显示验证码弹窗
-        this.preloadCaptchaResources();
-        
-        // 添加全局事件监听
-        document.addEventListener('mousemove', this.onMouseMove);
-        document.addEventListener('mouseup', this.onMouseUp);
-        document.addEventListener('touchmove', this.onTouchMove);
-        document.addEventListener('touchend', this.onTouchEnd);
+        this.randomizeTarget()
+        window.addEventListener('mousemove', this.onMove)
+        window.addEventListener('mouseup', this.onEnd)
+        window.addEventListener('touchmove', this.onMove, {passive:false})
+        window.addEventListener('touchend', this.onEnd)
     },
     beforeDestroy() {
         // 移除全局事件监听
-        document.removeEventListener('mousemove', this.onMouseMove);
-        document.removeEventListener('mouseup', this.onMouseUp);
-        document.removeEventListener('touchmove', this.onTouchMove);
-        document.removeEventListener('touchend', this.onTouchEnd);
+        window.removeEventListener('mousemove', this.onMove)
+        window.removeEventListener('mouseup', this.onEnd)
+        window.removeEventListener('touchmove', this.onMove)
+        window.removeEventListener('touchend', this.onEnd)
     },
-    methods: {
-        // 新增：预加载验证码资源
+    methods: {// 新增：预加载验证码资源
         preloadCaptchaResources() {
             // 随机生成验证码图片和位置，但不显示弹窗
-            this.generateRandomCaptcha();
             this.captchaLoaded = true;
+            this.showTarget = true;
         },
-        
+        closeCaptcha() {
+            this.showCaptcha = false;
+        },
         showSliderCaptcha() {
             // 验证表单
             if (!this.loginForm.username || !this.loginForm.password) {
                 alert('请填写用户名和密码');
                 return;
             }
-            
-            // 重置验证码状态
-            this.sliderValue = 0;
-            this.puzzlePosition.x = 0;
-            this.captchaResult = '';
-            this.captchaResultClass = '';
-            this.verificationSuccess = false;
-            this.sliderTip = '向右滑动完成验证';
-            
-            // 随机生成新的验证码
-            this.generateRandomCaptcha();
-            
             // 确保资源加载完成后再显示验证码弹窗
             if (this.captchaLoaded) {
                 this.showCaptcha = true;
@@ -101,89 +120,60 @@ new Vue({
                 }, 100);
             }
         },
-        
-        closeCaptcha() {
-            this.showCaptcha = false;
+        randomizeTarget() {
+            const min = Math.round(this.width * 0.12)
+            const max = Math.round(this.width * 0.78)
+            this.targetX = Math.floor(Math.random()*(max-min+1))+min
         },
-        
-        generateRandomCaptcha() {
-            // 随机选择背景图片
-            const bgIndex = Math.floor(Math.random() * this.captchaConfig.backgrounds.length);
-            this.captchaBackground = this.captchaConfig.backgrounds[bgIndex];
-            
-            // 随机选择拼图
-            const puzzleIndex = Math.floor(Math.random() * this.captchaConfig.puzzles.length);
-            this.captchaPuzzle = this.captchaConfig.puzzles[puzzleIndex];
-            
-            // 随机生成目标位置 (确保在合理范围内)
-            this.targetPosition = {
-                x: Math.floor(Math.random() * 150) + 100,
-                y: Math.floor(Math.random() * 100) + 50
-            };
-            
-            // 重置拼图初始位置
-            this.puzzlePosition = { x: 0, y: this.targetPosition.y };
+        reset() {
+            this.randomizeTarget()
+            this.handleX = 0
+            this.pieceX = 12
+            this.status = '请将滑块拖动到图中正确位置'
         },
-        
-        startSlide(event) {
-            this.isDragging = true;
-            
-            // 记录起始位置
-            if (event.type === 'mousedown') {
-                this.startX = event.clientX;
-            } else if (event.type === 'touchstart') {
-                this.startX = event.touches[0].clientX;
+        nextImage() {
+            this.currentIndex = (this.currentIndex + 1) % this.images.length
+            this.reset()
+        },
+        onStart(e) {
+            if (this.status.includes('成功')) return
+            this.dragging = true
+            this.startClientX = e.touches ? e.touches[0].clientX : e.clientX
+            this.startHandleX = this.handleX
+        },
+        onMove(e) {
+            if (!this.dragging) return
+            e.preventDefault()
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX
+            const dx = clientX - this.startClientX
+            const maxX = this.width - 44
+            let nx = this.startHandleX + dx
+            nx = Math.max(0, Math.min(maxX, nx))
+            this.handleX = nx
+            const mapped = Math.round((nx / maxX) * (this.width - this.pieceSize - 8)) + 8
+            this.pieceX = mapped
+        },
+        onEnd() {
+            if (!this.dragging) return
+            this.dragging = false
+            const delta = Math.abs(this.pieceX - this.targetX)
+            if (delta <= this.tolerance) {
+                this.status = '验证成功 ✅'
+                this.pieceX = this.targetX
+                this.handleX = Math.round((this.targetX - 8)/(this.width - this.pieceSize - 8)*(this.width - 44))
+
+                // 1.5秒后自动关闭验证码并提交表单
+                setTimeout(() => {
+                    this.closeCaptcha();
+                    this.submitLogin();
+                }, 1500);
+            } else {
+                this.status = '验证失败，请重试'
+                this.handleX = 0
+                this.pieceX = 12
             }
-            
-            // 阻止默认行为和事件冒泡
-            event.preventDefault();
-            event.stopPropagation();
         },
-        
-        onMouseMove(event) {
-            if (!this.isDragging) return;
-            
-            this.moveSlider(event.clientX);
-        },
-        
-        onTouchMove(event) {
-            if (!this.isDragging) return;
-            
-            this.moveSlider(event.touches[0].clientX);
-            event.preventDefault(); // 防止页面滚动
-        },
-        
-        moveSlider(clientX) {
-            // 计算移动距离
-            const deltaX = clientX - this.startX;
-            
-            // 计算新的滑块位置 (限制在0-100%范围内)
-            const containerWidth = document.querySelector('.slider-track').offsetWidth - 40; // 减去滑块宽度
-            let newValue = (this.sliderValue * containerWidth / 100 + deltaX) / containerWidth * 100;
-            newValue = Math.max(0, Math.min(100, newValue));
-            
-            // 更新滑块位置
-            this.sliderValue = newValue;
-            
-            // 更新拼图位置 (等比例映射到目标x坐标)
-            this.puzzlePosition.x = (newValue / 100) * this.targetPosition.x;
-            
-            // 更新起始位置
-            this.startX = clientX;
-        },
-        
-        onMouseUp() {
-            if (!this.isDragging) return;
-            
-            this.finishSlide();
-        },
-        
-        onTouchEnd() {
-            if (!this.isDragging) return;
-            
-            this.finishSlide();
-        },
-        
+
         finishSlide() {
             this.isDragging = false;
             

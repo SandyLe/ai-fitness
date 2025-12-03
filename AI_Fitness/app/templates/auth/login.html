@@ -98,7 +98,7 @@
         
         <!-- 滑动验证弹窗保持不变，但添加v-cloak指令 -->
         <div class="slider-captcha-modal" v-if="showCaptcha" v-cloak>
-            <div class="slider-captcha-container">
+            <!--<div class="slider-captcha-container">
                 <div class="slider-captcha-header">
                     <h3>安全验证</h3>
                     <span class="close-captcha" @click="closeCaptcha">&times;</span>
@@ -127,6 +127,26 @@
                     
                     <div class="captcha-result" :class="captchaResultClass" v-if="captchaResult">
                         {{ captchaResult }}
+                    </div>
+                </div>
+            </div>-->
+            <div class="slider-captcha" style="width: 420px; margin: 20px auto; font-family: sans-serif;">
+                <div class="image-wrap" :style="imageWrapStyle">
+                    <img :src="currentImage" :style="imgStyle" />
+                    <div v-if="showTarget" :style="targetStyle"></div>
+                    <div :style="pieceStyle"></div>
+                </div>
+                <div class="control" style="margin-top:12px; user-select:none;">
+                    <div class="track" :style="trackStyle">
+                        <div class="progress" :style="progressStyle"></div>
+                        <div class="handle" :style="handleStyle" @mousedown.prevent="onStart" @touchstart.prevent="onStart" @mousedown.stop @touchstart.stop></div>
+                    </div>
+                    <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
+                        <div>{{ status }}</div>
+                        <div style="display:flex; gap:8px;">
+                            <button @click="reset">重置</button>
+                            <button @click="nextImage">下一张</button>
+                        </div>
                     </div>
                 </div>
             </div>
