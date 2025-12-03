@@ -71,7 +71,7 @@
                         </div>
                         <div class="course-content">
                             <h3>{% raw %}{{ course.name }}{% endraw %}</h3>
-                            <p style="white-space: pre;">{% raw %}{{ course.brife_introduction }}{% endraw %}</p>
+                            <p class="preserve-line-breaks">{% raw %}{{ course.brife_introduction.replace(/\\n/g, '\n') }}{% endraw %}</p>
                             <div class="course-meta">
                                 <span><i class="fas fa-clock"></i> {% raw %}{{ course.duration }}{% endraw %}</span>
                                 <!--<span><i class="fas fa-fire"></i> {% raw %}{{ course.calories }}{% endraw %} 卡路里</span>-->
