@@ -567,7 +567,7 @@
 
 #shouye .contact-item {
     display: flex;
-    margin-bottom: 30px;
+    margin:0 auto 10px;
 }
 
 #shouye .contact-item i {
