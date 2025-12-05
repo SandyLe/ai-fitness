@@ -9,35 +9,41 @@
     justify-content: space-evenly;
     margin-bottom: 40px;
 }
-.footer-content .section-header {
+.footer .section-header {
     text-align: center;
     margin-bottom: 60px;
 }
 
-.footer-content .section-header h2 {
+.footer .section-header h2 {
     font-size: 36px;
     margin-bottom: 15px;
     color: #ffffff;
 }
 
-.footer-content .section-header p {
+.footer .section-header p {
     font-size: 18px;
     color: #a0a0a0;
 }
 .footer-content .contact-content {
     display: flex;
-    gap: 40px;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .footer-content .contact-info {
     /* flex: 1; */
-    margin: 0 auto;
+    display: flex;
+    width: 640px;
+    flex-wrap: wrap;
+    justify-content: center;
 
 }
 
 .footer-content .contact-item {
     display: flex;
-    margin:0 auto 10px;
+    width: 280px;
+    margin:0 0 10px 40px;
 }
 
 .footer-content .contact-item i {
@@ -166,6 +172,9 @@
 
 /* 响应式设计 */
 @media (max-width: 1200px) {
+    .footer-content .contact-content {
+        display: flex;
+    }
     .footer-content {
         padding: 0 20px;
     }
@@ -176,6 +185,9 @@
 }
 
 @media (max-width: 992px) {
+    .footer-content .contact-info {
+        width:  100%;
+    }
     .footer-links {
         flex-wrap: wrap;
     }
@@ -192,6 +204,9 @@
 }
 
 @media (max-width: 768px) {
+     .footer-content .contact-info {
+        width:  100%;
+    }
     .footer-content {
         flex-direction: column;
         padding: 0 15px;
@@ -232,6 +247,9 @@
 }
 
 @media (max-width: 480px) {
+     .footer-content .contact-info {
+        width:  100%;
+    }
     .footer {
         padding: 30px 0 15px;
     }
