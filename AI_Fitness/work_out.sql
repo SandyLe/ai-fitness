@@ -276,6 +276,7 @@ DROP TABLE IF EXISTS `course_theme`;
 CREATE TABLE `course_theme` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `theme_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '名称',
+  `theme_code` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '编码',
   `indications` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '适用病症',
   `rehabilitation_goal` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '康复目标',
   `training_frequency` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '训练运动频率',
@@ -295,6 +296,7 @@ CREATE TABLE `course` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `theme_id` int(20)  COMMENT '主题id',
   `name` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程名称',
+  `code` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '编码',
   `level` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '等级',
   `brife_introduction` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程简介',
   `video_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '视频地址',

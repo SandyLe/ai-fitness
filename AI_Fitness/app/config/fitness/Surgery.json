@@ -1,0 +1,21 @@
+{
+    "Surgery": {
+        "comment": "外科",
+        "name": "外科",
+        "description": "腹腔镜----腹肌是人体的重要组成部分，也是人体的重要功能区。它位于腹部的中部，是人体的核心和支撑部位。腹肌的作用是保护腹部的肌肉，使腹部的肌肉保持稳定，同时也起到了保护腹部的作用。",
+        "Abdomen": {
+            "comment": "腹腔",
+            "action": "外科腹腔镜术后康复操",
+            "video_src": {
+                "man": "vedio/Abdominal_out_man1.mp4",
+                "woman": "vedio/Abdominal_out_man.mp4"
+            },
+            "Action_points": [
+                "五指并拢，立正，站直",
+                "手掌翘起",
+                "左臂向前伸，右臂向后伸",
+                "换动作，右臂向前伸，左臂向后伸"
+            ]
+        }
+    }
+}

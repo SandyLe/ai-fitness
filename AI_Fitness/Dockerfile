@@ -16,7 +16,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir \
     --timeout 100 \
     gunicorn>=21.2.0 \
-    -r requirements.txt
+    -r requirements.txt && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    rm -rf ~/.cache/pip
 
 # 复制项目文件
 COPY . .

@@ -220,9 +220,15 @@ def checklen(text):
 
 def config():
     config = {}
-    config["appid"] = "26f96b41"
-    config["api_secret"] = "NTFkMGM1ZGQ1YzliMzkxNzEwODBmZjRh"
-    config["api_key"] = "38d618a9cf023aa8a53ca442fc03cd78"
+    # config["appid"] = "26f96b41"
+    # config["api_secret"] = "NTFkMGM1ZGQ1YzliMzkxNzEwODBmZjRh"
+    # config["api_key"] = "38d618a9cf023aa8a53ca442fc03cd78"
+    # config["domain"] = "lite"
+    # config["Spark_url"] = "wss://spark-api.xf-yun.com/v1.1/chat"
+
+    config["appid"] = "e6b3eaaf"
+    config["api_secret"] = "YmI4NmZmYmJhOWZjOTllMzVkZTExZjJj"
+    config["api_key"] = "50c272d82b0ffe0f2b2e490c255055e0"
     config["domain"] = "lite"
     config["Spark_url"] = "wss://spark-api.xf-yun.com/v1.1/chat"
     return config

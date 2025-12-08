@@ -47,6 +47,25 @@ def get_course(condition: dict):
         return Response.fail(code=500, msg=f"查询课程失败: {str(e)}")
 
 
+def get_course_and_theam(condition: dict):
+    sql = 'select * from course c left join course_theme ct on c.theme_id = ct.id where c.is_deleted = 0 and {where}'
+    if not condition or len(condition) == 0:
+        return Response.fail(code=500, msg="查询条件不能为空")
+    where = conn.join_field_value(condition, ' AND ')
+    sql = sql.format(where=where)
+    try:
+        prepared = []
+        prepared.extend(condition.values())
+        result = conn.query(sql, prepared)
+        if result is None or len(result) == 0:
+            return Response.fail(code=404, msg="查无此课程")
+        # 如果是根据唯一ID查询，通常只返回一条记录
+        if "id" in condition and len(result) == 1:
+             return Response.success(data=result[0]) # 返回单个对象而非列表
+        return Response.success(data=result) # 返回列表
+    except Exception as e:
+        return Response.fail(code=500, msg=f"查询课程失败: {str(e)}")
+
 def get_course_by_id(id: int):
      """根据ID获取单个课程信息"""
      if not id:

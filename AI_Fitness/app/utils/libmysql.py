@@ -243,11 +243,13 @@ class MYSQL:
             self.connection.commit()
             return cursor.fetchone() if fetchone else cursor.fetchall()
 
-    def query(self, sql, fetchone=False, execute=False):
+    def query(self, sql, prepared, fetchone=False, execute=False):
         """execute custom sql query"""
         with self.connection.cursor() as cursor:
-
-            cursor.execute(sql)
+            if not prepared:
+                cursor.execute(sql)
+            else:
+                cursor.execute(sql, tuple(prepared))
             self.connection.commit()
 
             if execute:

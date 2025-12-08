@@ -9,12 +9,12 @@ auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/')
 def shouye2():
-    courses = course.get_course({"is_deleted": 0, "is_show_index": 1})
+    courses = course.get_course_and_theam({"is_show_index": 1})
     return render_template('shouye.html', active_page='home', courses=courses)
 
 @auth_bp.route('/shouye', methods=['GET', 'POST'])
 def shouye():
-    courses = course.get_course({"is_deleted": 0, "is_show_index": 1})
+    courses = course.get_course_and_theam({"is_show_index": 1})
     return render_template("shouye.html", active_page='home', courses=courses)
 
 # 添加登录路由

@@ -75,6 +75,7 @@
                             <div class="course-meta">
                                 <span><i class="fas fa-clock"></i> {% raw %}{{ course.duration }}{% endraw %}</span>
                                 <!--<span><i class="fas fa-fire"></i> {% raw %}{{ course.calories }}{% endraw %} 卡路里</span>-->
+                                <span><a :href="'/fitness/'+ course.theme_code + '/man/' + course.code"><i class="fas fa-fire"></i>开始训练</a></span>
                             </div>
                             <button class="btn">查看详情</button>
                         </div>

@@ -97,7 +97,7 @@
         <!-- 简化的标题区域 -->
         <div class="header-simple">
             <h1>{{current_data.name}}</h1>
-            <h2 class="action-title">{{current_data.equipment.action}}</h2>
+            <h2 class="action-title">{{current_data.course.action}}</h2>
         </div>
         
         <!-- 主要内容区域 - 视频和要点 -->
@@ -106,7 +106,7 @@
             <div class="video-section">
                 <div class="video-container">
                     <video controls autoplay loop muted>
-                        <source src="{{url_for('static', filename=current_data.equipment.video_src)}}" type="video/mp4">
+                        <source src="{{url_for('static', filename=current_data.course.video_src)}}" type="video/mp4">
                         您的浏览器不支持视频标签
                     </video>
                 </div>
@@ -131,7 +131,7 @@
                     <!-- 当前动作显示 -->
                     <div class="current-exercise">
                         <span>当前动作: </span>
-                        <span id="currentExercise">{{current_data.equipment.action}}</span>
+                        <span id="currentExercise">{{current_data.course.action}}</span>
                     </div>
                     
                     <!-- 训练控制按钮 -->
@@ -145,7 +145,7 @@
                 <div class="action-points">
                     <h2>动作要点</h2>
                     <ul>
-                        {% for point in current_data.equipment.Action_points %}
+                        {% for point in current_data.course.Action_points %}
                         <li>{{point}}</li>
                         {% endfor %}
                     </ul>

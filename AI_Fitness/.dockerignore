@@ -6,3 +6,10 @@ Dockerfile
 .github
 .gitignore
 README.md
+*.pyc
+__pycache__
+*.egg-info
+.git
+node_modules
+.env
+

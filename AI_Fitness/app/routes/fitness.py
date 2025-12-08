@@ -47,20 +47,20 @@ def start_fitness():
 
 
 '''
-肌肉练习
-muscle:肌肉名称
+训练
+theme:主题
 gender:性别
-equipment:器材
+course:课程
 '''
-@fitness_bp.route('/<muscle>/<gender>/<equipment>', methods=['GET', 'POST'])
+@fitness_bp.route('/<theme>/<gender>/<course>', methods=['GET', 'POST'])
 # @login_required
-def fitness_muscle(muscle, gender, equipment):
+def fitness_muscle(theme, gender, course):
     try:
         # 从session获取用户ID
         user_id = session.get('user_id', '0')
         
         # 记录请求信息
-        logger.info(f"康训请求: 肌肉={muscle}, 性别={gender}, 器材={equipment}, 用户ID={user_id}")
+        logger.info(f"康复训练请求: 课程主题={theme}, 性别={gender}, 课程={course}, 用户ID={user_id}")
         
         # 验证性别参数
         if gender not in ['man', 'woman']:
@@ -68,16 +68,16 @@ def fitness_muscle(muscle, gender, equipment):
             gender = 'man'
         
         # 验证器材参数
-        valid_equipment = ['dumbbell', 'bodyweight']
-        if equipment not in valid_equipment:
-            logger.warning(f"无效的器材参数: {equipment}，使用默认值 'dumbbell'")
-            equipment = 'dumbbell'
+        valid_course = ['arms', 'legs', 'abdomen']
+        if course not in valid_course:
+            logger.warning(f"无效的部位参数: {course}，使用默认值 'arms'")
+            course = 'arms'
         
         # 获取用户数据
         user = ''
         
         # 获取当前数据
-        current_data = get_current_data(muscle, gender, equipment)
+        current_data = get_current_data(theme, gender, course)
         
         return render_template('fitness/main_fitness.html', user=user, id=user_id, current_data=current_data)
     
