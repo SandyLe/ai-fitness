@@ -1,7 +1,7 @@
 import logging as python_logging
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, jsonify
 from app.services import db_service
-from app.services.db_services import user_clock
+from app.services.db_services import user_clock, course as courseService, course_action_points
 from app.services.basefunc import get_current_data
 from datetime import datetime
 import calendar
@@ -58,26 +58,33 @@ def fitness_muscle(theme, gender, course):
     try:
         # 从session获取用户ID
         user_id = session.get('user_id', '0')
-        
         # 记录请求信息
         logger.info(f"康复训练请求: 课程主题={theme}, 性别={gender}, 课程={course}, 用户ID={user_id}")
-        
+
+        current_datas = courseService.get_course_and_theam({"theme_code": theme, "code": course})
+        if current_datas.code == 200 and len(current_datas.data) >0 :
+            current_data = current_datas.data[0]
+
+        dicParam = {'course_id': current_data['course_id']}
+        points = course_action_points.get_course_action_points(dicParam)
+        if points.code == 200 and len(points.data) >0 :
+            current_data["Action_points"]=points.data
         # 验证性别参数
-        if gender not in ['man', 'woman']:
-            logger.warning(f"无效的性别参数: {gender}，使用默认值 'man'")
-            gender = 'man'
+        # if gender not in ['man', 'woman']:
+        #     logger.warning(f"无效的性别参数: {gender}，使用默认值 'man'")
+        #     gender = 'man'
         
         # 验证器材参数
-        valid_course = ['arms', 'legs', 'abdomen']
-        if course not in valid_course:
-            logger.warning(f"无效的部位参数: {course}，使用默认值 'arms'")
-            course = 'arms'
+        # valid_course = ['arms', 'legs', 'abdomen']
+        # if course not in valid_course:
+        #     logger.warning(f"无效的部位参数: {course}，使用默认值 'arms'")
+        #     course = 'arms'
         
         # 获取用户数据
         user = ''
         
         # 获取当前数据
-        current_data = get_current_data(theme, gender, course)
+        # current_data = get_current_data(theme, gender, course)
         
         return render_template('fitness/main_fitness.html', user=user, id=user_id, current_data=current_data)
     

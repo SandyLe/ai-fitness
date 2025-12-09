@@ -290,7 +290,6 @@ CREATE TABLE `course_theme` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程主题表';
 
 
-
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -302,7 +301,10 @@ CREATE TABLE `course` (
   `video_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '视频地址',
   `img_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '图片地址',
   `course_desc` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程描述',
+  `course_action` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '当前动作',
   `duration` int(4) DEFAULT NULL COMMENT '课程时长',
+  `groups_count` int(4) DEFAULT NULL COMMENT '训练组数',
+  `actions_count` int(4) DEFAULT NULL COMMENT '每组次数',
   `is_show_index` int(2) DEFAULT NULL COMMENT '是否首頁展示',
   `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -311,6 +313,15 @@ CREATE TABLE `course` (
   `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程表';
+
+
+DROP TABLE IF EXISTS `course_action_points`;
+CREATE TABLE `course_action_points` (
+  `action_points_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `course_id` int(20)  COMMENT '主题id',
+  `action_points` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '动作要点',
+  PRIMARY KEY (`action_points_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程动作要点';
 
 
 DROP TABLE IF EXISTS `question`;

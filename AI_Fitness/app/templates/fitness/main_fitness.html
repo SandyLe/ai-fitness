@@ -96,8 +96,8 @@
     <div class="main-fitness-container">
         <!-- 简化的标题区域 -->
         <div class="header-simple">
-            <h1>{{current_data.name}}</h1>
-            <h2 class="action-title">{{current_data.course.action}}</h2>
+            <h1>{{current_data.theme_name}}</h1>
+            <h2 class="action-title">{{current_data.name}}</h2>
         </div>
         
         <!-- 主要内容区域 - 视频和要点 -->
@@ -106,7 +106,7 @@
             <div class="video-section">
                 <div class="video-container">
                     <video controls autoplay loop muted>
-                        <source src="{{url_for('static', filename=current_data.course.video_src)}}" type="video/mp4">
+                        <source src="{{url_for('static', filename=current_data.video_url)}}" type="video/mp4">
                         您的浏览器不支持视频标签
                     </video>
                 </div>
@@ -119,19 +119,19 @@
                     <!-- 训练组数配置 -->
                     <div class="training-sets">
                         <label for="sets">训练组数:</label>
-                        <input type="number" id="sets" min="1" value="3">
+                        <input type="number" id="sets" min="1" value="{{current_data.groups_count}}">
                     </div>
                     
                     <!-- 每组重复次数配置 -->
                     <div class="reps-per-set">
                         <label for="reps">每组次数:</label>
-                        <input type="number" id="reps" min="1" value="12">
+                        <input type="number" id="reps" min="1" value="{{current_data.actions_count}}">
                     </div>
                     
                     <!-- 当前动作显示 -->
                     <div class="current-exercise">
                         <span>当前动作: </span>
-                        <span id="currentExercise">{{current_data.course.action}}</span>
+                        <span id="currentExercise">{{current_data.course_action}}</span>
                     </div>
                     
                     <!-- 训练控制按钮 -->
@@ -145,8 +145,8 @@
                 <div class="action-points">
                     <h2>动作要点</h2>
                     <ul>
-                        {% for point in current_data.course.Action_points %}
-                        <li>{{point}}</li>
+                        {% for point in current_data.Action_points %}
+                        <li>{{point.action_points}}</li>
                         {% endfor %}
                     </ul>
                 </div>    
