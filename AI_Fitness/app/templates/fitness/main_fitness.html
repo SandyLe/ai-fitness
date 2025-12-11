@@ -149,15 +149,22 @@
                         <li>{{point.action_points}}</li>
                         {% endfor %}
                     </ul>
-                </div>    
+                </div>
             </div>
-
+            <div class="action-points">
+                <h2>课程介绍</h2>
+                <ul>
+                    <li>康复目标：{{current_data.rehabilitation_goal}}</li>
+                    <li>课程描述：{{current_data.course_desc}}</li>
+                </ul>
+            </div>
             <!-- 姿态识别训练按钮 -->
         </div>
     </div>
     
     <!-- 在页面中添加一个隐藏字段，用于存储用户ID -->
     <input type="hidden" id="current-user-id" value="{{ session.get('user_id', '0') }}">
+    <input type="hidden" id="course_id" value="{{ current_data.course_id }}">
     
     <div class="sidebar" id="sidebar">
         <div class="content" id="sidebarContent">

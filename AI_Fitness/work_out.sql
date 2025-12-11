@@ -292,7 +292,7 @@ CREATE TABLE `course_theme` (
 
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `course_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `theme_id` int(20)  COMMENT '主题id',
   `name` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '课程名称',
   `code` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '编码',
@@ -315,6 +315,22 @@ CREATE TABLE `course` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程表';
 
 
+
+DROP TABLE IF EXISTS `course_training_record`;
+CREATE TABLE `course_training_record` (
+  `record_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `course_id` int(20)  COMMENT '课程Id',
+  `user_id` int(20) DEFAULT NULL COMMENT '用户id',
+  `angle1` double DEFAULT NULL COMMENT '夹角1',
+  `angle2` double DEFAULT NULL COMMENT '夹角2',
+  `groups_num` int(4) DEFAULT NULL COMMENT '训练组数',
+  `actions_num` int(4) DEFAULT NULL COMMENT '每组次数',
+  `start_time` datetime DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `batch_no` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '批次号',
+  PRIMARY KEY (`record_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程训练记录';
+
 DROP TABLE IF EXISTS `course_action_points`;
 CREATE TABLE `course_action_points` (
   `action_points_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -322,6 +338,33 @@ CREATE TABLE `course_action_points` (
   `action_points` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '动作要点',
   PRIMARY KEY (`action_points_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程动作要点';
+
+DROP TABLE IF EXISTS `course_action_indicator`;
+CREATE TABLE `course_action_indicator` (
+  `action_indicator_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `course_id` int(20)  COMMENT '主题id',
+  `action_points` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '动作指标名称',
+  `point1` int(20) DEFAULT NULL COMMENT '部位点-计算夹角1',
+  `point2` int(20) DEFAULT NULL COMMENT '部位点-计算夹角顶点',
+  `point3` int(20) DEFAULT NULL COMMENT '部位点-计算夹角2',
+  `standard_value` double DEFAULT NULL COMMENT '标准值',
+  `start_value` double DEFAULT NULL COMMENT '初始值',
+  `end_value` double DEFAULT NULL COMMENT '结束值',
+  PRIMARY KEY (`action_points_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程动作指标';
+
+DROP TABLE IF EXISTS `course_action_comment`;
+CREATE TABLE `course_action_comment` (
+  `action_comment_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `course_id` int(20)  COMMENT '课程id',
+  `indicator_id` int(20)  COMMENT '指标id',
+  `less_or_more` int(20)  COMMENT '大于或小于',
+  `standard_value` double DEFAULT NULL COMMENT '标准值',
+  `action_comment_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '动作指标名称',
+  `action_comment_desc` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '动作指标评价',
+  `suggestions` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '动作指标建议',
+  PRIMARY KEY (`action_points_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='课程动作评价';
 
 
 DROP TABLE IF EXISTS `question`;

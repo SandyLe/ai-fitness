@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const poseSets = document.getElementById('pose-sets');
     const poseTimer = document.getElementById('pose-timer');
     const poseTimerText = document.getElementById('pose-timer-text');
+    const course_id = document.getElementById('course_id');
     
     // 训练变量
     let totalSets = 0;
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isResting = false;
     let restTimer = null;
     let restSeconds = 0;
+    let records = [];
     
     // MediaPipe 相关变量
     let webcamElement;
@@ -37,7 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let imuData = null; // 模拟IMU数据
     let lightingCondition = 1.0; // 默认光照条件良好
     let motionSpeed = 0.5; // 默认中等速度
-    
+
+    let start_time = null;
+    let end_time = null;
+    let batch_no = null;
     // 关节三元组定义 - 用于角度计算
     const JOINT_TRIPLETS = {
         'right_elbow': [12, 14, 16], // 右肩-右肘-右腕
@@ -170,9 +175,18 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // 如果完成一次动作
             if (result.counter > 0) {
+                records[totalReps-currentReps] = {
+                    'angle1': result.angle1,
+                    'angle2': result.angle2,
+                    'actions_num': totalReps - currentReps +1,
+                    'groups_num': totalSets - currentSets +1,
+                    'course_id': course_id.value,
+                    'start_time': start_time,
+                    'end_time': end_time,
+                    'batch_no': batch_no
+                };
                 currentReps--;
                 poseCounter.textContent = currentReps;
-                
                 // 检查是否完成当前组
                 if (currentReps <= 0) {
                     completeSet();
@@ -444,7 +458,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const baseResult = analyzeExercise(keypoints, type);
         let counter = baseResult.counter;
         let guideText = baseResult.guideText;
-        
+        let angle1 = baseResult.angle1;
+        let angle2 = baseResult.angle2;
+
         // 使用关节角度和平滑度数据增强分析
         if (Object.keys(jointAngles).length > 0 && Object.keys(smoothnessScores).length > 0) {
             // 根据动作类型应用特定的增强分析
@@ -510,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        return { counter, guideText };
+        return { counter, guideText, angle1, angle2 };
     }
     
     // 分析运动 
@@ -518,17 +534,19 @@ document.addEventListener('DOMContentLoaded', function() {
         let counter = 0;
         let guideText = "开始！";
         let flag = 0; // 用于跟踪动作状态
+        let angle1 = 0;
+        let angle2 = 0;
         
         // 计算各种角度
         // 右臂与水平方向的夹角
         const v1_right_arm = [keypoints[5][0] - keypoints[6][0], keypoints[5][1] - keypoints[6][1]];
         const v2_right_arm = [keypoints[8][0] - keypoints[6][0], keypoints[8][1] - keypoints[6][1]];
-        const angle_right_arm = getAngle(v1_right_arm, v2_right_arm);
+        const angle_right_arm = Math.abs(getAngle(v1_right_arm, v2_right_arm));
         
         // 左臂与水平方向的夹角
         const v1_left_arm = [keypoints[7][0] - keypoints[5][0], keypoints[7][1] - keypoints[5][1]];
         const v2_left_arm = [keypoints[6][0] - keypoints[5][0], keypoints[6][1] - keypoints[5][1]];
-        const angle_left_arm = getAngle(v1_left_arm, v2_left_arm);
+        const angle_left_arm = Math.abs(getAngle(v1_left_arm, v2_left_arm));
         
         // 右肘的夹角
         const v1_right_elbow = [keypoints[6][0] - keypoints[8][0], keypoints[6][1] - keypoints[8][1]];
@@ -594,10 +612,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // 定义各种动作的条件
 
         //Sandylee
-        const out_abdominal_begin = angle_left_arm < -100 && angle_right_arm < -100
-        const out_abdominal_finish = angle_left_arm > -120 && angle_right_arm > -120
+        const out_abdominal_begin = angle_left_arm < 110 && angle_right_arm < 110
+        const out_abdominal_finish = angle_left_arm > 120 && angle_right_arm > 120
         console.log("angle_left_arm： "+angle_left_arm + ", " + out_abdominal_begin);
-        console.log("angle_right_arm： "+angle_right_arm + ", " + out_abdominal_finish);
+        console.log("angle_right_arm： "+angle_right_arm + ", " + out_abdominal_finish );
 
 
         // 哑铃推肩条件
@@ -665,10 +683,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // 根据不同动作类型判断
         switch (type) {
             case "外科腹腔镜术后康复操":
+                console.log('，' + this.poseFlag[type])
                 if (out_abdominal_begin) {
                     this.poseFlag[type] = 1;
                     guideText = "请张开双臂";
+                    start_time = Date.now();
                 } else if (out_abdominal_finish && this.poseFlag[type]) {
+                    angle1 = angle_left_arm;
+                    angle2 = angle_right_arm;
+                    end_time = Date.now();
                     counter = 1;
                     this.poseFlag[type] = 0;
                     guideText = "动作完成，请放下双臂";
@@ -811,14 +834,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 guideText = "请按照视频示范做动作";
         }
         
-        return { counter, guideText };
+        return { counter, guideText, angle1, angle2 };
     }
     
     // 完成一组训练
     function completeSet() {
         currentSets--;
         poseSets.textContent = currentSets;
-        
+
+        saveCourseRecord();
         if (currentSets <= 0) {
             // 所有组数完成
             completeTraining();
@@ -827,7 +851,43 @@ document.addEventListener('DOMContentLoaded', function() {
             startRest();
         }
     }
-    
+    // 添加训练记录的函数
+    async function saveCourseRecord() {
+        try {
+            // 获取当前用户ID
+            const userId = getCurrentUserId();
+            if (!userId) {
+                showToast('请先登录后再保存训练记录', 'error');
+                return;
+            }
+            // 准备要发送的数据
+            const saveData = records;
+
+            // 显示保存中提示
+            showToast('正在保存训练记录...', 'info');
+
+            // 发送请求保存训练记录
+            const response = await fetch('/course/save_course_training_record', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(saveData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                showToast('训练记录保存成功！', 'success');
+                records = [];
+            } else {
+                showToast(`保存失败: ${result.msg}`, 'error');
+            }
+        } catch (error) {
+            console.error('保存训练记录失败:', error);
+            showToast('保存训练记录时发生错误', 'error');
+        }
+    }
     // 开始休息
     function startRest() {
         isResting = true;
@@ -909,10 +969,15 @@ document.addEventListener('DOMContentLoaded', function() {
         poseSets.textContent = currentSets;
         poseCounter.textContent = currentReps;
         poseStatusText.textContent = "准备开始...";
-        
+
         // 打开侧边栏
         sidebarPoseFitness.classList.add('active');
-        
+        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+          this.batch_no = await crypto.randomUUID();
+        } else {
+          // 回退到其他方法，例如使用第三方库或自己实现UUID生成算法
+          console.error('Browser does not support crypto.randomUUID');
+        }
         // 初始化姿态识别
         initPoseDetection();
         
