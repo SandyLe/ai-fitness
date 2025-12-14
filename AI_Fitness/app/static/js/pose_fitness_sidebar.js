@@ -175,16 +175,19 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // 如果完成一次动作
             if (result.counter > 0) {
-                records[totalReps-currentReps] = {
-                    'angle1': result.angle1,
-                    'angle2': result.angle2,
-                    'actions_num': totalReps - currentReps +1,
-                    'groups_num': totalSets - currentSets +1,
-                    'course_id': course_id.value,
-                    'start_time': start_time,
-                    'end_time': end_time,
-                    'batch_no': batch_no
-                };
+                result.actions_data.forEach(action => {
+                    records[records.length] = {
+                        'action_points_code': action.code,
+                        'action_points_value': action.value,
+                        'actions_num': totalReps - currentReps +1,
+                        'groups_num': totalSets - currentSets +1,
+                        'course_id': course_id.value,
+                        'start_time': start_time,
+                        'end_time': end_time,
+                        'batch_no': batch_no
+                    };
+                });
+
                 currentReps--;
                 poseCounter.textContent = currentReps;
                 // 检查是否完成当前组
@@ -458,8 +461,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const baseResult = analyzeExercise(keypoints, type);
         let counter = baseResult.counter;
         let guideText = baseResult.guideText;
-        let angle1 = baseResult.angle1;
-        let angle2 = baseResult.angle2;
+        let actions_data = baseResult.actions_data;
 
         // 使用关节角度和平滑度数据增强分析
         if (Object.keys(jointAngles).length > 0 && Object.keys(smoothnessScores).length > 0) {
@@ -526,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        return { counter, guideText, angle1, angle2 };
+        return { counter, guideText, actions_data };
     }
     
     // 分析运动 
@@ -534,8 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let counter = 0;
         let guideText = "开始！";
         let flag = 0; // 用于跟踪动作状态
-        let angle1 = 0;
-        let angle2 = 0;
+        let actions_data = [];
         
         // 计算各种角度
         // 右臂与水平方向的夹角
@@ -689,8 +690,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     guideText = "请张开双臂";
                     start_time = Date.now();
                 } else if (out_abdominal_finish && this.poseFlag[type]) {
-                    angle1 = angle_left_arm;
-                    angle2 = angle_right_arm;
+                    actions_data[actions_data.length] = {'code': 'angle_left_arm', 'value': angle_left_arm}
+                    actions_data[actions_data.length] = {'code': 'angle_right_arm', 'value': angle_right_arm}
                     end_time = Date.now();
                     counter = 1;
                     this.poseFlag[type] = 0;
@@ -834,7 +835,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 guideText = "请按照视频示范做动作";
         }
         
-        return { counter, guideText, angle1, angle2 };
+        return { counter, guideText, actions_data };
     }
     
     // 完成一组训练
@@ -972,12 +973,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 打开侧边栏
         sidebarPoseFitness.classList.add('active');
-        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-          this.batch_no = await crypto.randomUUID();
-        } else {
-          // 回退到其他方法，例如使用第三方库或自己实现UUID生成算法
-          console.error('Browser does not support crypto.randomUUID');
-        }
+
+        batch_no = generateSimpleUUID();
         // 初始化姿态识别
         initPoseDetection();
         
@@ -1044,7 +1041,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // 添加到页面
         document.body.appendChild(overlay);
     }
-    
+
+    //生成uuid
+    function generateSimpleUUID() {
+      let dt = new Date().getTime();
+      const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c === 'x' ? r : (r&0x3|0x8)).toString(16);
+      });
+      return uuid;
+    }
+
     // 显示康训报告 - 移到内部
     function showFitnessReport() {
         console.log("显示康训报告", exerciseType); // 添加日志
@@ -1061,7 +1069,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // 获取与当前训练相关的报告数据
-        fetchFitnessReport(exerciseType)
+        fetchFitnessReport(batch_no)
             .then(reportData => {
                 console.log("获取到报告数据", reportData); // 添加日志
                 
@@ -1112,33 +1120,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // 获取康训报告数据 - 移到内部
-    async function fetchFitnessReport(exerciseType) {
-        console.log("请求报告数据", exerciseType); // 添加日志
-        
-        // 根据训练类型映射到对应的肌肉群
-        const muscleMapping = {
-            "哑铃推肩": "deltoid",
-            "哑铃飞鸟": "pectoralis",
-            "高脚杯深蹲": "quadriceps",
-            "深蹲": "quadriceps",
-            "哑铃弯举": "biceps",
-            "哑铃二头弯举": "biceps",
-            "哑铃上斜卧推": "pectoralis",
-            "哑铃砍伐者": "oblique",
-            "哑铃仰卧起坐": "abdominal",
-            "右手哑铃划船": "trapezius",
-            "左手哑铃划船": "trapezius",
-            "躺姿哑铃臂屈伸": "triceps",
-            "哑铃早安鞠躬挺": "erector_spinae",
-            "哑铃保加利亚单腿深蹲左": "quadriceps",
-            "哑铃保加利亚单腿深蹲右": "quadriceps"
-        };
-        
-        // 获取对应的肌肉群
-        const muscleGroup = muscleMapping[exerciseType] || "trapezius"; // 默认使用斜方肌
+    async function fetchFitnessReport(batch_no) {
+        console.log("请求报告数据", batch_no); // 添加日志
+
         
         // 构建API请求URL
-        const url = `/fitness/get_report?muscle=${muscleGroup}&exercise=${encodeURIComponent(exerciseType)}`;
+        const url = `/fitness/get_fitness_report?batch_no=${batch_no}`;
         
         console.log("请求URL:", url); // 添加日志
         

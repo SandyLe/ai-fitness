@@ -110,11 +110,11 @@ def get_training_record_by_id(record_id: int):
      return get_training_record({"id": record_id})
 
 
-def get_training_records_for_user(user_id: int, start_date=None, end_date=None):
+def get_training_records_for_user(user_id: int, batch_no):
     """获取指定用户的所有训练记录 (可选日期范围)"""
     if not user_id:
         return Response.fail(code=500, msg="用户ID不能为空")
-    condition = {"user_id": user_id}
+    condition = {"user_id": user_id, "batch_no": batch_no}
     # Add date range filtering on the 'data' column if needed
     # Example requires specific implementation in libmysql or raw SQL
     # if start_date:
