@@ -359,44 +359,92 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 $(document).ready(function() {
+    const plans = []
     const userid = $('#userid').val();
     $('#nav_training-plan').click(function(){
         $.ajax({
-          url: "/get-user-plan?id=" + userid,
+          url: "/get-user-plan-active",
           type: "get",
 //          contentType: "application/x-www-form-urlencoded",
           data: 'userId=' + userid
         }).done(function(response) {
-          if (!response.success) {
-            alert(response.error);
-          } else if (response.success) {
-            $('#plan-title').html(response.data.plan.plan)
-            $.each(response.data.detailList, function(index, value) {
-                plan = value.plan.length > 16 ? value.plan.substring(0,15) + "..." : value.plan
-                plan = plan.length == 0 ? "暂无<br>" : plan
-                if ('周一'==value.plan_day) {
-                   $('#p-mon').html(plan)
-                } else if ('周二'==value.plan_day) {
-                   $('#p-tues').html(plan)
-                } else if ('周三'==value.plan_day) {
-                   $('#p-wed').html(plan)
-                } else if ('周四'==value.plan_day) {
-                   $('#p-thur').html(plan)
-                } else if ('周五'==value.plan_day) {
-                   $('#p-fri').html(plan)
-                } else if ('周六'==value.plan_day) {
-                   $('#p-sat').html(plan)
-                } else if ('周日'==value.plan_day) {
-                   $('#p-sun').html(plan)
-                }
-            });
-          } else {
-            alert("加载计划失败，请稍后重试！");
-          }
+          renderPlan(response);
           $("#loading").hide();
         }).fail(function() {
           alert("网络错误，请稍后重试！");
           $("#loading").hide();
         });
     });
+
+
+  $("#change-plan-btn").modalInput({
+      title: "请选择您的计划",
+      animation: "zoom", // fade / zoom / slide
+
+      fields: [
+        {
+          type: "select",
+          name: "plan_id",
+          label: "计划",
+          default: "sport",
+          options: [{'value':'sport','label':'11'}],
+          dataUrl: "/get-user-plan?id=" + userid,
+          valueKey: "id",
+          labelKey: "plan",
+          validate: v => v ? {valid:true} : {valid:false, msg:"请选择类别"}
+        }
+      ],
+      onOpen: function(){
+
+      },
+      onConfirm: function(values){
+//        alert("提交的数据：" + JSON.stringify(values, null, 2));
+        $.ajax({
+          url: "/change-user-plan",
+          type: "post",
+          contentType: "application/json",
+          dataType: 'json',
+          data: JSON.stringify({
+            origin_id: $('#activePlan').val(),
+            new_id: values.plan_id,
+          })
+        }).done(function(response) {
+          renderPlan(response)
+        }).fail(function(error) {
+          console.error("Error sending message:", error);
+          appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+          $('#loading').hide();
+        });
+      }
+    });
+    function renderPlan(response){
+
+      if (!response.success) {
+        alert(response.error);
+      } else if (response.success) {
+        $('#activePlan').val(response.data.plan.id);
+        $('#plan-title').html(response.data.plan.plan)
+        $.each(response.data.detailList, function(index, value) {
+            plan = value.plan.length > 16 ? value.plan.substring(0,15) + "..." : value.plan
+            plan = plan.length == 0 ? "暂无<br>" : plan
+            if ('周一'==value.plan_day) {
+               $('#p-mon').html(plan)
+            } else if ('周二'==value.plan_day) {
+               $('#p-tues').html(plan)
+            } else if ('周三'==value.plan_day) {
+               $('#p-wed').html(plan)
+            } else if ('周四'==value.plan_day) {
+               $('#p-thur').html(plan)
+            } else if ('周五'==value.plan_day) {
+               $('#p-fri').html(plan)
+            } else if ('周六'==value.plan_day) {
+               $('#p-sat').html(plan)
+            } else if ('周日'==value.plan_day) {
+               $('#p-sun').html(plan)
+            }
+        });
+      } else {
+        alert("加载计划失败，请稍后重试！");
+      }
+    }
 })

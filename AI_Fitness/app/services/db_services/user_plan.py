@@ -72,7 +72,7 @@ def update_plan(plan_id: int, update_data: dict):
     update_data['update_time'] = datetime.now()
     # update_by should be set based on context
 
-    condition = {"id": plan_id, "is_deleted": 0} # 只能更新未删除的
+    condition = {"id": plan_id} # 只能更新未删除的
 
     try:
         affected_rows = conn.update(TABLE_NAME, update_data, condition=condition)
@@ -107,6 +107,8 @@ def delete_plan_by_id(plan_id: int):
 
 
 def get_plan(condition: dict):
+    return get_plan_options(condition, None, None);
+def get_plan_options(condition: dict, order=None, limit=None):
     """获取用户计划信息，允许传入查询条件字典，默认只查询未删除的"""
     if not condition or len(condition) == 0:
         return Response.fail(code=500, msg="查询条件不能为空")
@@ -147,3 +149,10 @@ def get_active_plan_for_user(user_id: int):
         return Response.fail(code=500, msg="用户ID不能为空")
     condition = {"user_id": user_id, "is_deleted": 2}
     return get_plan(condition)
+
+def get_no_active_plan_for_user(user_id: int):
+    """获取指定用户的所有计划 (未删除的)"""
+    if not user_id:
+        return Response.fail(code=500, msg="用户ID不能为空")
+    condition = {"user_id": user_id, "is_deleted": 0}
+    return get_plan_options(condition, 'created_time desc', 10)

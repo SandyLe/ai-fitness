@@ -43,6 +43,7 @@ DROP TABLE IF EXISTS `user_date`;
 CREATE TABLE `user_date`  (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `user_id` int(20) NULL DEFAULT NULL COMMENT '用户id',
+  `course_id` int(20) NULL DEFAULT NULL COMMENT '课程id',
   `title` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '标题',
   `source` int(3) NULL DEFAULT NULL COMMENT '分数',
   `analysis` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '分析',

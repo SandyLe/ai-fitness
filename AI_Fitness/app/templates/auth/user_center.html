@@ -51,7 +51,7 @@
                         <div class="form-group">
                             <label for="username">用户名</label>
                             <input type="text" id="username" value="{{ user.user_name }}" disabled>
-                            <input type="hidden" id="userid" value="{{ user.user_id|default('0') }}">
+                            <input type="hidden" id="userid" value="{{ user.id }}">
                             <small>用户名不可修改</small>
                         </div>
                         
@@ -203,7 +203,8 @@
                 <div class="card">
                     <div class="plan-header">
                         <h3>当前训练计划</h3>
-                        <button class="btn btn-outline">更换计划</button>
+                            <input type="hidden" id="activePlan" value="">
+                        <button id="change-plan-btn" class="btn btn-outline">更换计划</button>
                     </div>
                     
                     <div class="current-plan">
@@ -218,37 +219,37 @@
                         <div class="weekly-schedule">
                             <div class="day-card">
                                 <h5>周一</h5>
-                                <p id = "p-mon">胸部 + 三头肌</p>
+                                <p id = "p-mon"></p>
                                 <span class="status completed">已完成</span>
                             </div>
                             <div class="day-card">
                                 <h5>周二</h5>
-                                <p id = "p-tues">背部 + 二头肌</p>
+                                <p id = "p-tues"></p>
                                 <span class="status completed">已完成</span>
                             </div>
                             <div class="day-card active">
                                 <h5>周三</h5>
-                                <p id = "p-wed">腿部 + 肩部</p>
+                                <p id = "p-wed"></p>
                                 <span class="status">今日训练</span>
                             </div>
                             <div class="day-card">
                                 <h5>周四</h5>
-                                <p id = "p-thur">休息日</p>
+                                <p id = "p-thur"></p>
                                 <span class="status">休息</span>
                             </div>
                             <div class="day-card">
                                 <h5>周五</h5>
-                                <p id = "p-fri">全身训练</p>
+                                <p id = "p-fri"></p>
                                 <span class="status">未开始</span>
                             </div>
                             <div class="day-card">
                                 <h5>周六</h5>
-                                <p id = "p-sat">有氧训练</p>
+                                <p id = "p-sat"></p>
                                 <span class="status">未开始</span>
                             </div>
                             <div class="day-card">
                                 <h5>周日</h5>
-                                <p id = "p-sun">休息日</p>
+                                <p id = "p-sun"></p>
                                 <span class="status">休息</span>
                             </div>
                         </div>

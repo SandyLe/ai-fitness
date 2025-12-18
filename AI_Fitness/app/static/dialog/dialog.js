@@ -22,7 +22,9 @@
 
     // 返回 { valid:bool, msg:"" }
     onConfirm: function(values){},
-    onClose: function(){}
+    onClose: function(){},
+    onOpen: function(){},
+    refresh: function(){}
   };
 
   function ModalInput(element, options){
@@ -75,10 +77,33 @@
 
       if (f.type === "select"){
         fieldsHTML += `<select class="mi-select">`;
-        f.options.forEach(o=>{
-          fieldsHTML += `<option value="${o.value}" ${o.value===f.default?"selected":""}>${o.label}</option>`;
-        });
+        // 👉 动态接口
+        if (f.dataUrl) {
+          $.ajax({
+            url: f.dataUrl,
+            method: f.method || "GET",
+            data: f.params || {},
+            dataType: "json",
+            async: false,
+            success: function(res){
+              var list = res.data || [];
+              list.forEach(item=>{
+                var val = item[f.valueKey || "value"];
+                var lab = item[f.labelKey || "label"];
+                fieldsHTML += `<option value="${val}" ${val===f.default?"selected":""}>${lab}</option>`;
+              });
+            },
+            error: function(){
+              $select.html(`<option value="">加载失败</option>`);
+            }
+          });
+        } else {
+            f.options.forEach(o=>{
+              fieldsHTML += `<option value="${o.value}" ${o.value===f.default?"selected":""}>${o.label}</option>`;
+            });
+        }
         fieldsHTML += `</select>`;
+
       }
 
       if (f.type === "radio"){
@@ -154,6 +179,7 @@
   };
 
   ModalInput.prototype.open = function(){
+    this.options.onOpen();
     this.$title.text(this.options.title);
     this.$btnCancel.text(this.options.cancelText);
     this.$btnOk.text(this.options.okText);

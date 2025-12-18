@@ -272,8 +272,7 @@ def get_fitness_report():
                 suggestions.append(val['suggestions'])
         report['issues'] = issues
         report['suggestions'] = list(dict.fromkeys(suggestions))
-
-
+        report['course_id'] = records[0]['course_id']
         report['summary'] = summary
 
         return  report

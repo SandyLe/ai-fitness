@@ -462,7 +462,7 @@ $(document).ready(function() {
       ],
 
       onConfirm: function(values){
-        alert("提交的数据：" + JSON.stringify(values, null, 2));
+//        alert("提交的数据：" + JSON.stringify(values, null, 2));
         submitPlan(values.title);
       }
     });
