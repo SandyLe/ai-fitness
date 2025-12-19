@@ -1,0 +1,64 @@
+/* ==== 遮罩 ==== */
+.mi-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: none;
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 显示控制 */
+.mi-mask.show { display:flex; }
+
+/* ==== 弹框主体 ==== */
+.mi-box {
+  width: 90%;
+  max-width: 480px;
+  background: rgba(0, 200, 255, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all .25s ease;
+}
+
+/* 动画：fade */
+.mi-mask.fade .mi-box { opacity:0; transform:none; }
+.mi-mask.fade.show .mi-box { opacity:1; transform:none; }
+
+/* 动画：zoom */
+.mi-mask.zoom .mi-box { transform: scale(.85); }
+.mi-mask.zoom.show .mi-box { transform: scale(1); opacity:1; }
+
+/* 动画：slide */
+.mi-mask.slide .mi-box { transform: translateY(40px); }
+.mi-mask.slide.show .mi-box { transform: translateY(0); opacity:1; }
+
+/* ==== 内容样式 ==== */
+.mi-title { font-size:18px; font-weight:600; margin-bottom:14px; background-color:#00c8ff; border-radius:5px; padding:10px;}
+
+.mi-field { margin-bottom: 14px; }
+.mi-label { font-size:14px; margin-bottom:6px; display:block; font-weight:500; }
+
+.mi-input, .mi-textarea, .mi-select {
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  box-sizing:border-box;
+}
+
+.mi-textarea { height:90px; resize:vertical; }
+
+.mi-radio-group { padding-left: 6px; }
+.mi-radio-group label { margin-right:12px; }
+
+.mi-error { font-size:13px; color:#d93025; display:none; margin-top:-6px; margin-bottom:6px; }
+
+.mi-footer { text-align:right; margin-top:16px; }
+.mi-btn { padding:6px 12px; border-radius:6px; border:none; cursor:pointer; }
+.mi-btn-ok { background:#2d8cf0; color:#fff; }
+.mi-btn-cancel { background:#eee; margin-right:8px; }

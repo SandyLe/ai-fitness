@@ -220,37 +220,58 @@
                             <div class="day-card">
                                 <h5>周一</h5>
                                 <p id = "p-mon"></p>
-                                <span class="status completed">已完成</span>
+                                <div class="plan_item_btn">
+                                    <span class="status completed">已完成</span>
+                                    <span class="item right status"><input id = 'id-mon' value="" type="hidden"/>...</span>
+                                </div>
                             </div>
                             <div class="day-card">
                                 <h5>周二</h5>
                                 <p id = "p-tues"></p>
-                                <span class="status completed">已完成</span>
+                                <div class="plan_item_btn">
+                                    <span class="status completed">已完成</span>
+                                    <span class="item right status"><input id = 'id-tues' value="" type="hidden"/>...</span>
+                                </div>
                             </div>
                             <div class="day-card active">
                                 <h5>周三</h5>
                                 <p id = "p-wed"></p>
-                                <span class="status">今日训练</span>
+                                <div class="plan_item_btn">
+                                    <span class="item left status">今日训练</span>
+                                    <span class="item right status"><input id = 'id-wed' value="" type="hidden"/>...</span>
+                                </div>
                             </div>
                             <div class="day-card">
                                 <h5>周四</h5>
                                 <p id = "p-thur"></p>
-                                <span class="status">休息</span>
+                                <div class="plan_item_btn">
+                                    <span class="item left status">休息</span>
+                                    <span class="item right status"><input id = 'id-thur' value="" type="hidden"/>...</span>
+                                </div>
                             </div>
                             <div class="day-card">
                                 <h5>周五</h5>
                                 <p id = "p-fri"></p>
-                                <span class="status">未开始</span>
+                                <div class="plan_item_btn">
+                                    <span class="item left status">未开始</span>
+                                    <span class="item right status"><input id = 'id-fri' value="" type="hidden"/>...</span>
+                                </div>
                             </div>
                             <div class="day-card">
                                 <h5>周六</h5>
                                 <p id = "p-sat"></p>
-                                <span class="status">未开始</span>
+                                <div class="plan_item_btn">
+                                    <span class="item left status">未开始</span>
+                                    <span class="item right status"><input id = 'id-sat' value="" type="hidden"/>...</span>
+                                </div>
                             </div>
                             <div class="day-card">
                                 <h5>周日</h5>
                                 <p id = "p-sun"></p>
-                                <span class="status">休息</span>
+                                <div class="plan_item_btn">
+                                    <span class="item left status">休息</span>
+                                    <span class="item right status"><input id = 'id-sun' value="" type="hidden"/>...</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -415,7 +436,11 @@
 
 {% block extra_js %}
 <link rel="stylesheet" href="{{ url_for('static', filename='dialog/dialog.css') }}">>
+<link rel="stylesheet" href="{{ url_for('static', filename='dialog_js/dialog.css') }}">>
+<link rel="stylesheet" href="{{ url_for('static', filename='dropdown/dropdown.css') }}">>
 <script type="text/javascript" src="{{ url_for('static',filename='js/jquery/jquery-3.7.1.min.js')}}"></script>
 <script src="{{ url_for('static', filename='dialog/dialog.js') }}"></script>
+<script src="{{ url_for('static', filename='dialog_js/dialog.js') }}"></script>
+<script src="{{ url_for('static', filename='dropdown/dropdown.js') }}"></script>
 <script src="{{ url_for('static', filename='js/user_center.js') }}"></script>
 {% endblock %}

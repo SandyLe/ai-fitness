@@ -429,22 +429,186 @@ $(document).ready(function() {
             plan = plan.length == 0 ? "暂无<br>" : plan
             if ('周一'==value.plan_day) {
                $('#p-mon').html(plan)
+               $('#id-mon').val(value.id)
             } else if ('周二'==value.plan_day) {
                $('#p-tues').html(plan)
+               $('#id-tues').val(value.id)
             } else if ('周三'==value.plan_day) {
                $('#p-wed').html(plan)
+               $('#id-wed').val(value.id)
             } else if ('周四'==value.plan_day) {
                $('#p-thur').html(plan)
+               $('#id-thur').val(value.id)
             } else if ('周五'==value.plan_day) {
                $('#p-fri').html(plan)
+               $('#id-fri').html(value.id)
             } else if ('周六'==value.plan_day) {
                $('#p-sat').html(plan)
+               $('#id-sat').html(value.id)
             } else if ('周日'==value.plan_day) {
                $('#p-sun').html(plan)
+               $('#id-sun').html(value.id)
             }
         });
       } else {
         alert("加载计划失败，请稍后重试！");
       }
     }
+    $('.plan_item_btn .right').dropdownMenu({
+      menus: [
+        {
+          text: '开始训练',
+          value: 'connect',
+          click: function (_, __, ___, innerValue) {
+            $.ajax({
+              url: "/change-user-plan",
+              type: "post",
+              contentType: "application/json",
+              dataType: 'json',
+              data: JSON.stringify({
+                origin_id: $('#activePlan').val(),
+                new_id: values.plan_id,
+              })
+            }).done(function(response) {
+              renderPlan(response)
+            }).fail(function(error) {
+              console.error("Error sending message:", error);
+              appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+              $('#loading').hide();
+            });
+          }
+        },
+        {
+          text: '查看详情',
+          value: 'view-detail',
+          click: function (_, __, ___, innerValue) {
+            alert('要关联的数据是：' + innerValue)
+            $.ajax({
+              url: "/change-user-plan",
+              type: "post",
+              contentType: "application/json",
+              dataType: 'json',
+              data: JSON.stringify({
+                origin_id: $('#activePlan').val(),
+                new_id: values.plan_id,
+              })
+            }).done(function(response) {
+              renderPlan(response)
+            }).fail(function(error) {
+              console.error("Error sending message:", error);
+              appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+              $('#loading').hide();
+            });
+          }
+        },
+        {
+          text: '关联课程',
+          value: 'connect',
+          click: function (_, __, ___, innerValue) {
+            openModalInput({
+              title: '计划关联课程',
+              fields: [
+                {
+                  type: "select",
+                  name: "course_id",
+                  label: "课程",
+                  default: "sport",
+                  options: [{'value':'sport','label':'11'}],
+                  dataUrl: "/get-user-plan?id=" + userid,
+                  valueKey: "id",
+                  labelKey: "plan",
+                  validate: v => v ? {valid:true} : {valid:false, msg:"请选择关联课程"}
+                }
+              ],
+              onConfirm: function (values) {
+                $.ajax({
+                  url: "/change-user-plan",
+                  type: "post",
+                  contentType: "application/json",
+                  dataType: 'json',
+                  data: JSON.stringify({
+                    origin_id: $('#activePlan').val(),
+                    new_id: values.plan_id,
+                  })
+                }).done(function(response) {
+                  renderPlan(response)
+                }).fail(function(error) {
+                  console.error("Error sending message:", error);
+                  appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+                  $('#loading').hide();
+                });
+                console.log('提交数据', values)
+              }
+            })
+          }
+        },
+        {
+          text: '编辑',
+          value: 'edit',
+          click: function (value, text, index, innerValue) {
+            openModalInput({
+              title: '编辑计划详细',
+              fields: [
+                {
+                  type: 'text',
+                  name: 'name',
+                  label: '名称',
+                  default: innerValue,
+                  validate: function (v) {
+                    return { valid: !!v, msg: '不能为空' }
+                  }
+                },
+                {
+                  type: 'textarea',
+                  name: 'desc',
+                  label: '描述'
+                }
+              ],
+
+              onConfirm: function (values) {
+                $.ajax({
+                  url: "/change-user-plan",
+                  type: "post",
+                  contentType: "application/json",
+                  dataType: 'json',
+                  data: JSON.stringify({
+                    origin_id: $('#activePlan').val(),
+                    new_id: values.plan_id,
+                  })
+                }).done(function(response) {
+                  renderPlan(response)
+                }).fail(function(error) {
+                  console.error("Error sending message:", error);
+                  appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+                  $('#loading').hide();
+                });
+                console.log('提交数据', values)
+              }
+            })
+          }
+        }
+      ]
+    })
+
+    function openDebugDialog(params) {
+      $('.jq-debug-mask').remove()
+
+      var html =
+        '<div class="jq-debug-mask">' +
+          '<div class="jq-debug-dialog">' +
+            '<h3>点击参数</h3>' +
+            '<pre>' + JSON.stringify(params, null, 2) + '</pre>' +
+            '<button class="jq-debug-close">关闭</button>' +
+          '</div>' +
+        '</div>'
+
+      var $dialog = $(html)
+      $('body').append($dialog)
+
+      $dialog.find('.jq-debug-close').on('click', function () {
+        $dialog.remove()
+      })
+    }
+
+
 })

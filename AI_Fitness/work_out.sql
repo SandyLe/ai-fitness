@@ -396,3 +396,15 @@ CREATE TABLE `user_question_answer` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='问题回答表';
 
+
+DROP TABLE IF EXISTS `plan_detail_course`;
+CREATE TABLE `plan_detail_course` (
+  `plan_dtl_course_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `course_id` int(20)  COMMENT '课程Id',
+  `plan_dtl_id` int(20) DEFAULT NULL COMMENT '计划详情id',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`plan_dtl_course_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='计划课程关联表';
