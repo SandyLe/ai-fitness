@@ -441,13 +441,13 @@ $(document).ready(function() {
                $('#id-thur').val(value.id)
             } else if ('周五'==value.plan_day) {
                $('#p-fri').html(plan)
-               $('#id-fri').html(value.id)
+               $('#id-fri').val(value.id)
             } else if ('周六'==value.plan_day) {
                $('#p-sat').html(plan)
-               $('#id-sat').html(value.id)
+               $('#id-sat').val(value.id)
             } else if ('周日'==value.plan_day) {
                $('#p-sun').html(plan)
-               $('#id-sun').html(value.id)
+               $('#id-sun').val(value.id)
             }
         });
       } else {
@@ -461,16 +461,17 @@ $(document).ready(function() {
           value: 'connect',
           click: function (_, __, ___, innerValue) {
             $.ajax({
-              url: "/change-user-plan",
-              type: "post",
-              contentType: "application/json",
-              dataType: 'json',
-              data: JSON.stringify({
-                origin_id: $('#activePlan').val(),
-                new_id: values.plan_id,
-              })
+              url: "/get-user-plan-detail",
+              type: "get",
+              data: 'plan_dtl_id='+innerValue
             }).done(function(response) {
-              renderPlan(response)
+              detail_data = response.data.plan_detail
+              course_data = response.data.course
+              if (course_data) {
+                window.open('/fitness/'+ course_data.theme_code + '/man/' + course_data.code, '_blank');
+              } else {
+                alert('尚未关联课程，请先关联课程！');
+              }
             }).fail(function(error) {
               console.error("Error sending message:", error);
               appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
@@ -482,18 +483,60 @@ $(document).ready(function() {
           text: '查看详情',
           value: 'view-detail',
           click: function (_, __, ___, innerValue) {
-            alert('要关联的数据是：' + innerValue)
             $.ajax({
-              url: "/change-user-plan",
-              type: "post",
-              contentType: "application/json",
-              dataType: 'json',
-              data: JSON.stringify({
-                origin_id: $('#activePlan').val(),
-                new_id: values.plan_id,
-              })
+              url: "/get-user-plan-detail",
+              type: "get",
+              data: 'plan_dtl_id='+innerValue
             }).done(function(response) {
-              renderPlan(response)
+              detail_data = response.data.plan_detail
+              course_data = response.data.course
+              course_name = '尚未关联课程'
+              if (course_data) {
+                course_name = course_data.name
+              }
+              openModalInput({
+                  title: '计划详细',
+                  fields: [
+                    {
+                      type: 'span',
+                      name: 'name',
+                      label: '名称',
+                      default: detail_data.plan,
+                    },
+                    {
+                      type: 'span',
+                      name: 'context',
+                      label: '描述',
+                      default: detail_data.context
+                    },
+                    {
+                      type: 'span',
+                      name: 'context',
+                      label: '关联课程',
+                      default: course_name
+                    }
+                  ],
+
+                  onConfirm: function (values) {
+                    $.ajax({
+                      url: "/change-user-plan",
+                      type: "post",
+                      contentType: "application/json",
+                      dataType: 'json',
+                      data: JSON.stringify({
+                        origin_id: $('#activePlan').val(),
+                        new_id: values.plan_id,
+                      })
+                    }).done(function(response) {
+                      renderPlan(response)
+                    }).fail(function(error) {
+                      console.error("Error sending message:", error);
+                      appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+                      $('#loading').hide();
+                    });
+                    console.log('提交数据', values)
+                  }
+                })
             }).fail(function(error) {
               console.error("Error sending message:", error);
               appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
@@ -505,41 +548,76 @@ $(document).ready(function() {
           text: '关联课程',
           value: 'connect',
           click: function (_, __, ___, innerValue) {
-            openModalInput({
-              title: '计划关联课程',
-              fields: [
-                {
-                  type: "select",
-                  name: "course_id",
-                  label: "课程",
-                  default: "sport",
-                  options: [{'value':'sport','label':'11'}],
-                  dataUrl: "/get-user-plan?id=" + userid,
-                  valueKey: "id",
-                  labelKey: "plan",
-                  validate: v => v ? {valid:true} : {valid:false, msg:"请选择关联课程"}
-                }
-              ],
-              onConfirm: function (values) {
-                $.ajax({
-                  url: "/change-user-plan",
-                  type: "post",
-                  contentType: "application/json",
-                  dataType: 'json',
-                  data: JSON.stringify({
-                    origin_id: $('#activePlan').val(),
-                    new_id: values.plan_id,
-                  })
+              $.ajax({
+                  url: "/get-user-plan-detail",
+                  type: "get",
+                  data: 'plan_dtl_id='+innerValue
                 }).done(function(response) {
-                  renderPlan(response)
-                }).fail(function(error) {
-                  console.error("Error sending message:", error);
-                  appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
-                  $('#loading').hide();
-                });
-                console.log('提交数据', values)
-              }
-            })
+                  detail_data = response.data.plan_detail
+                  connection = response.data.connection
+                  connection_id = null
+                  course_id = null
+                  if (connection) {
+                    connection_id = connection.plan_dtl_course_id
+                    course_id = connection.course_id
+                  }
+                openModalInput({
+                  title: '计划关联课程',
+                  fields: [
+                    {
+                      type: "select",
+                      name: "course_id",
+                      label: "课程",
+                      default: course_id,
+                      options: [{'value':'sport','label':'11'}],
+                      dataUrl: "/course/get-courses",
+                      valueKey: "course_id",
+                      labelKey: "name",
+                      validate: v => v ? {valid:true} : {valid:false, msg:"请选择关联课程"}
+                    },
+                    {
+                      type: "text",
+                      name: "plan_dtl_id",
+                      show: 'hidden',
+                      default: innerValue
+                    },
+                    {
+                      type: "text",
+                      name: "plan_dtl_course_id",
+                      show: 'hidden',
+                      default: connection_id
+                    }
+                  ],
+                  onConfirm: function (values) {
+                  console.info(values)
+                    $.ajax({
+                      url: "/save-plan-detail-course",
+                      type: "post",
+                      contentType: "application/json",
+                      dataType: 'json',
+                      data: JSON.stringify({
+                        plan_dtl_id: values.plan_dtl_id,
+                        course_id: values.course_id,
+                        plan_dtl_course_id: values.plan_dtl_course_id,
+                      })
+                    }).done(function(response) {
+                      if (response.success) {
+                        alert('操作成功！');
+                      }
+                      renderPlan(response)
+                    }).fail(function(error) {
+                      console.error("Error sending message:", error);
+                      appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+                      $('#loading').hide();
+                    });
+                    console.log('提交数据', values)
+                  }
+                })
+              }).fail(function(error) {
+                 console.error("Error sending message:", error);
+                 appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+                $('#loading').hide();
+            });
           }
         },
         {

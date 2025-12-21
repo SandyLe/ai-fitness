@@ -61,7 +61,7 @@ def update_plan_detail_course(plan_dtl_course_id: int, update_data: dict):
         return Response.fail(code=500, msg="更新信息为空")
 
     # 不允许修改主键或用户ID
-    for forbidden_key in ['plan_dtl_course_id', 'course_id', 'plan_dtl_id']:
+    for forbidden_key in ['plan_dtl_course_id']:
          if forbidden_key in update_data:
              del update_data[forbidden_key]
 

@@ -58,8 +58,11 @@
       html += '<div class="mi-field" data-index="' + i + '">' +
                 '<label class="mi-label">' + (f.label || '') + '</label>';
 
+      if (f.type === 'span') {
+        html += '<span class="mi-span">'+ (f.default||'') + '</span>';
+      }
       if (f.type === 'text') {
-        html += '<input class="mi-input" type="text" value="' + (f.default||'') + '" placeholder="' + (f.placeholder||'') + '">';
+        html += '<input class="mi-input" type="' + (f.show||'text') + '" value="' + (f.default||'') + '" placeholder="' + (f.placeholder||'') + '">';
       }
 
       if (f.type === 'textarea') {

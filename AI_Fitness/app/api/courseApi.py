@@ -25,3 +25,16 @@ def save_course_training_record():
     except Exception as e:
         # 返回失败响应
         return jsonify({"success": False, "error": str(e)})
+
+@course_bp.route("/get-courses", methods=["GET"])
+def get_user_plan():
+    try:
+        user_id = session.get('user_id', '0')
+        if user_id == '0':
+            return jsonify({"success": False, 'error': "您还未登录，请登录后使用！！"})
+        param = {'is_deleted': 0 }
+        courses = course.get_course(param)
+        return jsonify({"success": True, "data": courses.data})
+    except Exception as e:
+        # 返回失败响应
+        return jsonify({"success": False, "error": str(e)})
