@@ -11,12 +11,14 @@ def get_user_plan_active():
         if user_id == '0':
             return jsonify({"success": False, 'error': "您还未登录，请登录后使用！！"})
         parent = user_plan.get_active_plan_for_user(user_id)
-        details = user_plan_detail.get_plan_detail_by_plan_id(parent.data[0]['id'])
-        if (details.data):
-            details = [dict(i) for i in details.data]
-        else:
-            details = []
-        return jsonify({"success": True, "data": {"plan": parent.data[0], "detailList": details}})
+        parent_data = parent.data[0]
+        details = user_plan_detail.get_plan_detail_by_plan_id(parent_data['id'])
+        # if (details[0]):
+        #     details = [dict(i) for i in details.data]
+        # else:
+        #     details = []
+        parent_data['percent'] = details[2]
+        return jsonify({"success": True, "data": {"plan": parent_data, "detailList": details[0]}})
     except Exception as e:
         # 返回失败响应
         return jsonify({"success": False, "error": str(e)})
@@ -61,8 +63,6 @@ def save_plan_detail_course():
             result = plan_detail_course.update_plan_detail_course(plan_dtl_course_id, plan_detail_course_data)
         else:
             result = plan_detail_course.add_plan_detail_course(plan_detail_course_data)
-            plan_dtl_course_id = result.data['plan_dtl_course_id']
-
         return get_user_plan_active()
     except Exception as e:
         # 返回失败响应
@@ -90,4 +90,25 @@ def get_user_plan_detail():
         return jsonify({"success": True, "data": {'plan_detail': plan_detail.data, 'connection': connection_data, 'course': course_data}})
     except Exception as e:
         # 返回失败响应
+        return jsonify({"success": False, "error": str(e)})
+
+
+@user_plan_bp.route("/save-plan-detail", methods=["POST"])
+def save_plan_detail():
+    try:
+        user_id = session.get('user_id', '0')
+        params = request.get_json()
+        id = params['id']
+        plan = params['plan']
+        context = params['context']
+        plan_day = params['plan_day']
+        plan_detail_data = {'id':id,'plan': plan, 'context': context, 'plan_day':plan_day}
+        if (id) :
+            result = user_plan_detail.update_plan_detail(id, plan_detail_data)
+        else:
+            result = user_plan_detail.add_plan_detail(plan_detail_data)
+
+        return get_user_plan_active()
+    except Exception as e:
+         # 返回失败响应
         return jsonify({"success": False, "error": str(e)})

@@ -102,15 +102,13 @@ def delete_user_score_data_by_id(data_id: int):
         return Response.fail(code=500, msg=f"用户分数数据删除失败: {str(e)}")
 
 
-def get_user_score_data(condition: dict):
+def get_user_score_data(condition: dict, limit: int = None):
     """获取用户分数数据，允许传入查询条件字典"""
     if not condition or len(condition) == 0:
         return Response.fail(code=500, msg="查询条件不能为空")
-
     # No is_deleted default
-
     try:
-        result = conn.fetch_rows(TABLE_NAME, condition=condition)
+        result = conn.fetch_rows(TABLE_NAME, condition=condition, order="source DESC", limit = limit)
         if result is None or len(result) == 0:
             return Response.fail(code=404, msg="查无此用户分数数据")
         # 如果是根据唯一ID查询，通常只返回一条记录
@@ -119,6 +117,28 @@ def get_user_score_data(condition: dict):
         return Response.success(data=result) # 返回列表
     except Exception as e:
         return Response.fail(code=500, msg=f"查询用户分数数据失败: {str(e)}")
+
+def get_user_score_data_detail(condition: dict, create_date):
+    sql = 'select * from user_date c where 1=1 and {where} '
+    if (create_date):
+        sql = sql + ' and DATE_FORMAT(c.created_time,\'%%Y-%%m-%%d\') = \'{}\''.format(create_date)
+
+    if not condition or len(condition) == 0:
+        return Response.fail(code=500, msg="查询条件不能为空")
+    where = conn.join_field_value(condition, ' AND ')
+    sql = sql.format(where=where)
+    try:
+        prepared = []
+        prepared.extend(condition.values())
+        result = conn.query(sql, prepared)
+        if result is None or len(result) == 0:
+            return Response.fail(code=404, msg="查无此数据")
+        # 如果是根据唯一ID查询，通常只返回一条记录
+        if "id" in condition and len(result) == 1:
+             return Response.success(data=result[0]) # 返回单个对象而非列表
+        return Response.success(data=result) # 返回列表
+    except Exception as e:
+        return Response.fail(code=500, msg=f"查询数据失败: {str(e)}")
 
 
 def get_user_score_data_by_id(data_id: int):

@@ -316,7 +316,7 @@ def filter_ai_response(response_text):
 # 添加提示语句到问题中
 def append_prompt_to_question(question_text):
     # 更强的角色定义和限制提示
-    system_prompt = """你是一个专业的康复训练助手AI，你的唯一目的是提供康复训练、康复期间营养和健康生活方面的建议。
+    system_prompt = """你是一个专业的AI康复训练助手，你的唯一目的是提供康复训练、康复期间营养和健康生活方面的建议。
 你必须遵循以下规则：
 1. 只回答与康复训练、营养、健康生活相关的问题
 2. 拒绝回答任何与康复训练无关的问题
@@ -627,8 +627,8 @@ def analizePlan(text):
     week_days = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
     plan = {day: [] for day in week_days}
 
-    # 正则：匹配 #### 周一：标题
-    day_header_re = re.compile(r"^###\s*([^：:]+)[:：](.*)$")
+    # 正则：匹配 **周一：标题** 格式
+    day_header_re = re.compile(r"^\*\*\s*([^：:]+)[:：](.*?)\*\*$\s*")
 
     current_days = []  # 解析到“周六/周日”时会出现多个 day
     current_title = ""
