@@ -211,9 +211,9 @@
                         <h4 id = "plan-title">增肌塑形 - 中级计划</h4>
                         <div class="plan-progress">
                             <div class="progress-bar">
-                                <div class="progress" style="width: 65%;"></div>
+                                <div class="progress" id = "progress" style="width: 65%;"></div>
                             </div>
-                            <span>65% 完成</span>
+                            <span id="progress-text"> </span><span>完成</span>
                         </div>
                         
                         <div class="weekly-schedule">
@@ -221,7 +221,7 @@
                                 <h5>周一</h5>
                                 <p id = "p-mon"></p>
                                 <div class="plan_item_btn">
-                                    <span class="status completed">已完成</span>
+                                    <span class="status" id="status-mon">已完成</span>
                                     <span class="item right status"><input id = 'id-mon' value="" type="hidden"/>...</span>
                                 </div>
                             </div>
@@ -229,7 +229,7 @@
                                 <h5>周二</h5>
                                 <p id = "p-tues"></p>
                                 <div class="plan_item_btn">
-                                    <span class="status completed">已完成</span>
+                                    <span class="status" id="status-tues">已完成</span>
                                     <span class="item right status"><input id = 'id-tues' value="" type="hidden"/>...</span>
                                 </div>
                             </div>
@@ -237,7 +237,7 @@
                                 <h5>周三</h5>
                                 <p id = "p-wed"></p>
                                 <div class="plan_item_btn">
-                                    <span class="item left status">今日训练</span>
+                                    <span class="item left status" id="status-wed">今日训练</span>
                                     <span class="item right status"><input id = 'id-wed' value="" type="hidden"/>...</span>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@
                                 <h5>周四</h5>
                                 <p id = "p-thur"></p>
                                 <div class="plan_item_btn">
-                                    <span class="item left status">休息</span>
+                                    <span class="item left status" id="status-thur">休息</span>
                                     <span class="item right status"><input id = 'id-thur' value="" type="hidden"/>...</span>
                                 </div>
                             </div>
@@ -253,7 +253,7 @@
                                 <h5>周五</h5>
                                 <p id = "p-fri"></p>
                                 <div class="plan_item_btn">
-                                    <span class="item left status">未开始</span>
+                                    <span class="item left status" id="status-fri">未开始</span>
                                     <span class="item right status"><input id = 'id-fri' value="" type="hidden"/>...</span>
                                 </div>
                             </div>
@@ -261,7 +261,7 @@
                                 <h5>周六</h5>
                                 <p id = "p-sat"></p>
                                 <div class="plan_item_btn">
-                                    <span class="item left status">未开始</span>
+                                    <span class="item left status" id="status-sat">未开始</span>
                                     <span class="item right status"><input id = 'id-sat' value="" type="hidden"/>...</span>
                                 </div>
                             </div>
@@ -269,12 +269,15 @@
                                 <h5>周日</h5>
                                 <p id = "p-sun"></p>
                                 <div class="plan_item_btn">
-                                    <span class="item left status">休息</span>
+                                    <span class="item left status" id="status-sun">休息</span>
                                     <span class="item right status"><input id = 'id-sun' value="" type="hidden"/>...</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!--<div>
+                        <button id="open">打开日历</button>
+                    </div>-->
                 </div>
             </div>
             
@@ -438,9 +441,11 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='dialog/dialog.css') }}">>
 <link rel="stylesheet" href="{{ url_for('static', filename='dialog_js/dialog.css') }}">>
 <link rel="stylesheet" href="{{ url_for('static', filename='dropdown/dropdown.css') }}">>
+<link rel="stylesheet" href="{{ url_for('static', filename='calendar/calendar.css') }}">>
 <script type="text/javascript" src="{{ url_for('static',filename='js/jquery/jquery-3.7.1.min.js')}}"></script>
 <script src="{{ url_for('static', filename='dialog/dialog.js') }}"></script>
 <script src="{{ url_for('static', filename='dialog_js/dialog.js') }}"></script>
 <script src="{{ url_for('static', filename='dropdown/dropdown.js') }}"></script>
+<script src="{{ url_for('static', filename='calendar/calendar.js') }}"></script>
 <script src="{{ url_for('static', filename='js/user_center.js') }}"></script>
 {% endblock %}

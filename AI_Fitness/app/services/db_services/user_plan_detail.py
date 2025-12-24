@@ -12,6 +12,7 @@ from datetime import datetime
 from app.config import DB_CONFIG
 from app.utils.libmysql import MYSQL
 from app.utils.result_type import Response
+from app.services.db_services import plan_detail_course,user_date
 
 conn = MYSQL(
     dbhost=DB_CONFIG['host'],
@@ -145,4 +146,32 @@ def get_plan_detail_by_plan_id(plan_id: int):
      """根据ID获取单个用户计划信息"""
      if not plan_id:
          return Response.fail(code=500, msg="计划ID不能为空")
-     return get_plan_detail({"parent_id": plan_id})
+     details_data = get_plan_detail({"parent_id": plan_id})
+     if (details_data.data):
+         status = ''
+         completed = 0
+         total = 0
+         details = []
+         percent = 0
+         for detail in details_data.data:
+             dtl_course_param = {'plan_dtl_id': detail['id']}
+             plan_dtl_course = plan_detail_course.get_user_plan_detail_course(dtl_course_param)
+             if(plan_dtl_course.data):
+                 total = total + 1
+                 user_data_param = {'course_id': plan_dtl_course.data[0]['course_id'], 'user_id': detail['user_id']}
+                 user_score_data_result = None
+                 if (detail['plan_time']):
+                    user_score_data_result = user_date.get_user_score_data_detail(user_data_param, detail['plan_time'].strftime("%Y-%m-%d"))
+                 if (user_score_data_result.data):
+                    status = '1'
+                    completed = completed + 1
+                 else:
+                    status = '0'
+             else:
+                 status = '-1'
+             detail['status'] = status
+             details.append(detail)
+         if (total > 0):
+             percent = completed / total
+         return details,completed,percent
+     return [],0,0

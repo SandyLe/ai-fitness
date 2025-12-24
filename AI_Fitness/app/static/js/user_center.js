@@ -422,32 +422,59 @@ $(document).ready(function() {
       if (!response.success) {
         alert(response.error);
       } else if (response.success) {
+        percentage = Math.round(response.data.plan.percent * 100) + '%';
+        $('#progress').css('width',percentage)
+        $('#progress-text').html(percentage)
         $('#activePlan').val(response.data.plan.id);
         $('#plan-title').html(response.data.plan.plan)
         $.each(response.data.detailList, function(index, value) {
             plan = value.plan.length > 16 ? value.plan.substring(0,15) + "..." : value.plan
             plan = plan.length == 0 ? "暂无<br>" : plan
+            css = null
+            status = '休息'
+            if ('0' == value.status) {
+                status = '未开始';
+            } else if ('1' == value.status) {
+                status = '已完成';
+                css = 'completed'
+            }  else if ('-1' == value.status) {
+                status = '未关联';
+            }
             if ('周一'==value.plan_day) {
                $('#p-mon').html(plan)
                $('#id-mon').val(value.id)
+               $('#status-mon').html(status)
+               $('#status-mon').addClass(css)
             } else if ('周二'==value.plan_day) {
                $('#p-tues').html(plan)
                $('#id-tues').val(value.id)
+               $('#status-tues').html(status)
+               $('#status-tues').addClass(css)
             } else if ('周三'==value.plan_day) {
                $('#p-wed').html(plan)
                $('#id-wed').val(value.id)
+               $('#status-wed').html(status)
+               $('#status-wed').addClass(css)
             } else if ('周四'==value.plan_day) {
                $('#p-thur').html(plan)
                $('#id-thur').val(value.id)
+               $('#status-thur').html(status)
+               $('#status-thur').addClass(css)
             } else if ('周五'==value.plan_day) {
                $('#p-fri').html(plan)
                $('#id-fri').val(value.id)
+               $('#status-fri').html(status)
+               $('#status-fri').addClass(css)
             } else if ('周六'==value.plan_day) {
                $('#p-sat').html(plan)
                $('#id-sat').val(value.id)
+               $('#status-sat').html(status)
+               $('#status-sat').addClass(css)
             } else if ('周日'==value.plan_day) {
                $('#p-sun').html(plan)
                $('#id-sun').val(value.id)
+               $('#status-sun').html(status)
+               $('#status-sun').addClass(css)
             }
         });
       } else {
@@ -624,69 +651,86 @@ $(document).ready(function() {
           text: '编辑',
           value: 'edit',
           click: function (value, text, index, innerValue) {
-            openModalInput({
-              title: '编辑计划详细',
-              fields: [
-                {
-                  type: 'text',
-                  name: 'name',
-                  label: '名称',
-                  default: innerValue,
-                  validate: function (v) {
-                    return { valid: !!v, msg: '不能为空' }
-                  }
-                },
-                {
-                  type: 'textarea',
-                  name: 'desc',
-                  label: '描述'
-                }
-              ],
+            $.ajax({
+              url: "/get-user-plan-detail",
+              type: "get",
+              data: 'plan_dtl_id='+innerValue
+            }).done(function(response) {
+              detail_data = response.data.plan_detail
+              openModalInput({
+                  title: '编辑计划详细',
+                  fields: [
+                    {
+                      type: 'text',
+                      name: 'plan',
+                      label: '名称',
+                      default: detail_data.plan,
+                      validate: function (v) {
+                        return { valid: !!v, msg: '不能为空' }
+                      }
+                    },
+                    {
+                      type: 'textarea',
+                      name: 'context',
+                      label: '描述',
+                      default: detail_data.context
+                    },
+                    {
+                      type: "text",
+                      name: "id",
+                      show: 'hidden',
+                      default: detail_data.id
+                    },
+                    {
+                      type: "text",
+                      name: "plan_day",
+                      show: 'hidden',
+                      default: detail_data.plan_day
+                    }
+                  ],
 
-              onConfirm: function (values) {
-                $.ajax({
-                  url: "/change-user-plan",
-                  type: "post",
-                  contentType: "application/json",
-                  dataType: 'json',
-                  data: JSON.stringify({
-                    origin_id: $('#activePlan').val(),
-                    new_id: values.plan_id,
-                  })
-                }).done(function(response) {
-                  renderPlan(response)
-                }).fail(function(error) {
-                  console.error("Error sending message:", error);
-                  appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
-                  $('#loading').hide();
-                });
-                console.log('提交数据', values)
-              }
-            })
+                  onConfirm: function (values) {
+                    console.info(values)
+                    $.ajax({
+                      url: "/save-plan-detail",
+                      type: "post",
+                      contentType: "application/json",
+                      dataType: 'json',
+                      data: JSON.stringify({
+                        id: values.id,
+                        plan_day: values.plan_day,
+                        plan: values.plan,
+                        context: values.context
+                      })
+                    }).done(function(response) {
+                      if (response.success) {
+                        alert('操作成功！');
+                      }
+                      renderPlan(response)
+                    }).fail(function(error) {
+                      console.error("Error sending message:", error);
+                      appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+                      $('#loading').hide();
+                    });
+                    console.log('提交数据', values)
+                  }
+                })
+            }).fail(function(error) {
+                 console.error("Error sending message:", error);
+                 appendMessage('assistant', "抱歉，发生了错误，请稍后再试。");
+                $('#loading').hide();
+            });
           }
         }
       ]
     })
 
-    function openDebugDialog(params) {
-      $('.jq-debug-mask').remove()
-
-      var html =
-        '<div class="jq-debug-mask">' +
-          '<div class="jq-debug-dialog">' +
-            '<h3>点击参数</h3>' +
-            '<pre>' + JSON.stringify(params, null, 2) + '</pre>' +
-            '<button class="jq-debug-close">关闭</button>' +
-          '</div>' +
-        '</div>'
-
-      var $dialog = $(html)
-      $('body').append($dialog)
-
-      $dialog.find('.jq-debug-close').on('click', function () {
-        $dialog.remove()
-      })
-    }
+    $("#open").click(()=>$.scheduleCalendar({
+         data:{
+          "2025-12-01":"会议",
+          "2025-12-02":"培训"
+         }
+        }));
 
 
 })
