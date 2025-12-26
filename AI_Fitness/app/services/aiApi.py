@@ -115,6 +115,11 @@ def on_message(ws, message):
 def gen_params(appid, domain, question, history=None):
     """
     通过appid和用户的提问来生成请参数，支持历史对话
+    如果请求制定计划，生成个七日计划。
+    要求：
+    1. 计划包含周一至周日的内容。
+    2. 每个计划项包含项目、内容。
+    3. **周一：标题** 格式
     """
     data = {
         "header": {

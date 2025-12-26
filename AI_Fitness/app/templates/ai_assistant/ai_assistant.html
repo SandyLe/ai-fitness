@@ -26,6 +26,75 @@
        <button id="add_to_plan_button" class="plan-button" title="将当前对话添加到我的计划">
         <i class="fas fa-calendar-plus"></i> 添加到我的计划
       </button>
+      <div id="addPlanModal" class="modal-overlay">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>请给计划起个名吧</h3>
+          </div>
+          <div class="modal-body">
+            <div class="modal-input">
+              <label for="planTitle">计划名称：</label>
+               <input type="text" name="text" id="planTitle" placeholder="请输入计划名称" />
+            </div>
+            <div class="modal-box-input">
+              <div>
+                 <label for="monday-content">周一：</label>
+                 <input type="text" name="text" id="monday-title" placeholder="计划名字" />
+                 <div id="monday-content">
+                  <textarea name="text" id="monday-content-text" placeholder="输入计划内容"></textarea>
+                 </div>
+              </div>
+              <div>
+                 <label for="tuesday-content">周二：</label>
+                 <input type="text" name="text" id="tuesday-title" placeholder="计划名字" />
+                 <div id="tuesday-content">
+                  <textarea name="text" id="tuesday-content-text" placeholder="输入计划内容"></textarea>
+                 </div>
+              </div>
+              <div>
+                 <label for="wednesday-content">周三：</label>
+                 <input type="text" name="text" id="wednesday-title" placeholder="计划名字" />
+                 <div id="wednesday-content">
+                  <textarea name="text" id="wednesday-content-text" placeholder="输入计划内容"></textarea>
+                 </div>
+              </div>
+              <div>
+                 <label for="thursday-content">周四：</label>
+                 <input type="text" name="text" id="thursday-title" placeholder="计划名字" />
+                 <div id="thursday-content">
+                  <textarea name="text" id="thursday-content-text" placeholder="输入计划内容"></textarea>
+                 </div>
+              </div>
+              <div>
+                 <label for="friday-content">周五：</label>
+                 <input type="text" name="text" id="friday-title" placeholder="计划名字" />
+                 <div id="friday-content">
+                  <textarea name="text" id="friday-content-text" placeholder="输入计划内容"></textarea>
+                 </div>
+              </div>
+              <div>
+                 <label for="saturday-content">周六：</label>
+                 <input type="text" name="text" id="saturday-title" placeholder="计划名字" />
+                 <div id="saturday-content">
+                  <textarea name="text" id="saturday-content-text" placeholder="输入计划内容"></textarea>
+                 </div>
+              </div>
+              <div>
+                 <label for="sunday-content">周日：</label>
+                 <input type="text" name="text" id="sunday-title" placeholder="计划名字" />
+                 <div id="sunday-content">
+                  <textarea name="text" id="sunday-content-text" placeholder="输入计划内容"></textarea>
+                 </div>
+              </div>
+            </div>
+           
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="confirmAddPlan" class="btn btn-primary">确认添加计划</button>
+            <button type="button" id="cancelAddPlan" class="btn btn-danger">取消</button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- 欢迎消息部分 -->
     <div class="conversation" id="conversation">
