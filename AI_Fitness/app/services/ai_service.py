@@ -593,21 +593,86 @@ def add_to_plan():
     except Exception as e:
         # 返回失败响应
         return jsonify({"success": False, "error": str(e)})
+@app.route("/add-to-plan-weekly", methods=["POST"])
+def add_to_plan_weekly():
+    try:
+        user_id = session.get('user_id', '0')
+        if user_id == '0':
+            return jsonify({"success": False, 'error': "您还未登录，请登录后使用！！"})
 
-# 清理过期会话的函数
-def cleanup_expired_sessions():
-    current_time = time.time()
-    expired_threshold = 3600  # 1小时（秒）
-    
-    with session_lock:
-        expired_sessions = [
-            session_id for session_id, session in user_sessions.items()
-            if current_time - session['last_active'] > expired_threshold
-        ]
-        
-        for session_id in expired_sessions:
-            del user_sessions[session_id]
+        data = request.get_json()
+        alltitle = data.get('title')
+        message = data.get('message')
+        if not alltitle:
+            return jsonify({"success": False, 'error': "计划标题不能为空"})
 
+        weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        chinese_days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+
+        day_parsed_data = {}  # key: 中文星期, value: {title, time, items}
+
+        for i, day_key in enumerate(weekdays):
+            day_data = data.get(day_key, {})
+            day_data_list = day_data.get('data', [])
+
+            title_item = next((item for item in day_data_list if item.get('type') == 'title'), None)
+            time_item = next((item for item in day_data_list if item.get('type') == 'time'), None)
+            content_items = [
+                item.get('text') 
+                for item in day_data_list 
+                if item.get('type') == 'item' and item.get('text', '').strip()
+            ]
+
+            title = title_item.get('text').strip() if title_item and title_item.get('text', '').strip() else '默认计划'
+            time_text = time_item.get('text').strip() if time_item and time_item.get('text', '').strip() else None
+
+            # 只有有内容才保存（或根据需求调整）
+            if content_items or title != '默认计划':
+                day_parsed_data[chinese_days[i]] = {
+                    'title': title,
+                    'time': time_text,
+                    'items': content_items
+                }
+
+        if not day_parsed_data:
+            return jsonify({"success": False, 'error': "至少需要填写一天的计划内容"})
+
+        # 创建主计划
+        plan_parent = {
+            "user_id": user_id,
+            "plan": alltitle,
+            "context": message, 
+            "is_deleted": 0
+        }
+        parent = user_plan.add_plan(plan_parent)
+        if not parent.success:
+            return jsonify({"success": False, 'error': "计划创建失败"})
+
+        for day, info in day_parsed_data.items():
+            # 构造 context 字符串（带 - 前缀）
+            content_lines = [f'- {item}' for item in info['items']]
+            full_content = '\n'.join(content_lines)
+
+            plan_detail = {
+                "parent_id": parent.data['id'],
+                "user_id": user_id,
+                "plan_day": day,
+                "plan_time": info['time'],  # ✅ 正确：来自当天的数据
+                "plan": info['title'],
+                "context": full_content,
+                "is_deleted": 0
+            }
+
+            print("================")
+            print(plan_detail)
+            user_plan_detail.add_plan_detail(plan_detail)
+
+        return jsonify({"success": True, "message": "计划添加成功！", "data": parent.data})
+
+    except Exception as e:
+        error_msg = f"系统错误：{str(e)}"
+        print(error_msg)  # 开发时打印真实错误
+        return jsonify({"success": False, 'error': error_msg})
 # 定期清理过期会话
 def start_cleanup_thread():
     cleanup_thread = threading.Thread(target=cleanup_thread_func)
@@ -627,8 +692,8 @@ def analizePlan(text):
     week_days = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
     plan = {day: [] for day in week_days}
 
-    # 正则：匹配 #### 周一：标题
-    day_header_re = re.compile(r"^###\s*([^：:]+)[:：](.*)$")
+    # 正则：匹配 **周一：标题** 格式
+    day_header_re = re.compile(r"^\*\*\s*([^：:]+)[:：](.*?)\*\*$\s*")
 
     current_days = []  # 解析到“周六/周日”时会出现多个 day
     current_title = ""
