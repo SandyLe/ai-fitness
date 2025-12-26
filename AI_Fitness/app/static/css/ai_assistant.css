@@ -576,6 +576,7 @@
   background: rgba(9, 85, 120, 0.8);
   width: 80%;
   max-width: 1286px;
+  overflow: scroll;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: all .25s ease;
   border-radius: 10px;
@@ -596,7 +597,7 @@
   font-size: 14px;
   margin-bottom: 6px;
   font-weight: 500;
-  width: 106px;
+  width: 180px;
   display: flex;
   align-items: center;
 }
@@ -606,15 +607,22 @@
   margin-bottom: 12px;
   box-sizing: border-box;
 }
+.modal-body textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
 .modal-input {
   display: flex;
 }
-.modal-input div{
-  flex:1
+.modal-box-input div{
+  flex:0 0 33.3%
 }
 .modal-box-input {
  display: flex;
- justify-content: center;
+ justify-content: flex-start;
+ flex-wrap: wrap;
 }
 .modal-footer {
   display: flex;

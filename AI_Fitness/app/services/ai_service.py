@@ -596,97 +596,83 @@ def add_to_plan():
 @app.route("/add-to-plan-weekly", methods=["POST"])
 def add_to_plan_weekly():
     try:
-        # 获取用户ID并验证登录状态
         user_id = session.get('user_id', '0')
         if user_id == '0':
             return jsonify({"success": False, 'error': "您还未登录，请登录后使用！！"})
 
-        # 从表单获取计划标题和每日内容
         data = request.get_json()
         alltitle = data.get('title')
         message = data.get('message')
-        print(alltitle)
         if not alltitle:
             return jsonify({"success": False, 'error': "计划标题不能为空"})
 
-        # 获取周一至周日的计划内容
-        weekdays = [
-            'monday', 'tuesday', 'wednesday', 'thursday', 
-            'friday', 'saturday', 'sunday'
-        ]
+        weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
         chinese_days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-        daily_plans = {}
-        
-        # 修改数据解析逻辑以处理前端传递的JSON数组
-        for i, day in enumerate(weekdays):
-            # 从表单获取JSON字符串并解析
-            print('day'+day)
-            day_data = data.get(day)
-            print(day_data)
-            if day_data:
-                day_data_list = day_data.get('data', [])
-                print(f'=========== {json.dumps(day_data_list, ensure_ascii=False)}')
-                # 提取标题和内容项
-                title_item = next((item for item in day_data_list if item.get('type') == 'title'), None)
-                content_items = [item.get('text') for item in day_data_list if item.get('type') == 'item' and item.get('text', '').strip()]
-                
-                if title_item and title_item.get('text').strip():
-                        title = title_item.get('text').strip()
-                        content = '\n'.join([f'- {item}' for item in content_items])
-                        daily_plans[chinese_days[i]] = f'【{title}】\n{content}'
-                
-        if not daily_plans:
+
+        day_parsed_data = {}  # key: 中文星期, value: {title, time, items}
+
+        for i, day_key in enumerate(weekdays):
+            day_data = data.get(day_key, {})
+            day_data_list = day_data.get('data', [])
+
+            title_item = next((item for item in day_data_list if item.get('type') == 'title'), None)
+            time_item = next((item for item in day_data_list if item.get('type') == 'time'), None)
+            content_items = [
+                item.get('text') 
+                for item in day_data_list 
+                if item.get('type') == 'item' and item.get('text', '').strip()
+            ]
+
+            title = title_item.get('text').strip() if title_item and title_item.get('text', '').strip() else '默认计划'
+            time_text = time_item.get('text').strip() if time_item and time_item.get('text', '').strip() else None
+
+            # 只有有内容才保存（或根据需求调整）
+            if content_items or title != '默认计划':
+                day_parsed_data[chinese_days[i]] = {
+                    'title': title,
+                    'time': time_text,
+                    'items': content_items
+                }
+
+        if not day_parsed_data:
             return jsonify({"success": False, 'error': "至少需要填写一天的计划内容"})
-     
-        # 创建计划主记录
+
+        # 创建主计划
         plan_parent = {
             "user_id": user_id,
             "plan": alltitle,
-            "context":message, 
+            "context": message, 
             "is_deleted": 0
         }
         parent = user_plan.add_plan(plan_parent)
         if not parent.success:
             return jsonify({"success": False, 'error': "计划创建失败"})
 
-        # 存储每日计划详情
-        for day, content in daily_plans.items():
-            # 提取标题行（以【】标记的第一行）
-            lines = content.split('\n')
-            day_title = lines[0][1:-1] if lines and lines[0].startswith('【') and lines[0].endswith('】') else '默认计划'
-            day_content = '\n'.join(lines[1:]) if len(lines) > 1 else ''
+        for day, info in day_parsed_data.items():
+            # 构造 context 字符串（带 - 前缀）
+            content_lines = [f'- {item}' for item in info['items']]
+            full_content = '\n'.join(content_lines)
 
             plan_detail = {
                 "parent_id": parent.data['id'],
                 "user_id": user_id,
                 "plan_day": day,
-                "plan_time": None,
-                "plan": day_title,
-                "context": day_content,
+                "plan_time": info['time'],  # ✅ 正确：来自当天的数据
+                "plan": info['title'],
+                "context": full_content,
                 "is_deleted": 0
             }
-            print("-------------")
+
+            print("================")
             print(plan_detail)
             user_plan_detail.add_plan_detail(plan_detail)
 
         return jsonify({"success": True, "message": "计划添加成功！", "data": parent.data})
 
     except Exception as e:
-        return jsonify({"success": False, 'error': f"系统错误：{str(e)}"})
-# 清理过期会话的函数
-def cleanup_expired_sessions():
-    current_time = time.time()
-    expired_threshold = 3600  # 1小时（秒）
-    
-    with session_lock:
-        expired_sessions = [
-            session_id for session_id, session in user_sessions.items()
-            if current_time - session['last_active'] > expired_threshold
-        ]
-        
-        for session_id in expired_sessions:
-            del user_sessions[session_id]
-
+        error_msg = f"系统错误：{str(e)}"
+        print(error_msg)  # 开发时打印真实错误
+        return jsonify({"success": False, 'error': error_msg})
 # 定期清理过期会话
 def start_cleanup_thread():
     cleanup_thread = threading.Thread(target=cleanup_thread_func)

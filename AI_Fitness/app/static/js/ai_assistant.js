@@ -2,7 +2,8 @@ $(document).ready(function() {
    $("#addPlanModal").hide();
   // 获取用户ID
   const userid = $('#userid').val();
-  
+  const weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
   // 会话ID - 用于区分不同用户的请求
   const sessionId = generateSessionId();
   
@@ -343,7 +344,6 @@ $(document).ready(function() {
       $('#loading').hide();
     });
   }
-   const weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
   // 处理发送按钮点击
   $('#send_button').click(function() {
@@ -446,18 +446,23 @@ $(document).ready(function() {
               // 清空现有内容
               contentElement.innerHTML = '';
               // 循环生成input元素
-              dayData.content.forEach((item, index) => {
-                  const input = document.createElement('input');
-                  input.type = 'text';
-                  input.name = 'item';
-                  input.value = item;
-                  input.className = 'plan-item-input';
-                  input.placeholder = `项目 ${index + 1}`;
-                  // 添加到容器
-                  contentElement.appendChild(input);
-                  // 添加换行符
-                  contentElement.appendChild(document.createElement('br'));
-              });
+              const textarea = document.createElement('textarea');
+              textarea.name = 'item';
+              textarea.value = dayData.content.join('\n');
+              contentElement.appendChild(textarea);
+
+              // dayData.content.forEach((item, index) => {
+              //     const input = document.createElement('input');
+              //     input.type = 'text';
+              //     input.name = 'item';
+              //     input.value = item;
+              //     input.className = 'plan-item-input';
+              //     input.placeholder = `项目 ${index + 1}`;
+              //     // 添加到容器
+              //     contentElement.appendChild(input);
+              //     // 添加换行符
+              //     contentElement.appendChild(document.createElement('br'));
+              // });
             }
         }
     });
@@ -488,7 +493,48 @@ $(document).ready(function() {
       $("#loading").hide();
     });*/
   });
+   function formatDate(date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+  function getWeekDates(selectedDate) {
+    // 创建副本避免修改原日期
+    const d = new Date(selectedDate);
+    // 获取当前是星期几（0=周日, 1=周一, ..., 6=周六）
+    const dayOfWeek = d.getDay();
+    
+    // 计算周一：如果今天是周日（0），则周一在 6 天前；否则减 (dayOfWeek - 1)
+    const monday = new Date(d);
+    monday.setDate(d.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+
+    const week = [];
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(monday);
+      day.setDate(monday.getDate() + i);
+      week.push(formatDate(day));
+    }
+    return week; // [mon, tue, wed, thu, fri, sat, sun]
+  }
+  const input = document.getElementById('startDate');
+  input.addEventListener('change', function () {
+    const selected = new Date(this.value);
+    const weekDates = getWeekDates(selected);
+
+    weekdays.forEach((id, index) => {
+      document.getElementById(id+'-time').value = weekDates[index];
+    });
+  });
   $("#confirmAddPlan").click(function() {
+    if (!$("#planTitle").val()) {
+        alert("请输入计划名称");
+        return;
+    }
+    if (!$("#startDate").val()) {
+        alert("请输入计划开始日期");
+        return;
+    }
     // 收集计划内容
     const planContent = weekdays.map(day => {
         const contentElement = document.getElementById(`${day}-title`);
@@ -509,46 +555,38 @@ $(document).ready(function() {
         message: lastAssistantMessage,
         monday:{data:[
             {type: "title", "text": $("#monday-title").val()},
-            // 遍历收集所有name=item的input值
-            ...Array.from(document.querySelectorAll('#monday-content input[name="item"]'))
-               
-                .map(input => ({type: "item", "text": input.value}))
+            {type: "time", "text": $("#monday-time").val()},
+            {type: "item", "text": $("#monday-content textarea[name='item']").val()},
         ]},
         tuesday: {data:[
             {type: "title", "text": $("#tuesday-title").val()},
-            ...Array.from(document.querySelectorAll('#tuesday-content input[name="item"]'))
-               
-                .map(input => ({type: "item", "text": input.value}))
+            {type: "time", "text": $("#tuesday-time").val()},
+            {type: "item", "text": $("#tuesday-content textarea[name='item']").val()},
         ]},
         wednesday: {data:[
             {type: "title", "text": $("#wednesday-title").val()},
-            ...Array.from(document.querySelectorAll('#wednesday-content input[name="item"]'))
-              
-                .map(input => ({type: "item", "text": input.value}))
+            {type: "time", "text": $("#wednesday-time").val()},
+            {type: "item", "text": $("#wednesday-content textarea[name='item']").val()},
         ]},
         thursday: {data:[     
             {type: "title", "text": $("#thursday-title").val()},
-            ...Array.from(document.querySelectorAll('#thursday-content input[name="item"]'))
-                
-                .map(input => ({type: "item", "text": input.value}))
+            {type: "time", "text": $("#thursday-time").val()},
+            {type: "item", "text": $("#thursday-content textarea[name='item']").val()},
         ]},
         friday: {data:[
             {type: "title", "text": $("#friday-title").val()},
-            ...Array.from(document.querySelectorAll('#friday-content input[name="item"]'))
-
-                .map(input => ({type: "item", "text": input.value}))
+            {type: "time", "text": $("#friday-time").val()},
+            {type: "item", "text": $("#friday-content textarea[name='item']").val()},
         ]},
         saturday: {data:[
             {type: "title", "text": $("#saturday-title").val()},
-            ...Array.from(document.querySelectorAll('#saturday-content input[name="item"]'))
-             
-                .map(input => ({type: "item", "text": input.value}))
+            {type: "time", "text": $("#saturday-time").val()},
+            {type: "item", "text": $("#saturday-content textarea[name='item']").val()},
         ]},
         sunday: {data:[
             {type: "title", "text": $("#sunday-title").val()},
-            ...Array.from(document.querySelectorAll('#sunday-content input[name="item"]'))
-               
-                .map(input => ({type: "item", "text": input.value}))
+            {type: "time", "text": $("#sunday-time").val()},
+            {type: "item", "text": $("#sunday-content textarea[name='item']").val()},
         ]},  
       })
     }).done(function(response) {
