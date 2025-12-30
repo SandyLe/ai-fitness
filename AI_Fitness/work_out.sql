@@ -408,3 +408,64 @@ CREATE TABLE `plan_detail_course` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`plan_dtl_course_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='计划课程关联表';
+
+DROP TABLE IF EXISTS `nutrition_guidance_template`;
+CREATE TABLE `nutrition_guidance_template` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `guidance_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '名称',
+  `template_code` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '模板编码',
+  `template_desc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '模板描述',
+  `theme_id` int(20) DEFAULT NULL COMMENT '康复主题',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='营养指导模板表';
+
+DROP TABLE IF EXISTS `nutrition_guidance_detail`;
+CREATE TABLE `nutrition_guidance_detail` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `template_id` int(20)  COMMENT '模板Id',
+  `type_code` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '类型编码：T01-营养摄入量建议；T02-饮食建议',
+  `item_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '项目名称',
+  `item_value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '项目明细',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='营养指导明细模板表';
+
+DROP TABLE IF EXISTS `user_nutrition_guidance`;
+CREATE TABLE `user_nutrition_guidance` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `guidance_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '名称',
+  `template_code` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '模板编码',
+  `guidance_desc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '模板描述',
+  `theme_id` int(20) DEFAULT NULL COMMENT '康复主题',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
+  `user_id` int(20) DEFAULT NULL COMMENT '用户id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='用户营养指导表';
+
+DROP TABLE IF EXISTS `user_nutrition_guidance_detail`;
+CREATE TABLE `user_nutrition_guidance_detail` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `nutrition_guidance_id` int(20)  COMMENT '指导Id',
+  `type_code` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '类型编码：T01-营养摄入量建议；T02-饮食建议',
+  `item_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '项目名称',
+  `item_value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '项目明细',
+  `created_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT NULL COMMENT '是否逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='用户营养指导明细表';

@@ -1,0 +1,144 @@
+
+/* 营养记录样式 */
+.nutrition-summary {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    background-color: #1c2530;
+    border-radius: 8px;
+    padding: 10px;
+}
+.main-nutrition {
+    display: flex;
+    padding: 0 40px;
+    /* 添加网格模板，确保内容不会超出容器 */
+    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 标题区域 */
+.main-nutrition .header-simple {
+    margin-bottom: 15px;
+    /* border-bottom: 1px solid #eee; */
+    /* padding-bottom: 10px; */
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+.main-nutrition .header-simple h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: rgb(255, 255, 255);
+}
+
+.main-nutrition .action-title {
+    font-size: 1.4rem;
+    color: #b9f0ff;
+    margin: 0;
+}
+
+.main-nutrition .content-area {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    /* 添加这些属性确保内容不会溢出 */
+    max-width: 80%;
+    min-width: 0;
+    margin: 0 auto;
+}
+@media (min-width: 992px) {
+    .main-nutrition .content-area {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+.content-section {
+    width: 45%
+}
+.nutrition-chart {
+    flex: 1;
+    min-width: 300px;
+    height: 300px;
+    /*background-color: #1c2530;*/
+    border-radius: 8px;
+}
+.nutrition-chart img {
+    flex: 1;
+    min-width: 300px;
+    height: 300px;
+    background-color: #1c2530;
+    border-radius: 8px;
+}
+
+.nutrition-stats {
+    flex: 1;
+    min-width: 300px;
+}
+
+.nutrient-item {
+    margin-bottom: 20px;
+}
+
+.nutrient-item h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: #c0c0c0;
+}
+
+.nutrient-item p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #8a8a8a;
+}
+
+.meal-log {
+    margin-top: 30px;
+}
+
+.meal-log h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #c0c0c0;
+}
+
+.meal-section {
+    margin-bottom: 25px;
+}
+
+.meal-section h4 {
+    margin: 0 0 15px;
+    color: #00c8ff;
+    border-bottom: 1px solid #2a3a4a;
+    padding-bottom: 8px;
+}
+
+.meal-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.meal-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #243040;
+    border-radius: 5px;
+    border: 1px solid #2a3a4a;
+}
+
+.food-name {
+    flex: 2;
+    font-weight: 500;
+    color: #c0c0c0;
+}
+
+.food-amount, .food-calories {
+    flex: 1;
+    text-align: right;
+    color: #8a8a8a;
+}

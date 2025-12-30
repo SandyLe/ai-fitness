@@ -34,6 +34,7 @@ def create_app():
     from app.routes.community import community_bp
     from app.routes.fitness import fitness_bp
     from app.routes.clock import clock_bp
+    from app.routes.nutrition import nutrition_bp
     from app.api.userPlanApi import user_plan_bp
     from app.api.courseApi import course_bp
     
@@ -44,6 +45,7 @@ def create_app():
     app.register_blueprint(clock_bp)
     app.register_blueprint(user_plan_bp)
     app.register_blueprint(course_bp)
+    app.register_blueprint(nutrition_bp)
     
     logger.info("应用程序初始化完成")
     return app

@@ -673,6 +673,23 @@ def add_to_plan_weekly():
         error_msg = f"系统错误：{str(e)}"
         print(error_msg)  # 开发时打印真实错误
         return jsonify({"success": False, 'error': error_msg})
+
+
+# 清理过期会话的函数
+def cleanup_expired_sessions():
+    current_time = time.time()
+    expired_threshold = 3600  # 1小时（秒）
+
+    with session_lock:
+        expired_sessions = [
+            session_id for session_id, session in user_sessions.items()
+            if current_time - session['last_active'] > expired_threshold
+        ]
+
+        for session_id in expired_sessions:
+            del user_sessions[session_id]
+
+
 # 定期清理过期会话
 def start_cleanup_thread():
     cleanup_thread = threading.Thread(target=cleanup_thread_func)
