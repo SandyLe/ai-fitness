@@ -50,8 +50,8 @@ def add_user(user: dict):
 
     # 准备插入的数据
     insert_data = user.copy()
-    insert_data['created_time'] = datetime.now()
-    insert_data['updated_time'] = datetime.now()
+    insert_data['create_time'] = datetime.now()
+    insert_data['update_time'] = datetime.now()
     # 可以设置默认值，如 status=1, is_deleted=0 等
     insert_data.setdefault('status', 1)
     insert_data.setdefault('is_deleted', 0)
@@ -80,7 +80,7 @@ def delete_user_by_id(user_id: int):
 
     update_data = {
         "is_deleted": 1,
-        "updated_time": datetime.now()
+        "update_time": datetime.now()
     }
     condition = {"id": user_id}
 
@@ -123,7 +123,7 @@ def update_user(user_id: int, update_data: dict):
         del update_data['id']
 
     # 补充更新时间
-    update_data['updated_time'] = datetime.now()
+    update_data['update_time'] = datetime.now()
     condition = {"id": user_id, "is_deleted": 0} # 只能更新未删除的用户
 
     try:

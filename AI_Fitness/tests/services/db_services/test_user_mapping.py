@@ -33,7 +33,7 @@ class TestUserMappingService(unittest.TestCase):
         mock_conn.insert.assert_called_once()
         # 检查插入参数是否包含时间戳和 is_deleted=0
         call_args = mock_conn.insert.call_args[0][1]
-        self.assertIn('created_time', call_args)
+        self.assertIn('create_time', call_args)
         self.assertIn('update_time', call_args)
         self.assertEqual(call_args.get('is_deleted'), 0)
 

@@ -45,10 +45,10 @@ def add_mapping(mapping_data: dict):
     # 准备插入的数据
     insert_data = mapping_data.copy()
     now = datetime.now()
-    insert_data['created_time'] = now
+    insert_data['create_time'] = now
     insert_data['update_time'] = now
     insert_data.setdefault('is_deleted', 0)
-    # created_by 和 update_by 应根据上下文设置
+    # create_by 和 update_by 应根据上下文设置
 
     try:
         result_id = conn.insert(TABLE_NAME, insert_data)

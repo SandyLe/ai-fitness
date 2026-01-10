@@ -41,9 +41,9 @@ def add_plan_detail_course(plan_detail_course: dict):
     # 准备插入的数据
     insert_data = plan_detail_course.copy()
     now = datetime.now()
-    insert_data['created_time'] = now
+    insert_data['create_time'] = now
     insert_data['update_time'] = now
-    # created_by and update_by should ideally be set based on logged-in user context
+    # create_by and update_by should ideally be set based on logged-in user context
     # No is_deleted field in DDL
 
     try:
@@ -177,7 +177,7 @@ def save_fitness_report(user_id: int, report_data: dict, exercise_type: str, act
     save_data['number'] = report_data.get('reps', 10)  # 默认10次
     
     # 添加创建者信息
-    save_data['created_by'] = str(user_id)  # 使用用户ID作为创建者
+    save_data['create_by'] = str(user_id)  # 使用用户ID作为创建者
     
     # 调用添加数据的函数
     return add_user_plan_detail_course(save_data)
@@ -204,7 +204,7 @@ def get_latest_fitness_reports(user_id: int, limit: int = 5):
         result = conn.fetch_rows(
             TABLE_NAME, 
             condition=condition,
-            order="created_time DESC",
+            order="create_time DESC",
             limit=limit
         )
         
@@ -235,7 +235,7 @@ def get_user_fitness_stats(user_id: int):
             COUNT(*) as total_workouts,
             AVG(source) as avg_score,
             SUM(group * number) as total_reps,
-            COUNT(DISTINCT DATE(created_time)) as workout_days
+            COUNT(DISTINCT DATE(create_time)) as workout_days
         FROM {TABLE_NAME}
         WHERE user_id = %s
         """

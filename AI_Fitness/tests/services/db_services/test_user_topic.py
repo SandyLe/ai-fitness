@@ -17,7 +17,7 @@ class TestUserTopicService(unittest.TestCase):
     def test_add_topic_success(self):
         """测试添加顶层主题（parent_id为None）成功。"""
         # 使用 None 代表顶层主题
-        topic_data = {'discussion_id': 10, 'parent_id': None, 'created_by': 1}
+        topic_data = {'discussion_id': 10, 'parent_id': None, 'create_by': 1}
         mock_conn.insert.return_value = 201 # 模拟插入ID
 
         response = db_services.add_topic(topic_data)
@@ -26,7 +26,7 @@ class TestUserTopicService(unittest.TestCase):
         call_args = mock_conn.insert.call_args[0][1]
         self.assertEqual(call_args['discussion_id'], 10)
         self.assertIsNone(call_args['parent_id']) # 确认插入时 parent_id 是 None
-        self.assertIn('created_time', call_args)
+        self.assertIn('create_time', call_args)
         self.assertIn('update_time', call_args)
         # self.assertNotIn('is_deleted', call_args) # 无 is_deleted 字段
         self.assertTrue(response.success)

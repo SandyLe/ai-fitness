@@ -24,7 +24,7 @@ class TestUserPlanService(unittest.TestCase):
         mock_conn.insert.assert_called_once()
         call_args = mock_conn.insert.call_args[0][1]
         self.assertEqual(call_args['plan'], 'Run 5k')
-        self.assertIn('created_time', call_args)
+        self.assertIn('create_time', call_args)
         self.assertIn('update_time', call_args)
         self.assertEqual(call_args.get('is_deleted'), 0)
         self.assertTrue(response.success)

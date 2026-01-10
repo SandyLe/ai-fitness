@@ -17,7 +17,7 @@ class TestUserDiscussionService(unittest.TestCase):
 
     def test_add_discussion_success(self):
         """测试成功添加论坛讨论。"""
-        discussion_data = {'title': 'Test Title', 'content': 'Test content', 'created_by': 1}
+        discussion_data = {'title': 'Test Title', 'content': 'Test content', 'create_by': 1}
         mock_conn.insert.return_value = 5 # 模拟插入返回ID 5
 
         response = db_services.add_discussion(discussion_data)
@@ -26,7 +26,7 @@ class TestUserDiscussionService(unittest.TestCase):
         # 检查插入参数是否包含时间戳和 is_deleted=0
         call_args = mock_conn.insert.call_args[0][1] # 获取传递给 insert 的字典
         self.assertEqual(call_args['title'], 'Test Title')
-        self.assertIn('created_time', call_args)
+        self.assertIn('create_time', call_args)
         self.assertIn('update_time', call_args)
         self.assertEqual(call_args.get('is_deleted'), 0)
 

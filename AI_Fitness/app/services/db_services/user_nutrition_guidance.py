@@ -41,10 +41,10 @@ def add_guidance(plan_data: dict):
     # 准备插入的数据
     insert_data = plan_data.copy()
     now = datetime.now()
-    insert_data['created_time'] = now
+    insert_data['create_time'] = now
     insert_data['update_time'] = now
     insert_data.setdefault('is_deleted', 0)
-    # created_by and update_by should ideally be set based on logged-in user context
+    # create_by and update_by should ideally be set based on logged-in user context
 
     try:
         result_id = conn.insert(TABLE_NAME, insert_data)
@@ -155,4 +155,4 @@ def get_no_active_guidance_for_user(user_id: int):
     if not user_id:
         return Response.fail(code=500, msg="用户ID不能为空")
     condition = {"user_id": user_id, "is_deleted": 0}
-    return get_guidance_options(condition, 'created_time desc', 10)
+    return get_guidance_options(condition, 'create_time desc', 10)

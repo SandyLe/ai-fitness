@@ -32,7 +32,7 @@ def add_clock_in():
     user_id = session.get('user_id', '0')
     logger.info(f"user_id>>>={user_id}")
     user_clock_data['data'] = datetime.now()
-    user_clock_data['created_by'] = user_id
+    user_clock_data['create_by'] = user_id
     user_clock_data['update_by'] = user_id
     result = user_clock.add_clock_in(user_clock_data)
 

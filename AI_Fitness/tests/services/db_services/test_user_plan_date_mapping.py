@@ -28,7 +28,7 @@ class TestUserPlanDateMappingService(unittest.TestCase):
         )
         mock_conn.insert.assert_called_once()
         call_args = mock_conn.insert.call_args[0][1]
-        self.assertIn('created_time', call_args)
+        self.assertIn('create_time', call_args)
         self.assertIn('update_time', call_args)
         # self.assertNotIn('is_deleted', call_args) # 无 is_deleted 字段
         self.assertTrue(response.success)

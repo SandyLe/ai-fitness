@@ -9,8 +9,8 @@ class MyTestCase(unittest.TestCase):
             "title": "如何康训",
             "content": "1.坚持打卡 ， 2.坚持锻炼",
             "image_path": "https://123.png",
-            "created_by": None,
-            "created_time": datetime.now(),
+            "create_by": None,
+            "create_time": datetime.now(),
             "update_by": None,
             "update_time": datetime.now(),
         })
@@ -19,8 +19,8 @@ class MyTestCase(unittest.TestCase):
             "title": "如何康训",
             "content": "1.坚持打卡 ， 2.坚持锻炼",
             "image_path": "https://123.png",
-            "created_by": "test_unit",
-            "created_time": datetime.now(),
+            "create_by": "test_unit",
+            "create_time": datetime.now(),
             "update_by": 'admin',
             "update_time": datetime.now(),
         } , {'id' : 1})

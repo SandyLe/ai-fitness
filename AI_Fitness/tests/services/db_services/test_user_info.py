@@ -90,7 +90,7 @@ class TestUserInfoService(unittest.TestCase):
 
         mock_conn.update.assert_called_once()
         # 如果需要，断言传递给 update 的具体参数
-        # 检查 'updated_time' 是否已添加，以及 'id'/'user_name' 是否不在参数中
+        # 检查 'update_time' 是否已添加，以及 'id'/'user_name' 是否不在参数中
         self.assertTrue(response.success)
         self.assertEqual(response.msg, "用户信息更新成功")
 
@@ -115,7 +115,7 @@ class TestUserInfoService(unittest.TestCase):
         response = db_services.delete_user_by_id(user_id)
 
         mock_conn.update.assert_called_once()
-        # 断言逻辑删除的具体参数 (is_deleted=1, updated_time)
+        # 断言逻辑删除的具体参数 (is_deleted=1, update_time)
         self.assertTrue(response.success)
         self.assertEqual(response.msg, "用户删除成功")
 

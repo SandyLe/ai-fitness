@@ -45,9 +45,9 @@ def add_plan_date_mapping(mapping_data: dict):
     # 准备插入的数据
     insert_data = mapping_data.copy()
     now = datetime.now()
-    insert_data['created_time'] = now
+    insert_data['create_time'] = now
     insert_data['update_time'] = now
-    # created_by and update_by should ideally be set based on logged-in user context
+    # create_by and update_by should ideally be set based on logged-in user context
     # No is_deleted field in DDL
 
     try:

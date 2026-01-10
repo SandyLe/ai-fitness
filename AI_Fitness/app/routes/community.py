@@ -27,8 +27,8 @@ def community():
             discussion['reply_count'] = len(replies_response.data) if replies_response.success else 0
             
             # 获取作者名称 (这里需要额外查询用户表，假设有一个获取用户信息的函数)
-            # 由于没有提供用户服务模块，这里暂时使用created_by作为author_name
-            discussion['author_name'] = discussion['created_by']
+            # 由于没有提供用户服务模块，这里暂时使用create_by作为author_name
+            discussion['author_name'] = discussion['create_by']
     else:
         discussions = []
     
@@ -48,7 +48,7 @@ def view_discussion(discussion_id):
     
     discussion = discussion_response.data
     # 获取作者名称 (同样，这里需要额外查询)
-    discussion['author_name'] = discussion['created_by']
+    discussion['author_name'] = discussion['create_by']
     
     # 获取讨论的回复
     replies_response = user_topic.get_topics_for_discussion(discussion_id)
@@ -57,7 +57,7 @@ def view_discussion(discussion_id):
         replies = replies_response.data
         # 为每个回复获取作者名称
         for reply in replies:
-            reply['author_name'] = reply['created_by']
+            reply['author_name'] = reply['create_by']
     else:
         replies = []
     
@@ -94,8 +94,8 @@ def create_discussion():
             'title': title,
             'content': content,
             'image_path': image_path,
-            'created_by': user_id,
-            'created_time': datetime.now(),
+            'create_by': user_id,
+            'create_time': datetime.now(),
             'update_by': user_id,
             'update_time': datetime.now(),
             'is_deleted': 0
@@ -111,7 +111,7 @@ def create_discussion():
             mapping_data = {
                 'user_id': user_id,
                 'discuss_id': result.data['id'],
-                'created_by': user_id,
+                'create_by': user_id,
                 'update_by': user_id
             }
             user_mapping.add_mapping(mapping_data)
@@ -144,8 +144,8 @@ def reply_discussion(discussion_id):
         'parent_id': parent_id if int(parent_id) > 0 else None,
         'discussion_id': discussion_id,
         'content': content,
-        'created_by': user_id,
-        'created_time': datetime.now()
+        'create_by': user_id,
+        'create_time': datetime.now()
     }
     
     # 插入回复
@@ -167,7 +167,7 @@ def delete_discussion(discussion_id):
     # 检查是否是讨论的创建者
     discussion_response = user_discussion.get_discussion({
         'id': discussion_id,
-        'created_by': user_id
+        'create_by': user_id
     })
     
     if not discussion_response.success:
@@ -210,7 +210,7 @@ def search_discussions():
                 replies_response = user_topic.get_topics_for_discussion(discussion['id'])
                 discussion['reply_count'] = len(replies_response.data) if replies_response.success else 0
                 # 获取作者名称
-                discussion['author_name'] = discussion['created_by']
+                discussion['author_name'] = discussion['create_by']
                 discussions.append(discussion)
     else:
         discussions = []

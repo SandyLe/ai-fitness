@@ -39,17 +39,17 @@ def add_discussion(discussion_data: dict):
     # 准备插入的数据
     insert_data = discussion_data.copy()
     now = datetime.now()
-    insert_data['created_time'] = now
+    insert_data['create_time'] = now
     insert_data['update_time'] = now # ddl uses update_time
     insert_data.setdefault('is_deleted', 0)
-    # created_by and update_by should ideally be set based on logged-in user context
+    # create_by and update_by should ideally be set based on logged-in user context
 
     try:
         result_id = conn.insert(TABLE_NAME, insert_data)
         return Response.success(data={"id": result_id})
     except Exception as e:
         return Response.fail(code=500, msg=f"论坛信息创建失败: {str(e)}")
-discussion_data = {'title': 'Test Title', 'content': 'Test content', 'created_by': 1}
+discussion_data = {'title': 'Test Title', 'content': 'Test content', 'create_by': 1}
 # print(add_discussion(discussion_data))
 """修改论坛信息"""
 def update_discussion(discussion_id: int, update_data: dict):
@@ -140,8 +140,8 @@ def count_discussions(condition: dict = None):
 #         "title":"如何康训",
 #         "content":"1.坚持打卡 ， 2.坚持锻炼",
 #         "image_path" : "https://123.png",
-#         "created_by" : None ,
-#         "created_time" : datetime.now(),
+#         "create_by" : None ,
+#         "create_time" : datetime.now(),
 #         "update_by": None ,
 #         "update_time":datetime.now(),
 #         }))
@@ -155,8 +155,8 @@ def count_discussions(condition: dict = None):
 #         "title":"如何康训",
 #         "content":"1.坚持打卡",
 #         "image_path" : "https://123.png",
-#         "created_by" : None ,
-#         "created_time" : datetime.now(),
+#         "create_by" : None ,
+#         "create_time" : datetime.now(),
 #         "update_by": None ,
 #         "update_time":datetime.now(),
 # },
@@ -165,8 +165,8 @@ def count_discussions(condition: dict = None):
 #         "title": "如何康训",
 #         "content": "1.坚持打卡 ， 2.坚持锻炼",
 #         "image_path": "https://123.png",
-#         "created_by": None,
-#         "created_time": datetime.now(),
+#         "create_by": None,
+#         "create_time": datetime.now(),
 #         "update_by": None,
 #         "update_time": datetime.now(),
 #     }

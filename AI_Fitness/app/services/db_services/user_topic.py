@@ -39,9 +39,9 @@ def add_topic(topic_data: dict):
     # 准备插入的数据
     insert_data = topic_data.copy()
     now = datetime.now()
-    insert_data['created_time'] = now
+    insert_data['create_time'] = now
     insert_data['update_time'] = now
-    # created_by and update_by should ideally be set based on logged-in user context
+    # create_by and update_by should ideally be set based on logged-in user context
 
     try:
         result_id = conn.insert(TABLE_NAME, insert_data)

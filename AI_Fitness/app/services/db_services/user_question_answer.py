@@ -44,9 +44,9 @@ def add_question_answer(user_question_answer: dict):
     # insert_data['user_question_answer'] = insert_data.pop('data')
 
     now = datetime.now()
-    insert_data['created_time'] = now
-    insert_data['update_time'] = now # Typo in DDL? update_time, not updated_time
-    # created_by and update_by should ideally be set based on logged-in user context
+    insert_data['create_time'] = now
+    insert_data['update_time'] = now # Typo in DDL? update_time, not update_time
+    # create_by and update_by should ideally be set based on logged-in user context
     # No is_deleted field in DDL
 
     try:
