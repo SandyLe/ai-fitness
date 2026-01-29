@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ],
             testimonials: [
                 {
-                    quote: '加入智体康训是我做过的最好的决定之一。专业的教练和个性化的训练计划帮助我在短时间内达到了理想的康训效果。',
+                    quote: '加入智能康训系统是我做过的最好的决定之一。专业的教练和个性化的训练计划帮助我在短时间内达到了理想的康训效果。',
                     name: '张先生',
                     title: '会员 · 6个月',
                     avatar: staticUrl + 'img/user1.jpg',
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     fallback: "this.src='https://randomuser.me/api/portraits/women/44.jpg'; this.onerror=null;"
                 },
                 {
-                    quote: '智体康训的环境非常好，设备齐全，而且很干净。最重要的是，这里的社区氛围非常棒，让我每次锻炼都充满动力。',
+                    quote: '智能康训系统的环境非常好，设备齐全，而且很干净。最重要的是，这里的社区氛围非常棒，让我每次锻炼都充满动力。',
                     name: '王先生',
                     title: '会员 · 3个月',
                     avatar: staticUrl + 'img/user3.jpg',
