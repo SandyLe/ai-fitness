@@ -266,3 +266,10 @@ def change_password():
     else:
         flash(f'密码修改失败: {result.msg}', 'error')
         return redirect(url_for('auth.user_center'))
+
+    # 医师列表页面
+
+
+@auth_bp.route('/doctors')
+def doctors_list():
+    return render_template('doctors_list.html', active_page='doctors')
