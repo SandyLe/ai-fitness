@@ -1,6 +1,7 @@
 {% extends "main.html" %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/fitness.css') }}">
 <style>
     .training-container {
         padding: 20px;
@@ -212,7 +213,7 @@
 <div class="training-container">
     <div class="training-header">
         <div>
-            <h1><i class="fas fa-heartbeat"></i> {{ course.course_name or course.course_action or '康复训练' }}</h1>
+            <h1><i class="fas fa-heartbeat"></i> <span id="currentExercise">{{ course.course_action or '康复训练' }}</span></h1>
             <p>姿态识别训练中</p>
         </div>
         <a href="{{ url_for('course.course_detail', course_id=course.course_id) }}" class="close-btn">
@@ -221,12 +222,14 @@
     </div>
 
     <div class="training-content">
+    <input type="hidden" id="current-user-id" value="{{ session.get('user_id', '0') }}">
+    <input type="hidden" id="course_id" value="{{ course.course_id }}">
         <!-- 视频区域 -->
         <div class="video-section">
             <div class="video-wrapper">
                 {% if course.video_url %}
                 <video id="demoVideo" loop muted>
-                    <source src="{{ course.video_url }}" type="video/mp4">
+                    <source src="{{url_for('static', filename=course.video_url)}}" type="video/mp4">
                 </video>
                 {% else %}
                 <video id="demoVideo" loop muted poster="{{ url_for('static', filename='img/training-placeholder.jpg') }}">
@@ -237,6 +240,7 @@
                 <!-- 摄像头画面 -->
                 <div class="camera-feed">
                     <video id="cameraFeed" autoplay playsinline></video>
+                    <canvas id="pose-output-canvas"></canvas>
                 </div>
             </div>
 
@@ -271,6 +275,11 @@
                 <div class="unit">次</div>
             </div>
 
+            <div class="pose-timer" id="pose-timer">
+                <span>休息时间: </span>
+                <span id="pose-timer-text">0</span>
+            </div>
+
             <div class="stat-item">
                 <label>训练时长</label>
                 <div class="value" id="trainingTime">00:00</div>
@@ -298,71 +307,10 @@
     </div>
 </div>
 
-<script>
-// 简化的训练页面脚本
-document.addEventListener('DOMContentLoaded', function() {
-    const demoVideo = document.getElementById('demoVideo');
-    const cameraFeed = document.getElementById('cameraFeed');
-    const stopBtn = document.getElementById('stopBtn');
-    const resumeBtn = document.getElementById('resumeBtn');
-    const statusText = document.getElementById('statusText');
-    const trainingTimeEl = document.getElementById('trainingTime');
-
-    let isTraining = true;
-    let startTime = Date.now();
-    let timerInterval;
-
-    // 开始摄像头
-    async function startCamera() {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            cameraFeed.srcObject = stream;
-        } catch (err) {
-            console.error('无法访问摄像头:', err);
-        }
-    }
-
-    // 更新计时器
-    function updateTimer() {
-        const elapsed = Math.floor((Date.now() - startTime) / 1000);
-        const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
-        const seconds = (elapsed % 60).toString().padStart(2, '0');
-        trainingTimeEl.textContent = minutes + ':' + seconds;
-    }
-
-    // 开始训练
-    function startTraining() {
-        demoVideo.play();
-        timerInterval = setInterval(updateTimer, 1000);
-        startCamera();
-    }
-
-    // 停止/暂停
-    stopBtn.addEventListener('click', function() {
-        if (isTraining) {
-            demoVideo.pause();
-            clearInterval(timerInterval);
-            statusText.textContent = '已暂停';
-            statusText.className = 'value paused';
-            stopBtn.style.display = 'none';
-            resumeBtn.style.display = 'flex';
-            isTraining = false;
-        }
-    });
-
-    // 恢复
-    resumeBtn.addEventListener('click', function() {
-        demoVideo.play();
-        timerInterval = setInterval(updateTimer, 1000);
-        statusText.textContent = '训练中';
-        statusText.className = 'value active';
-        resumeBtn.style.display = 'none';
-        stopBtn.style.display = 'flex';
-        isTraining = true;
-    });
-
-    // 初始化
-    startTraining();
-});
-</script>
+<!-- 添加姿态识别所需的脚本 -->
+<script src="{{ url_for('static', filename='pose_fitness_js/camera_utils.js') }}" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='pose_fitness_js/control_utils.js') }}" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='pose_fitness_js/drawing_utils.js') }}" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='pose_fitness_js/pose.js') }}" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/posture_recognition.js')}}"></script>
 {% endblock %}
