@@ -263,22 +263,23 @@
                 <div class="value active" id="statusText">训练中</div>
             </div>
 
+            <div class="stat-item" id="pose-timer">
+                <label>休息时间</label>
+                <div class="value" id="pose-timer-text">0</div>
+            </div>
+
             <div class="stat-item">
                 <label>剩余组数</label>
-                <div class="value" id="remainingGroups">{{ course.group_count or 3 }}</div>
+                <div class="value" id="remainingSets">{{ course.groups_count or 3 }}</div>
                 <div class="unit">组</div>
             </div>
 
             <div class="stat-item">
                 <label>剩余次数</label>
-                <div class="value" id="remainingReps">{{ course.rep_count or 10 }}</div>
+                <div class="value" id="remainingReps">{{ course.actions_count or 10 }}</div>
                 <div class="unit">次</div>
             </div>
 
-            <div class="pose-timer" id="pose-timer">
-                <span>休息时间: </span>
-                <span id="pose-timer-text">0</span>
-            </div>
 
             <div class="stat-item">
                 <label>训练时长</label>

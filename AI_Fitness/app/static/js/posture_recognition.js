@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const resumeBtn = document.getElementById('resumeBtn');
     const statusText = document.getElementById('statusText');
     const trainingTimeEl = document.getElementById('trainingTime');
-    const poseCounter = document.getElementById('remainingGroups');
-    const poseSets = document.getElementById('remainingReps');
+    const setsCounter = document.getElementById('remainingSets');
+    const repsCounter = document.getElementById('remainingReps');
     const poseTimer = document.getElementById('pose-timer');
     const poseTimerText = document.getElementById('pose-timer-text');
     const course_id = document.getElementById('course_id');
@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // 开始训练
     function startTraining() {
         // 获取用户设置的组数和每组次数
-        totalSets = parseInt(document.getElementById('remainingGroups').value) || 3;
-        totalReps = parseInt(document.getElementById('remainingReps').value) || 12;
+        totalSets = parseInt(document.getElementById('remainingSets').textContent) || 3;
+        totalReps = parseInt(document.getElementById('remainingReps').textContent) || 12;
 
         // 获取当前动作名称
         exerciseType = document.getElementById('currentExercise').textContent;
@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
         currentReps = totalReps;
 
         // 更新UI
-        poseSets.textContent = currentSets;
-        poseCounter.textContent = currentReps;
+        setsCounter.textContent = currentSets;
+        repsCounter.textContent = currentReps;
         statusText.textContent = "准备开始...";
         
         // 初始化姿态识别
@@ -237,16 +237,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 currentReps--;
-                poseCounter.textContent = currentReps;
-                // 检查是否完成当前组
-                if (currentReps <= 0) {
-                    completeSet();
-                }
+                repsCounter.textContent = currentReps;
             }
 
             // 更新指导文本
             if (result.guideText) {
                 statusText.textContent = result.guideText;
+            }
+            // 检查是否完成当前组
+            if (currentReps <= 0) {
+                completeSet();
             }
         }
     }
@@ -887,7 +887,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 完成一组训练
     function completeSet() {
         currentSets--;
-        poseSets.textContent = currentSets;
+        setsCounter.textContent = currentSets;
 
         saveCourseRecord();
         if (currentSets <= 0) {
@@ -963,7 +963,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 重置当前组的重复次数
         currentReps = totalReps;
-        poseCounter.textContent = currentReps;
+        repsCounter.textContent = currentReps;
     }
 
     // 停止训练
