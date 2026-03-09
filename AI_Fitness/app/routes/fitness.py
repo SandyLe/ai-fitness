@@ -274,6 +274,7 @@ def get_fitness_report():
         report['suggestions'] = list(dict.fromkeys(suggestions))
         report['course_id'] = records[0]['course_id']
         report['summary'] = summary
+        report['batch_no'] = batch_no
 
         return  report
     #     # 构建报告文件路径
