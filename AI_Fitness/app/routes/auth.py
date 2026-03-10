@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash, jsonify
-from app.services import db_service
-from datetime import datetime
-from app.services.db_services import user_info, user_date, course, question, user_question_answer
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash, jsonify, send_from_directory
+from app.services.db_services import user_info, user_date, course, question, user_question_answer, sys_user
+import os
+import json
 # 创建蓝图
 auth_bp = Blueprint('auth', __name__)
 
@@ -272,4 +272,15 @@ def change_password():
 
 @auth_bp.route('/doctors')
 def doctors_list():
-    return render_template('doctors_list.html', active_page='doctors')
+    doctors_result = sys_user.query_doctors({'su.del_flag': '0'})
+    doctors_list = doctors_result.data
+    return render_template('doctors_list.html', active_page='doctors', doctors_list = doctors_list)
+
+@auth_bp.route('/images/<type>', methods=['GET'])
+def images(type):
+    cfg_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config', 'syscfg', 'cfg.json')
+    cfgJson = {};
+    with open(cfg_path, 'r', encoding='utf-8') as f:
+        cfgJson = json.load(f)
+    path = request.args.get("path")
+    return send_from_directory(cfgJson[type], path)

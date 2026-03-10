@@ -16,20 +16,22 @@
     <!-- 医师列表 -->
     <div class="doctors-container">
         <div class="doctors-grid">
+        {% for c in doctors_list %}
             <div class="doctor-card" v-for="doctor in pagedDoctors" :key="doctor.name">
                 <div class="doctor-image">
-                    <img :src="doctor.image" :alt="doctor.name" :onerror="doctor.fallback" loading="lazy">
+                    <img src=" {{'/images/doctor_path?path=' + c.avatar.split('/')[2:] | join('/')}}" :alt="doctor.name" :onerror="doctor.fallback" loading="lazy">
                     <div class="doctor-badge"><i class="fas fa-user-md"></i></div>
                 </div>
                 <div class="doctor-content">
-                    <h3>{% raw %}{{ doctor.name }}{% endraw %}</h3>
-                    <p class="doctor-specialty">{% raw %}{{ doctor.specialty }}{% endraw %}</p>
-                    <p class="doctor-bio">{% raw %}{{ doctor.bio }}{% endraw %}</p>
+                    <h3>{{ c.nick_name }}</h3>
+                    <p class="doctor-specialty">{{ c.role_name }}</p>
+                    <p class="doctor-bio">{{ c.rremark }}</p>
                     <div class="doctor-credentials">
-                        <span class="credential-tag"><i class="fas fa-certificate"></i> {% raw %}{{ doctor.credential }}{% endraw %}</span>
+                        <span class="credential-tag"><i class="fas fa-certificate"></i>{{ c.uremark }}</span>
                     </div>
                 </div>
             </div>
+        {% endfor %}
         </div>
         <!-- 分页器 -->
         <div id="doctorPagination"></div>
@@ -66,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     credential: '主任医师',
                     image: staticUrl + 'img/doctor1.avif',
                     fallback: "this.src='https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'; this.onerror=null;"
-                },
+                }<!--,
                 {
                     name: '王雅琪 医师',
                     specialty: '神经康复科专家',
@@ -250,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     credential: '副主任医师',
                     image: staticUrl + 'img/doctor8.avif',
                     fallback: "this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'; this.onerror=null;"
-                }
+                }-->
             ]
         },
         computed: {

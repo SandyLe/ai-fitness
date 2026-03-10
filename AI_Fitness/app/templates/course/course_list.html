@@ -36,8 +36,8 @@
         {% for c in courses %}
         <div class="course-card">
             <div class="course-image">
-                {% if c.image_url %}
-                <img src="{{ c.image_url }}" alt="{{ c.course_name }}">
+                {% if c.img_url %}
+                <img src="{{ c.img_url }}" alt="{{ c.course_name }}">
                 {% else %}
                 <!-- 复用首页课程模块的图片 -->
                 {% set course_images = ['course1.avif', 'course2.avif', 'course3.avif', 'course4.avif'] %}
