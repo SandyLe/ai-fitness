@@ -8,12 +8,14 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/')
 def shouye2():
     courses = course.get_course_and_theam({"is_show_index": 1})
-    return render_template('shouye.html', active_page='home', courses=courses)
+    doctors = sys_user.query_doctors({'su.del_flag': '0'}, 4)
+    return render_template("shouye.html", active_page='home', courses=courses, doctors=doctors)
 
 @auth_bp.route('/shouye', methods=['GET', 'POST'])
 def shouye():
     courses = course.get_course_and_theam({"is_show_index": 1})
-    return render_template("shouye.html", active_page='home', courses=courses)
+    doctors = sys_user.query_doctors({'su.del_flag': '0'}, 4)
+    return render_template("shouye.html", active_page='home', courses=courses, doctors=doctors)
 
 # 添加登录路由
 # 在登录成功后保存更多用户信息到session
@@ -272,7 +274,7 @@ def change_password():
 
 @auth_bp.route('/doctors')
 def doctors_list():
-    doctors_result = sys_user.query_doctors({'su.del_flag': '0'})
+    doctors_result = sys_user.query_doctors({'su.del_flag': '0'}, None)
     doctors_list = doctors_result.data
     return render_template('doctors_list.html', active_page='doctors', doctors_list = doctors_list)
 

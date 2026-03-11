@@ -114,8 +114,8 @@ def get_user_by_id(user_id: int):
      return get_user({"id": user_id})
 
 
-def query_doctors(condition: dict):
-    sql = "select su.user_id, su.user_name, su.nick_name, su.email, su.avatar, sr.role_name, sr.role_key , su.remark as uremark, sr.remark as rremark from sys_user su left join sys_user_role sur on su.user_id = sur.user_id left join sys_role sr on sr.role_id = sur.role_id where sr.role_key like %s and {where}"
+def query_doctors(condition: dict, limit: int):
+    sql = "select su.user_id, su.img_url, su.user_name, su.nick_name, su.email, su.avatar, sr.role_name, sr.role_key , su.remark as uremark, sr.remark as rremark from sys_user su left join sys_user_role sur on su.user_id = sur.user_id left join sys_role sr on sr.role_id = sur.role_id where sr.role_key like %s and {where}"
     if not condition or len(condition) == 0:
         return Response.fail(code=500, msg="查询条件不能为空")
     where = conn.join_field_value(condition, ' AND ')
@@ -123,6 +123,9 @@ def query_doctors(condition: dict):
     try:
         prepared = ['fitness:doctor%']
         prepared.extend(condition.values())
+        if (limit):
+            limits = "LIMIT {limit}".format(limit=limit) if limit else ""
+            sql += limits
         result = conn.query(sql, prepared)
         if result is None or len(result) == 0:
             return Response.fail(code=404, msg="查无此医生")

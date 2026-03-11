@@ -262,7 +262,7 @@ class MYSQL:
         for key in data.keys():
             if '.' in key :
                 keyarr = key.split('.')
-                sql = "{}{}.`{}` = %s".format(comma, keyarr[0], keyarr[1])
+                sql += "{}{}.`{}` = %s".format(comma, keyarr[0], keyarr[1])
             else:
                 sql += "{}`{}` = %s".format(comma, key)
             comma = glue

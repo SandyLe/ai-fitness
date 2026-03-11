@@ -19,7 +19,11 @@
         {% for c in doctors_list %}
             <div class="doctor-card" v-for="doctor in pagedDoctors" :key="doctor.name">
                 <div class="doctor-image">
-                    <img src=" {{'/images/doctor_path?path=' + c.avatar.split('/')[2:] | join('/')}}" :alt="doctor.name" :onerror="doctor.fallback" loading="lazy">
+                    {%if c.img_url %}
+                    <img src="{{'/images/doctor_path?path=' + c.img_url.split('/')[2:] | join('/')}}" :alt="c.nick_name" :onerror="c.fallback" loading="lazy">
+                    {%else %}
+                    <img src=" {{'/images/doctor_path?path=default'}}" :alt="doctor.name" :onerror="c.fallback" loading="lazy">
+                    {%endif %}
                     <div class="doctor-badge"><i class="fas fa-user-md"></i></div>
                 </div>
                 <div class="doctor-content">
